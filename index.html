@@ -1,114 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Farming Hub</title>
+    <!-- Tailwind CSS is loaded from a CDN for a modern, responsive design -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Link to the external stylesheet -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="bg-gray-100 text-gray-800">
 
-body {
-    font-family: 'Inter', sans-serif;
-    background-color: #f0fdf4; /* A light, fresh green for a farming theme */
-}
+    <!-- Navigation Bar -->
+    <nav class="bg-white shadow-lg sticky top-0 z-50">
+        <div class="container mx-auto px-6 py-3 flex justify-between items-center flex-wrap md:flex-nowrap">
+            <a href="#" class="text-3xl font-bold text-green-700 transition-colors duration-300 hover:text-green-500" onclick="showSection('home-section')">🌱 Farming Hub</a>
+            
+            <!-- Language Selector and Hamburger Menu -->
+            <div class="flex items-center space-x-4">
+                <select id="language-selector" class="p-2 rounded-md border border-gray-300 bg-white" onchange="setLanguage(this.value)">
+                    <option value="en">English</option>
+                    <option value="hi">हिन्दी</option>
+                    <option value="mr">मराठी</option>
+                </select>
+                <button class="md:hidden text-gray-600 focus:outline-none" onclick="toggleNav()">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </button>
+            </div>
+            
+            <!-- Navigation links -->
+            <div id="nav-menu" class="nav-links">
+                <a href="#" class="text-gray-600 hover:text-green-500 transition-colors duration-300 font-semibold py-2 px-4 rounded-full" data-section="home-section" data-key="nav_home" onclick="showSection('home-section')">Home</a>
+                <a href="#" class="text-gray-600 hover:text-green-500 transition-colors duration-300 font-semibold py-2 px-4 rounded-full" data-section="recipes-section" data-key="nav_recipes" onclick="showSection('recipes-section')">Recipes</a>
+                <a href="#" class="text-gray-600 hover:text-green-500 transition-colors duration-300 font-semibold py-2 px-4 rounded-full" data-section="shop-section" data-key="nav_shop" onclick="showSection('shop-section')">Shop</a>
+                <a href="#" class="text-gray-600 hover:text-green-500 transition-colors duration-300 font-semibold py-2 px-4 rounded-full" data-section="e-learning-section" data-key="nav_elearning" onclick="showSection('e-learning-section')">E-learning</a>
+                <a href="#" class="text-gray-600 hover:text-green-500 transition-colors duration-300 font-semibold py-2 px-4 rounded-full" data-section="tools-section" data-key="nav_tools" onclick="showSection('tools-section')">Tools</a>
+                <a href="#" class="text-gray-600 hover:text-green-500 transition-colors duration-300 font-semibold py-2 px-4 rounded-full" data-section="reviews-section" data-key="nav_reviews" onclick="showSection('reviews-section')">Reviews</a>
+                <a href="#" class="text-gray-600 hover:text-green-500 transition-colors duration-300 font-semibold py-2 px-4 rounded-full" data-section="chatbot-section" data-key="nav_chatbot" onclick="showSection('chatbot-section')">Chat Bot</a>
+            </div>
+        </div>
+    </nav>
 
-/* Utility for consistent container width and spacing */
-.container {
-    max-width: 1200px;
-    margin: auto;
-    padding: 2rem 1rem;
-}
+    <!-- Home Section with a vibrant image background -->
+    <div id="home-section" class="section active text-center">
+        <!-- Content container placed over the image -->
+        <div class="relative z-10 bg-white bg-opacity-70 rounded-xl p-8 md:p-12 max-w-sm md:max-w-xl mx-auto shadow-lg">
+            <h1 class="text-4xl md:text-5xl font-extrabold text-green-800 mb-4" data-key="home_title">Welcome to Farming Hub</h1>
+            <p class="text-md md:text-lg text-gray-700" data-key="home_subtitle">Your one-stop destination for organic farming knowledge, sustainable practices, and community support.</p>
+        </div>
+    </div>
 
-/* Styling for the recipe cards with subtle animations */
-.recipe-card {
-    background-color: #ffffff; /* Use a solid white background for the recipe cards */
-    border-radius: 15px;
-    padding: 1.5rem;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-    margin-bottom: 1.5rem;
-    opacity: 0; /* Initially hidden for staggered animation */
-    transform: translateY(20px);
-    animation: card-appear 0.6s ease-out forwards;
-    position: relative;
-    overflow: hidden;
-}
+    <!-- Organic Pesticide Recipes Section (Index) -->
+    <div id="recipes-section" class="section">
+        <div class="container mx-auto">
+            <header class="text-center py-8">
+                <h1 class="text-3xl md:text-4xl font-extrabold text-green-700 mb-2" data-key="recipes_title">Organic Pesticide Recipes</h1>
+                <p class="text-gray-600 text-sm md:text-base" data-key="recipes_subtitle">Discover natural, homemade solutions for common garden pests.</p>
+            </header>
+            <div class="search-box text-center mb-8">
+                <input type="text" id="search" placeholder="Search by name, target, or crop..." oninput="filterRecipes()" class="w-full max-w-lg p-3 rounded-full border border-gray-300 shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500 transition-all duration-300">
+            </div>
+            <!-- Recipe cards grid that adjusts for different screen sizes -->
+            <div id="recipe-container" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+        </div>
+    </div>
 
-/* Pop-up effect on hover */
-.recipe-card:hover {
-    transform: translateY(-5px) scale(1.02);
-    box-shadow: 0 8px 16px rgba(0,0,0,0.2);
-}
+    <!-- Shop Section with colorful cards -->
+    <div id="shop-section" class="section">
+        <div class="container mx-auto text-center py-16">
+            <h1 class="text-3xl md:text-4xl font-extrabold text-green-700 mb-4" data-key="shop_title">Farming Shop</h1>
+            <p class="text-gray-600 mb-8 text-sm md:text-base" data-key="shop_subtitle">Browse a selection of organic gardening tools, seeds, and supplies.</p>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="bg-white p-6 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300">
+                    <img src="https://placehold.co/400x300/60a5fa/ffffff?text=Organic+Seeds" alt="Organic Seeds" class="w-full rounded-lg mb-4">
+                    <h3 class="text-xl font-bold text-gray-800" data-key="shop_item1_title">Organic Seeds Pack</h3>
+                    <p class="text-gray-600" data-key="shop_item1_desc">A variety of non-GMO, heirloom seeds.</p>
+                    <button class="mt-4 bg-green-600 text-white py-2 px-4 rounded-full hover:bg-green-700 transition-colors duration-300 btn-press" data-key="shop_button">Add to Cart</button>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300">
+                    <img src="https://placehold.co/400x300/f87171/ffffff?text=Gardening+Tools" alt="Gardening Tools" class="w-full rounded-lg mb-4">
+                    <h3 class="text-xl font-bold text-gray-800" data-key="shop_item2_title">Eco-Friendly Tools Set</h3>
+                    <p class="text-gray-600" data-key="shop_item2_desc">Durable tools made from recycled materials.</p>
+                    <button class="mt-4 bg-green-600 text-white py-2 px-4 rounded-full hover:bg-green-700 transition-colors duration-300 btn-press" data-key="shop_button">Add to Cart</button>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300">
+                    <img src="https://placehold.co/400x300/fbbf24/ffffff?text=Compost+Bins" alt="Compost Bins" class="w-full rounded-lg mb-4">
+                    <h3 class="text-xl font-bold text-gray-800" data-key="shop_item3_title">Home Composter</h3>
+                    <p class="text-gray-600" data-key="shop_item3_desc">Create your own rich, organic soil.</p>
+                    <button class="mt-4 bg-green-600 text-white py-2 px-4 rounded-full hover:bg-green-700 transition-colors duration-300 btn-press" data-key="shop_button">Add to Cart</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
-/* Keyframes for the card appearance animation */
-@keyframes card-appear {
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
+    <!-- E-learning Section with colorful cards -->
+    <div id="e-learning-section" class="section">
+        <div class="container mx-auto text-center py-16">
+            <h1 class="text-3xl md:text-4xl font-extrabold text-green-700 mb-4" data-key="elearning_title">E-learning Center</h1>
+            <p class="text-gray-600 mb-8 text-sm md:text-base" data-key="elearning_subtitle">Learn the fundamentals of organic farming with our video tutorials and guides.</p>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="bg-white p-6 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300">
+                    <img src="https://placehold.co/400x300/a3e635/ffffff?text=Soil+Health" alt="Soil Health" class="w-full rounded-lg mb-4">
+                    <h3 class="text-xl font-bold text-gray-800" data-key="elearning_item1_title">Course 1: Soil Health</h3>
+                    <p class="text-gray-600" data-key="elearning_item1_desc">Master the art of creating nutrient-rich soil for your plants.</p>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300">
+                    <img src="https://placehold.co/400x300/34d399/ffffff?text=Pest+Control" alt="Pest Control" class="w-full rounded-lg mb-4">
+                    <h3 class="text-xl font-bold text-gray-800" data-key="elearning_item2_title">Course 2: Organic Pest Control</h3>
+                    <p class="text-gray-600" data-key="elearning_item2_desc">Discover natural methods to protect your crops from pests.</p>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300">
+                    <img src="https://placehold.co/400x300/4ade80/ffffff?text=Harvesting" alt="Harvesting" class="w-full rounded-lg mb-4">
+                    <h3 class="text-xl font-bold text-gray-800" data-key="elearning_item3_title">Course 3: Sustainable Harvesting</h3>
+                    <p class="text-gray-600" data-key="elearning_item3_desc">Learn how to harvest your crops efficiently and sustainably.</p>
+                </div>
+            </div>
+        </div>
+    </div>
 
-/* Basic styling for section management */
-.section {
-    display: none; /* Hide all sections by default */
-    animation: fadeIn 0.8s ease-in-out;
-}
-.section.active {
-    display: block; /* Show the active section */
-}
+    <!-- Tools Section -->
+    <div id="tools-section" class="section">
+        <div class="container mx-auto text-center py-16">
+            <h1 class="text-3xl md:text-4xl font-extrabold text-green-700 mb-4" data-key="tools_title">Farming Tools & Calculators</h1>
+            <p class="text-gray-600 mb-8 text-sm md:text-base" data-key="tools_subtitle">Use our interactive tools to plan your farming activities efficiently.</p>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <!-- Sowing Seeds Calculator -->
+                <div class="bg-white p-6 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300">
+                    <h2 class="text-2xl font-bold text-green-600 mb-4" data-key="calc_seeds_title">Sowing Seeds Calculator</h2>
+                    <div class="space-y-4 text-left">
+                        <div>
+                            <label for="land-size-seeds" class="block text-gray-700 font-semibold mb-1" data-key="calc_seeds_label1">Land Size (in acres)</label>
+                            <input type="number" id="land-size-seeds" value="1" min="0.1" step="0.1" class="w-full p-2 border rounded-md focus:ring-2 focus:ring-green-500">
+                        </div>
+                        <div>
+                            <label for="seed-type" class="block text-gray-700 font-semibold mb-1" data-key="calc_seeds_label2">Seed Type</label>
+                            <select id="seed-type" class="w-full p-2 border rounded-md focus:ring-2 focus:ring-green-500">
+                                <option value="groundnut" data-key="seed_type_groundnut">Groundnut</option>
+                                <option value="corn" data-key="seed_type_corn">Corn</option>
+                                <option value="rice" data-key="seed_type_rice">Rice</option>
+                                <option value="wheat" data-key="seed_type_wheat">Wheat</option>
+                            </select>
+                        </div>
+                        <button onclick="calculateSeeds()" class="w-full bg-green-600 text-white py-2 px-4 rounded-full hover:bg-green-700 transition-colors duration-300 btn-press" data-key="calc_seeds_button">Calculate Seeds</button>
+                    </div>
+                    <div id="seed-result" class="mt-4 p-4 bg-green-50 rounded-lg text-green-800 font-medium hidden"></div>
+                </div>
 
-/* Fade-in animation for page transitions */
-@keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
-}
+                <!-- Spreading Pesticides Calculator -->
+                <div class="bg-white p-6 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300">
+                    <h2 class="text-2xl font-bold text-green-600 mb-4" data-key="calc_pesticides_title">Pesticides Spreading Calculator</h2>
+                    <div class="space-y-4 text-left">
+                        <div>
+                            <label for="land-size-pesticide" class="block text-gray-700 font-semibold mb-1" data-key="calc_pesticides_label1">Land Size (in acres)</label>
+                            <input type="number" id="land-size-pesticide" value="1" min="0.1" step="0.1" class="w-full p-2 border rounded-md focus:ring-2 focus:ring-green-500">
+                        </div>
+                        <div>
+                            <label for="pesticide-type" class="block text-gray-700 font-semibold mb-1" data-key="calc_pesticides_label2">Pesticide Type</label>
+                            <select id="pesticide-type" class="w-full p-2 border rounded-md focus:ring-2 focus:ring-green-500">
+                                <option value="neem-oil" data-key="pesticide_type_neem">Neem Oil Emulsion</option>
+                                <option value="garlic-chilli" data-key="pesticide_type_garlic">Garlic-Chilli Spray</option>
+                                <option value="tobacco" data-key="pesticide_type_tobacco">Tobacco Decoction</option>
+                            </select>
+                        </div>
+                        <button onclick="calculatePesticides()" class="w-full bg-green-600 text-white py-2 px-4 rounded-full hover:bg-green-700 transition-colors duration-300 btn-press" data-key="calc_pesticides_button">Calculate Pesticides</button>
+                    </div>
+                    <div id="pesticide-result" class="mt-4 p-4 bg-green-50 rounded-lg text-green-800 font-medium hidden"></div>
+                </div>
+            </div>
+        </div>
+    </div>
 
-/* Styling for the Home section with a background image */
-#home-section {
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    min-height: 100vh;
-    overflow: hidden;
-    background-image: url('https://images.pexels.com/photos/2165688/pexels-photo-2165688.jpeg?cs=srgb&dl=pexels-quang-nguyen-vinh-222549-2165688.jpg&fm=jpg');
-    background-size: cover;
-    background-position: center;
-}
+    <!-- Reviews/Feedback Section -->
+    <div id="reviews-section" class="section">
+        <div class="container mx-auto py-16">
+            <h1 class="text-3xl md:text-4xl font-extrabold text-center text-green-700 mb-8" data-key="reviews_title">Customer Reviews</h1>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="bg-white p-6 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300">
+                    <p class="text-gray-600 italic mb-4" data-key="review1_text">"The Neem Oil Emulsion recipe saved my tomato plants! Simple and effective. Highly recommend this site."</p>
+                    <p class="font-semibold">- Jane Doe</p>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300">
+                    <p class="text-gray-600 italic mb-4" data-key="review2_text">"I love the range of recipes and the clear instructions. The Ginger-Garlic mix is my new go-to for fungal spots."</p>
+                    <p class="font-semibold">- John Smith</p>
+                </div>
+            </div>
+        </div>
+    </div>
 
-/* Responsive navigation menu styling */
-.nav-links {
-    display: flex;
-    gap: 1.5rem; /* Equivalent to space-x-6 in Tailwind */
-}
+    <!-- Chat Bot Section -->
+    <div id="chatbot-section" class="section">
+        <div class="container mx-auto text-center py-16">
+            <h1 class="text-3xl md:text-4xl font-extrabold text-green-700 mb-4" data-key="chatbot_title">Farming Assistant Chat Bot</h1>
+            <p class="text-gray-600 mb-8 text-sm md:text-base" data-key="chatbot_subtitle">Ask our AI assistant for advice on pests, recipes, or general farming tips.</p>
+            <div class="max-w-lg mx-auto bg-white p-6 rounded-lg shadow-xl">
+                <div id="chatbot-messages" class="h-64 overflow-y-auto mb-4 border rounded-lg p-4 bg-gray-50">
+                    <p class="text-left text-gray-500" data-key="chatbot_initial_msg">Hello! I'm your farming assistant. How can I help you today?</p>
+                </div>
+                <!-- Chatbot 'is typing' indicator -->
+                <div id="typing-indicator" class="text-left text-gray-400 italic hidden">
+                    <span class="animate-pulse" data-key="chatbot_typing">Bot is typing...</span>
+                </div>
+                <div class="flex mt-4">
+                    <input type="text" id="chatbot-input" placeholder="Type your question here..." class="flex-grow p-3 rounded-l-full border border-gray-300 focus:outline-none">
+                    <button onclick="sendMessage()" class="bg-green-600 text-white py-2 px-4 rounded-full hover:bg-green-700 transition-colors duration-300 btn-press" data-key="chatbot_send_btn">Send</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
-/* Responsive design for mobile navigation */
-@media (max-width: 768px) {
-    .nav-links {
-        display: none; /* Hide nav links on smaller screens by default */
-        flex-direction: column;
-        position: absolute;
-        top: 60px;
-        left: 0;
-        width: 100%;
-        background-color: white;
-        padding: 1rem;
-        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-    }
-    .nav-links.active {
-        display: flex; /* Show nav links when menu is toggled */
-    }
-}
+    <footer class="bg-gray-800 text-white text-center py-6">
+        <p data-key="footer_text">© 2025 Farming Hub. All rights reserved. Made by Saksham Bhor | Email: <a href="mailto:sakshambhor@gmail.com" class="text-green-400 hover:text-green-300 transition-colors duration-300">sakshambhor@gmail.com</a></p>
+    </footer>
 
-/* Active link styling */
-.nav-links a.active {
-    color: #166534; /* Darker green for active link */
-    border-bottom: 2px solid #166534;
-}
-
-/* Button press animation */
-.btn-press:active {
-    transform: scale(0.95);
-}
-
-/* Result box animation */
-.result-box.show {
-    animation: slide-down 0.5s ease-out forwards;
-}
-
-@keyframes slide-down {
-    from { opacity: 0; transform: translateY(-20px); }
-    to { opacity: 1; transform: translateY(0); }
-}
-
+    <!-- Link to the external JavaScript file -->
+    <script src="script.js"></script>
+</body>
+</html>
