@@ -1,4 +1,3 @@
-
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
 import { getFirestore, doc, setDoc, getDoc, collection, onSnapshot, addDoc, deleteDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
@@ -95,493 +94,496 @@ const translations = {
         calc_pesticides_title: "कीटकनाशक फवारणी कॅल्क्युलेटर", calc_pesticides_label1: "जमिनीचा आकार (एकरमध्ये)", calc_pesticides_label2: "कीटकनाशक प्रकार", calc_pesticides_button: "कीटकनाशके मोजा", calc_pesticides_result: (amount, type, size) => `${size} एकरसाठी तुम्हाला अंदाजे <strong>${amount} L</strong> ${type} लागेल.`, calc_pesticides_error: "कृपया जमिनीचा वैध आकार प्रविष्ट करा.",
         reviews_title: "ग्राहक पुनरावलोकने", review_form_title: "एक पुनरावलोकन द्या", review_label: "तुमचे पुनरावलोकन", review_button: "पुनरावलोकन सबमिट करा",
         chatbot_title: "शेती सहायक चॅट बॉट", chatbot_subtitle: "कीटक, रेसिपी किंवा सामान्य शेती टिप्ससाठी आमच्या AI सहाय्याला विचारा.", chatbot_initial_msg: "नमस्कार! मी तुमचा शेती सहायक आहे. मी आज तुम्हाला कशी मदत करू शकतो?", chatbot_typing: "बॉट टाइप करत आहे...", chatbot_send_btn: "पाठवा", chatbot_user_label: "तुम्ही:", chatbot_bot_label: "बॉट:", chatbot_placeholder: "येथे तुमचा प्रश्न टाइप करा...", chatbot_static_response: "मी एक AI सहायक आहे। मी आत्ता नवीन सामग्री तयार करू शकत नाही, पण मी तुम्हाला रेसिपी शोधण्यात मदत करू शकतो। रेसिपी विभागात 'ऍफिड्स' किंवा 'फंगल' शोधण्याचा प्रयत्न करा!", chatbot_error: "त्रुटी: प्रतिसाद मिळविण्यात अयशस्वी. कृपया पुन्हा प्रयत्न करा।",
-        footer_text: "© 2025 फार्मिंग हब. सर्व हक्क राखीव. बनवणारे: Saksham Bhor | ईमेल:",
+                footer_text: "© 2025 फार्मिंग हब. सर्व हक्क राखीव. बनवणारे: Saksham Bhor | ईमेल:",
         login_title: "लॉगिन / साइन अप", login_email_label: "ईमेल", login_password_label: "पासवर्ड", login_button: "लॉगिन", login_switch_text: "खाता नाही? <a>साइन अप करा</a>", login_admin_text: "प्रशासक लॉगिन? <a>येथे क्लिक करा</a>",
         admin_title: "प्रशासक लॉगिन", admin_password_label: "प्रशासक पासवर्ड", admin_button: "प्रशासक लॉगिन", admin_switch_text: "<a>वापरकर्ता लॉगिन</a> वर परत जा",
         signup_button: "साइन अप करा", signup_title: "साइन अप करा",
-        admin_dashboard_title: "प्रशासक डॅशबोर्ड", admin_recipes_title: "रेसिपी व्यवस्थापित करा", admin_recipes_id_label: "रेसिपी आयडी (अपडेट/डिलीटसाठी)", admin_recipes_name_label: "रेसिपीचे नाव", admin_recipes_targets_label: "लक्ष्य (कॉमा-सेपरेटेड)", admin_recipes_cost_label: "अंदाजे खर्च (₹)", admin_add_recipe: "जोडा/अपडेट करा", admin_delete_recipe: "डिलीट करा", admin_reviews_title: "पुनरावलोकने व्यवस्थापित करा",
-    },
-};
+        admin_dashboard_title: "प्रशासक डॅशबोर्ड", admin_recipes_title: "रेसिपी व्यवस्थापित करा", admin_recipes_id_label: "रेसिपी आयडी (अपडेट/डिलीटसाठी)", admin_recipes_name_label: "रेसिपीचे नाव", admin_recipes_targets_label: "लक्ष्य (कॉमा-सेपरेटेड)", admin_recipes_cost_label: "अंदाजे खर्च (₹)", admin_add_recipe: "जोडा/अपडेट करा", admin_delete_recipe: "डिलीट करा", admin_calc_title: "कॅल्क्युलेटर डेटा व्यवस्थापित करा", admin_calc_type_label: "प्रकार", admin_calc_key_label: "की (उदा. 'corn')", admin_calc_name_label: "नाव", admin_calc_amount_label: "प्रमाण (किलो किंवा लिटर)", admin_add_calc: "जोडा/अपडेट करा", admin_delete_calc: "डिलीट करा", admin_reviews_title: "पुनरावलोकने व्यवस्थापित करा",
+            },
+        };
 
-const currentLang = localStorage.getItem('language') || 'en';
-let isSignupMode = false;
+        const currentLang = localStorage.getItem('language') || 'en';
+        let isSignupMode = false;
 
-let recipesData = [];
-let seedData = {};
-let pesticideData = {};
-let reviewsData = [];
+        let recipesData = [];
+        let seedData = {};
+        let pesticideData = {};
+        let reviewsData = [];
 
-document.getElementById('login-form').addEventListener('submit', handleAuthSubmit);
-document.getElementById('admin-form').addEventListener('submit', handleAdminLogin);
-document.getElementById('review-form').addEventListener('submit', addReview);
+        document.getElementById('login-form').addEventListener('submit', handleAuthSubmit);
+        document.getElementById('admin-form').addEventListener('submit', handleAdminLogin);
+        document.getElementById('review-form').addEventListener('submit', addReview);
 
-function showUserLogin(event) {
-    event.preventDefault();
-    document.getElementById('login-card').classList.add('active');
-    document.getElementById('login-card').classList.remove('hidden');
-    document.getElementById('admin-login-card').classList.add('hidden');
-    document.getElementById('login-title').innerHTML = translations[currentLang].login_title;
-    document.getElementById('login-button').innerHTML = translations[currentLang].login_button;
-    document.getElementById('login-switch-text').innerHTML = translations[currentLang].login_switch_text;
-}
-
-function showAdminLogin(event) {
-    event.preventDefault();
-    document.getElementById('login-card').classList.add('hidden');
-    document.getElementById('admin-login-card').classList.remove('hidden');
-    document.getElementById('admin-login-card').classList.add('active');
-}
-
-function toggleForm(event) {
-    event.preventDefault();
-    isSignupMode = !isSignupMode;
-    const loginTitle = document.getElementById('login-title');
-    const loginButton = document.getElementById('login-button');
-    const loginSwitchText = document.getElementById('login-switch-text');
-
-    if (isSignupMode) {
-        loginTitle.innerHTML = translations[currentLang].signup_title;
-        loginButton.innerHTML = translations[currentLang].signup_button;
-        loginSwitchText.innerHTML = `Already have an account? <a href="#" class="text-green-600 hover:underline" onclick="toggleForm(event)">Login</a>`;
-    } else {
-        loginTitle.innerHTML = translations[currentLang].login_title;
-        loginButton.innerHTML = translations[currentLang].login_button;
-        loginSwitchText.innerHTML = `Don't have an account? <a href="#" class="text-green-600 hover:underline" onclick="toggleForm(event)">Sign up</a>`;
-    }
-}
-
-async function handleAuthSubmit(event) {
-    event.preventDefault();
-    const email = document.getElementById('login-email').value;
-    const password = document.getElementById('login-password').value;
-    const authMessage = document.getElementById('auth-message');
-    authMessage.classList.add('hidden');
-
-    try {
-        if (isSignupMode) {
-            const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-            await setDoc(doc(db, "users", userCredential.user.uid), { role: 'user' });
-        } else {
-            await signInWithEmailAndPassword(auth, email, password);
+        function showUserLogin(event) {
+            event.preventDefault();
+            document.getElementById('login-card').classList.add('active');
+            document.getElementById('login-card').classList.remove('hidden');
+            document.getElementById('admin-login-card').classList.add('hidden');
+            document.getElementById('login-title').innerHTML = translations[currentLang].login_title;
+            document.getElementById('login-button').innerHTML = translations[currentLang].login_button;
+            document.getElementById('login-switch-text').innerHTML = translations[currentLang].login_switch_text;
         }
-    } catch (error) {
-        authMessage.innerText = error.message;
-        authMessage.classList.remove('hidden');
-    }
-}
 
-async function handleAdminLogin(event) {
-    event.preventDefault();
-    const email = document.getElementById('admin-email').value;
-    const password = document.getElementById('admin-password').value;
-    const authMessage = document.getElementById('admin-auth-message');
-    authMessage.classList.add('hidden');
-    
-    try {
-        await signInWithEmailAndPassword(auth, email, password);
-    } catch (error) {
-        authMessage.innerText = error.message;
-        authMessage.classList.remove('hidden');
-    }
-}
-
-function userLogout() {
-    signOut(auth);
-}
-
-// --- Data Fetching and Real-time Listeners ---
-
-function fetchAllData() {
-    onSnapshot(collection(db, "recipes"), (snapshot) => {
-        recipesData = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-        renderRecipes(recipesData);
-    });
-    onSnapshot(collection(db, "seedData"), (snapshot) => {
-        seedData = snapshot.docs.reduce((acc, doc) => ({ ...acc, [doc.id]: doc.data() }), {});
-        updateSeedDropdown();
-    });
-    onSnapshot(collection(db, "pesticideData"), (snapshot) => {
-        pesticideData = snapshot.docs.reduce((acc, doc) => ({ ...acc, [doc.id]: doc.data() }), {});
-        updatePesticideDropdown();
-    });
-    onSnapshot(collection(db, "reviews"), (snapshot) => {
-        reviewsData = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-        renderReviews(reviewsData);
-        renderAdminReviews();
-    });
-}
-
-function updateSeedDropdown() {
-    const select = document.getElementById('seed-type');
-    select.innerHTML = '';
-    for (const key in seedData) {
-        const option = document.createElement('option');
-        option.value = key;
-        option.text = seedData[key][currentLang];
-        select.appendChild(option);
-    }
-}
-
-function updatePesticideDropdown() {
-    const select = document.getElementById('pesticide-type');
-    select.innerHTML = '';
-    for (const key in pesticideData) {
-        const option = document.createElement('option');
-        option.value = key;
-        option.text = pesticideData[key][currentLang];
-        select.appendChild(option);
-    }
-}
-
-// --- UI Rendering Functions ---
-
-function showSection(sectionId) {
-    document.querySelectorAll('.section').forEach(section => {
-        section.classList.remove('active');
-    });
-    document.getElementById(sectionId).classList.add('active');
-    document.querySelectorAll('.nav-links a').forEach(link => {
-        link.classList.remove('active');
-    });
-    const activeLink = document.querySelector(`.nav-links a[data-section="${sectionId}"]`);
-    if (activeLink) {
-        activeLink.classList.add('active');
-    }
-    const navMenu = document.getElementById('nav-menu');
-    if (navMenu.classList.contains('active')) {
-        toggleNav();
-    }
-    if (sectionId === 'recipes-section') {
-        renderRecipes(recipesData);
-    }
-    if (sectionId === 'admin-section') {
-        renderAdminReviews();
-    }
-}
-
-function toggleNav() {
-    document.getElementById('nav-menu').classList.toggle('active');
-}
-
-function renderRecipes(list) {
-    const container = document.getElementById('recipe-container');
-    const lang = document.getElementById('language-selector').value;
-    if (!container) return;
-    container.innerHTML = '';
-    if (list.length === 0) {
-        container.innerHTML = `<p class="col-span-full text-center text-gray-500 text-lg">${translations[lang].recipes_no_found}</p>`;
-        return;
-    }
-    list.forEach((recipe, index) => {
-        const card = document.createElement('div');
-        card.className = 'recipe-card';
-        card.style.animationDelay = `${index * 0.1}s`;
-        card.innerHTML = `
-            <h2 class="text-2xl font-bold text-green-600 mb-2">${recipe.name[lang]}</h2>
-            <p class="text-sm text-gray-500 mb-4">ID: ${recipe.id}</p>
-            <div class="mb-3"><strong>${translations[lang].recipes_card_targets}</strong> <span class="text-gray-700">${recipe.targets[lang].join(', ')}</span></div>
-            <div class="mb-3"><strong>${translations[lang].recipes_card_where}</strong> <span class="text-gray-700">${recipe.where[lang].join(', ')}</span></div>
-            <div class="mb-3"><strong>${translations[lang].recipes_card_ingredients}</strong>
-                <ul class="list-disc list-inside mt-1">${recipe.ingredients[lang].map(i=>`<li>${i}</li>`).join('')}</ul>
-            </div>
-            <div class="mb-3"><strong>${translations[lang].recipes_card_procedure}</strong>
-                <ol class="list-decimal list-inside mt-1">${recipe.procedure[lang].map(p=>`<li>${p}</li>`).join('')}</ol>
-            </div>
-            <div class="mb-3"><strong>${translations[lang].recipes_card_usage}</strong>
-                <ul class="list-disc list-inside mt-1">${recipe.usage[lang].map(u=>`<li>${u}</li>`).join('')}</ul>
-            </div>
-            <div><strong>${translations[lang].recipes_card_cost}</strong> <span class="text-gray-700">₹${recipe.cost}</span></div>
-        `;
-        container.appendChild(card);
-    });
-}
-
-function renderReviews(list) {
-    const container = document.getElementById('reviews-container');
-    if (!container) return;
-    container.innerHTML = '';
-    list.forEach(review => {
-        const card = document.createElement('div');
-        card.className = 'bg-white p-6 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300';
-        card.innerHTML = `
-            <p class="text-gray-600 italic mb-4">"${review.text}"</p>
-            <p class="font-semibold">- ${review.userEmail}</p>
-        `;
-        container.appendChild(card);
-    });
-}
-
-function renderAdminReviews() {
-    const container = document.getElementById('admin-reviews-list');
-    container.innerHTML = '';
-    reviewsData.forEach(review => {
-        const card = document.createElement('div');
-        card.className = 'admin-card p-4 rounded-lg shadow-md flex justify-between items-center';
-        card.innerHTML = `
-            <div>
-                <p class="text-gray-300 italic">"${review.text}"</p>
-                <p class="font-semibold text-white">- ${review.userEmail} (ID: ${review.id})</p>
-            </div>
-            <button onclick="deleteReview(event, '${review.id}')" class="bg-red-600 text-white py-1 px-3 rounded-full hover:bg-red-700 transition-colors duration-300 btn-press">Delete</button>
-        `;
-        container.appendChild(card);
-    });
-}
-
-// --- Data Management Functions ---
-
-async function addReview(event) {
-    event.preventDefault();
-    const reviewText = document.getElementById('review-text').value;
-    if (!reviewText) return;
-    const user = window.currentUser;
-    if (!user) {
-        document.getElementById('auth-message').innerText = "Please log in to leave a review.";
-        document.getElementById('auth-message').classList.remove('hidden');
-        return;
-    }
-    
-    try {
-        await addDoc(collection(db, "reviews"), {
-            userEmail: user.email,
-            text: reviewText,
-            createdAt: new Date()
-        });
-        document.getElementById('review-text').value = '';
-    } catch (error) {
-        console.error("Error adding review: ", error);
-    }
-}
-
-async function deleteReview(event, reviewId) {
-    event.preventDefault();
-    if (!window.currentUser || window.currentUser.role !== 'admin') return;
-    if (!confirm("Are you sure you want to delete this review?")) return;
-    try {
-        await deleteDoc(doc(db, "reviews", reviewId));
-    } catch (error) {
-        console.error("Error deleting review: ", error);
-    }
-}
-
-async function addUpdateRecipe(event) {
-    event.preventDefault();
-    if (!window.currentUser || window.currentUser.role !== 'admin') return;
-
-    const id = document.getElementById('recipe-id').value;
-    const name_en = document.getElementById('recipe-name-en').value;
-    const name_hi = document.getElementById('recipe-name-hi').value;
-    const name_mr = document.getElementById('recipe-name-mr').value;
-    const targets_en = document.getElementById('recipe-targets-en').value.split(',').map(s => s.trim());
-    const targets_hi = document.getElementById('recipe-targets-hi').value.split(',').map(s => s.trim());
-    const targets_mr = document.getElementById('recipe-targets-mr').value.split(',').map(s => s.trim());
-    const where_en = document.getElementById('recipe-where-en').value.split(',').map(s => s.trim());
-    const where_hi = document.getElementById('recipe-where-hi').value.split(',').map(s => s.trim());
-    const where_mr = document.getElementById('recipe-where-mr').value.split(',').map(s => s.trim());
-    const ingredients_en = document.getElementById('recipe-ingredients-en').value.split(',').map(s => s.trim());
-    const ingredients_hi = document.getElementById('recipe-ingredients-hi').value.split(',').map(s => s.trim());
-    const ingredients_mr = document.getElementById('recipe-ingredients-mr').value.split(',').map(s => s.trim());
-    const procedure_en = document.getElementById('recipe-procedure-en').value.split(',').map(s => s.trim());
-    const procedure_hi = document.getElementById('recipe-procedure-hi').value.split(',').map(s => s.trim());
-    const procedure_mr = document.getElementById('recipe-procedure-mr').value.split(',').map(s => s.trim());
-    const usage_en = document.getElementById('recipe-usage-en').value.split(',').map(s => s.trim());
-    const usage_hi = document.getElementById('recipe-usage-hi').value.split(',').map(s => s.trim());
-    const usage_mr = document.getElementById('recipe-usage-mr').value.split(',').map(s => s.trim());
-    const cost = parseFloat(document.getElementById('recipe-cost').value);
-
-    if (!name_en || !name_hi || !name_mr || !targets_en || isNaN(cost)) return;
-
-    const recipeData = {
-        name: { en: name_en, hi: name_hi, mr: name_mr },
-        targets: { en: targets_en, hi: targets_hi, mr: targets_mr },
-        where: { en: where_en, hi: where_hi, mr: where_mr },
-        ingredients: { en: ingredients_en, hi: ingredients_hi, mr: ingredients_mr },
-        procedure: { en: procedure_en, hi: procedure_hi, mr: procedure_mr },
-        usage: { en: usage_en, hi: usage_hi, mr: usage_mr },
-        cost: cost,
-    };
-
-    try {
-        if (id) {
-            await setDoc(doc(db, "recipes", id), recipeData);
-        } else {
-            await addDoc(collection(db, "recipes"), recipeData);
+        function showAdminLogin(event) {
+            event.preventDefault();
+            document.getElementById('login-card').classList.add('hidden');
+            document.getElementById('admin-login-card').classList.remove('hidden');
+            document.getElementById('admin-login-card').classList.add('active');
         }
-        alert('Recipe saved successfully!');
-    } catch (error) {
-        console.error("Error saving recipe: ", error);
-        alert('Error saving recipe!');
-    }
-}
 
-async function deleteRecipe(event) {
-    event.preventDefault();
-    if (!window.currentUser || window.currentUser.role !== 'admin') return;
-    const id = document.getElementById('recipe-id').value;
-    if (!id) return;
-    if (confirm("Are you sure you want to delete this recipe?")) {
-        try {
-            await deleteDoc(doc(db, "recipes", id));
-            alert('Recipe deleted!');
-        } catch (error) {
-            console.error("Error deleting recipe: ", error);
-            alert('Error deleting recipe!');
-        }
-    }
-}
+        function toggleForm(event) {
+            event.preventDefault();
+            isSignupMode = !isSignupMode;
+            const loginTitle = document.getElementById('login-title');
+            const loginButton = document.getElementById('login-button');
+            const loginSwitchText = document.getElementById('login-switch-text');
 
-async function addUpdateCalcData() {
-    if (!window.currentUser || window.currentUser.role !== 'admin') return;
-
-    const type = document.getElementById('calc-type-select').value;
-    const key = document.getElementById('calc-key').value;
-    const name_en = document.getElementById('calc-name-en').value;
-    const name_hi = document.getElementById('calc-name-hi').value;
-    const name_mr = document.getElementById('calc-name-mr').value;
-    const amount = parseFloat(document.getElementById('calc-amount').value);
-
-    if (!key || !name_en || !name_hi || !name_mr || isNaN(amount)) return;
-
-    const data = {
-        en: name_en,
-        hi: name_hi,
-        mr: name_mr,
-        amount: amount
-    };
-    
-    try {
-        await setDoc(doc(db, `${type}Data`, key), data);
-        alert(`${type} data saved successfully!`);
-    } catch (error) {
-        console.error("Error saving calculator data: ", error);
-        alert("Error saving calculator data.");
-    }
-}
-
-async function deleteCalcData() {
-    if (!window.currentUser || window.currentUser.role !== 'admin') return;
-    const type = document.getElementById('calc-type-select').value;
-    const key = document.getElementById('calc-key').value;
-    if (!key) return;
-    if (confirm("Are you sure you want to delete this calculator data?")) {
-        try {
-            await deleteDoc(doc(db, `${type}Data`, key));
-            alert('Data deleted!');
-        } catch (error) {
-            console.error("Error deleting data: ", error);
-            alert("Error deleting data.");
-        }
-    }
-}
-
-// --- UI Logic and Initialization ---
-
-function filterRecipes() {
-    const keyword = document.getElementById('search').value.toLowerCase();
-    const lang = document.getElementById('language-selector').value;
-    const filtered = recipesData.filter(r => {
-        const name = r.name[lang] ? r.name[lang].toLowerCase() : '';
-        const targets = r.targets[lang] ? r.targets[lang].join(' ').toLowerCase() : '';
-        const where = r.where[lang] ? r.where[lang].join(' ').toLowerCase() : '';
-        return name.includes(keyword) || targets.includes(keyword) || where.includes(keyword);
-    });
-    renderRecipes(filtered);
-}
-
-function updateTextContent(lang) {
-    document.querySelectorAll('[data-key]').forEach(element => {
-        const key = element.getAttribute('data-key');
-        if (translations[lang] && translations[lang][key]) {
-            if (typeof translations[lang][key] === 'function') {
-                // This is for dynamic text like calculator results
+            if (isSignupMode) {
+                loginTitle.innerHTML = translations[currentLang].signup_title;
+                loginButton.innerHTML = translations[currentLang].signup_button;
+                loginSwitchText.innerHTML = `Already have an account? <a href="#" class="text-green-600 hover:underline" onclick="toggleForm(event)">Login</a>`;
             } else {
-                element.innerHTML = translations[lang][key];
+                loginTitle.innerHTML = translations[currentLang].login_title;
+                loginButton.innerHTML = translations[currentLang].login_button;
+                loginSwitchText.innerHTML = `Don't have an account? <a href="#" class="text-green-600 hover:underline" onclick="toggleForm(event)">Sign up</a>`;
             }
         }
-    });
-    
-    const searchInput = document.getElementById('search');
-    if(searchInput) searchInput.placeholder = translations[lang].recipes_search_placeholder;
-    renderRecipes(recipesData);
-    updateSeedDropdown();
-    updatePesticideDropdown();
-    renderReviews(reviewsData);
-    renderAdminReviews();
-}
 
-function setLanguage(lang) {
-    localStorage.setItem('language', lang);
-    updateTextContent(lang);
-}
+        async function handleAuthSubmit(event) {
+            event.preventDefault();
+            const email = document.getElementById('login-email').value;
+            const password = document.getElementById('login-password').value;
+            const authMessage = document.getElementById('auth-message');
+            authMessage.classList.add('hidden');
 
-// Initial fetch and render
-window.onload = function() {
-    fetchAllData();
-    updateTextContent(currentLang);
-    document.getElementById('language-selector').value = currentLang;
-};
+            try {
+                if (isSignupMode) {
+                    const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+                    await setDoc(doc(db, "users", userCredential.user.uid), { role: 'user' });
+                } else {
+                    await signInWithEmailAndPassword(auth, email, password);
+                }
+            } catch (error) {
+                authMessage.innerText = error.message;
+                authMessage.classList.remove('hidden');
+            }
+        }
 
-// Expose global functions
-window.showSection = showSection;
-window.toggleNav = toggleNav;
-window.setLanguage = setLanguage;
-window.filterRecipes = filterRecipes;
-window.calculateSeeds = calculateSeeds;
-window.calculatePesticides = calculatePesticides;
-window.sendMessage = sendMessage;
-window.userLogout = userLogout;
-window.showUserLogin = showUserLogin;
-window.showAdminLogin = showAdminLogin;
-window.toggleForm = toggleForm;
-window.addReview = addReview;
-window.deleteReview = deleteReview;
-window.addUpdateRecipe = addUpdateRecipe;
-window.deleteRecipe = deleteRecipe;
-window.addUpdateCalcData = addUpdateCalcData;
-window.deleteCalcData = deleteCalcData;
-window.handleAuthSubmit = handleAuthSubmit;
-window.handleAdminLogin = handleAdminLogin;
-window.calculateSeeds = function() {
-    const landSize = parseFloat(document.getElementById('land-size-seeds').value);
-    const seedType = document.getElementById('seed-type').value;
-    const seedDataForType = seedData[seedType];
-    const resultElement = document.getElementById('seed-result');
-    const lang = document.getElementById('language-selector').value;
+        async function handleAdminLogin(event) {
+            event.preventDefault();
+            const email = document.getElementById('admin-email').value;
+            const password = document.getElementById('admin-password').value;
+            const authMessage = document.getElementById('admin-auth-message');
+            authMessage.classList.add('hidden');
+            
+            try {
+                await signInWithEmailAndPassword(auth, email, password);
+            } catch (error) {
+                authMessage.innerText = error.message;
+                authMessage.classList.remove('hidden');
+            }
+        }
 
-    resultElement.classList.remove('show');
-    void resultElement.offsetWidth;
-    
-    if (landSize && seedDataForType) {
-        const requiredAmount = landSize * seedDataForType.amount;
-        const seedName = seedDataForType[lang];
-        resultElement.innerHTML = translations[lang].calc_seeds_result(requiredAmount, seedName, landSize);
-        resultElement.classList.remove('hidden');
-        resultElement.classList.add('show');
-    } else {
-        resultElement.innerHTML = translations[lang].calc_seeds_error;
-        resultElement.classList.remove('hidden');
-        resultElement.classList.add('show');
-    }
-};
-window.calculatePesticides = function() {
-    const landSize = parseFloat(document.getElementById('land-size-pesticide').value);
-    const pesticideType = document.getElementById('pesticide-type').value;
-    const pesticideDataForType = pesticideData[pesticideType];
-    const resultElement = document.getElementById('pesticide-result');
-    const lang = document.getElementById('language-selector').value;
-    
-    resultElement.classList.remove('show');
-    void resultElement.offsetWidth;
-    
-    if (landSize && pesticideDataForType) {
-        const requiredAmount = landSize * pesticideDataForType.amount;
-        const pesticideName = pesticideDataForType[lang];
-        resultElement.innerHTML = translations[lang].calc_pesticides_result(requiredAmount, pesticideName, landSize);
-        resultElement.classList.remove('hidden');
-        resultElement.classList.add('show');
-    } else {
-        resultElement.innerHTML = translations[lang].calc_pesticides_error;
-        resultElement.classList.remove('hidden');
-        resultElement.classList.add('show');
-    }
-};
+        function userLogout() {
+            signOut(auth);
+        }
+
+        // --- Data Fetching and Real-time Listeners ---
+
+        function fetchAllData() {
+            onSnapshot(collection(db, "recipes"), (snapshot) => {
+                recipesData = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+                renderRecipes(recipesData);
+            });
+            onSnapshot(collection(db, "seedData"), (snapshot) => {
+                seedData = snapshot.docs.reduce((acc, doc) => ({ ...acc, [doc.id]: doc.data() }), {});
+                updateSeedDropdown();
+            });
+            onSnapshot(collection(db, "pesticideData"), (snapshot) => {
+                pesticideData = snapshot.docs.reduce((acc, doc) => ({ ...acc, [doc.id]: doc.data() }), {});
+                updatePesticideDropdown();
+            });
+            onSnapshot(collection(db, "reviews"), (snapshot) => {
+                reviewsData = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+                renderReviews(reviewsData);
+                renderAdminReviews();
+            });
+        }
+
+        function updateSeedDropdown() {
+            const select = document.getElementById('seed-type');
+            select.innerHTML = '';
+            for (const key in seedData) {
+                const option = document.createElement('option');
+                option.value = key;
+                option.text = seedData[key][currentLang];
+                select.appendChild(option);
+            }
+        }
+
+        function updatePesticideDropdown() {
+            const select = document.getElementById('pesticide-type');
+            select.innerHTML = '';
+            for (const key in pesticideData) {
+                const option = document.createElement('option');
+                option.value = key;
+                option.text = pesticideData[key][currentLang];
+                select.appendChild(option);
+            }
+        }
+
+        // --- UI Rendering Functions ---
+
+        function showSection(sectionId) {
+            document.querySelectorAll('.section').forEach(section => {
+                section.classList.remove('active');
+            });
+            document.getElementById(sectionId).classList.add('active');
+            document.querySelectorAll('.nav-links a').forEach(link => {
+                link.classList.remove('active');
+            });
+            const activeLink = document.querySelector(`.nav-links a[data-section="${sectionId}"]`);
+            if (activeLink) {
+                activeLink.classList.add('active');
+            }
+            const navMenu = document.getElementById('nav-menu');
+            if (navMenu.classList.contains('active')) {
+                toggleNav();
+            }
+            if (sectionId === 'recipes-section') {
+                renderRecipes(recipesData);
+            }
+            if (sectionId === 'admin-section') {
+                renderAdminReviews();
+            }
+        }
+
+        function toggleNav() {
+            document.getElementById('nav-menu').classList.toggle('active');
+        }
+
+        function renderRecipes(list) {
+            const container = document.getElementById('recipe-container');
+            const lang = document.getElementById('language-selector').value;
+            if (!container) return;
+            container.innerHTML = '';
+            if (list.length === 0) {
+                container.innerHTML = `<p class="col-span-full text-center text-gray-500 text-lg">${translations[lang].recipes_no_found}</p>`;
+                return;
+            }
+            list.forEach((recipe, index) => {
+                const card = document.createElement('div');
+                card.className = 'recipe-card';
+                card.style.animationDelay = `${index * 0.1}s`;
+                card.innerHTML = `
+                    <h2 class="text-2xl font-bold text-green-600 mb-2">${recipe.name[lang]}</h2>
+                    <p class="text-sm text-gray-500 mb-4">ID: ${recipe.id}</p>
+                    <div class="mb-3"><strong>${translations[lang].recipes_card_targets}</strong> <span class="text-gray-700">${recipe.targets[lang].join(', ')}</span></div>
+                    <div class="mb-3"><strong>${translations[lang].recipes_card_where}</strong> <span class="text-gray-700">${recipe.where[lang].join(', ')}</span></div>
+                    <div class="mb-3"><strong>${translations[lang].recipes_card_ingredients}</strong>
+                        <ul class="list-disc list-inside mt-1">${recipe.ingredients[lang].map(i=>`<li>${i}</li>`).join('')}</ul>
+                    </div>
+                    <div class="mb-3"><strong>${translations[lang].recipes_card_procedure}</strong>
+                        <ol class="list-decimal list-inside mt-1">${recipe.procedure[lang].map(p=>`<li>${p}</li>`).join('')}</ol>
+                    </div>
+                    <div class="mb-3"><strong>${translations[lang].recipes_card_usage}</strong>
+                        <ul class="list-disc list-inside mt-1">${recipe.usage[lang].map(u=>`<li>${u}</li>`).join('')}</ul>
+                    </div>
+                    <div><strong>${translations[lang].recipes_card_cost}</strong> <span class="text-gray-700">₹${recipe.cost}</span></div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        function renderReviews(list) {
+            const container = document.getElementById('reviews-container');
+            if (!container) return;
+            container.innerHTML = '';
+            list.forEach(review => {
+                const card = document.createElement('div');
+                card.className = 'bg-white p-6 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300';
+                card.innerHTML = `
+                    <p class="text-gray-600 italic mb-4">"${review.text}"</p>
+                    <p class="font-semibold">- ${review.userEmail}</p>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        function renderAdminReviews() {
+            const container = document.getElementById('admin-reviews-list');
+            container.innerHTML = '';
+            reviewsData.forEach(review => {
+                const card = document.createElement('div');
+                card.className = 'admin-card p-4 rounded-lg shadow-md flex justify-between items-center';
+                card.innerHTML = `
+                    <div>
+                        <p class="text-gray-300 italic">"${review.text}"</p>
+                        <p class="font-semibold text-white">- ${review.userEmail} (ID: ${review.id})</p>
+                    </div>
+                    <button onclick="deleteReview(event, '${review.id}')" class="bg-red-600 text-white py-1 px-3 rounded-full hover:bg-red-700 transition-colors duration-300 btn-press">Delete</button>
+                `;
+                container.appendChild(card);
+            });
+        }
+        
+        // --- Data Management Functions ---
+
+        async function addReview(event) {
+            event.preventDefault();
+            const reviewText = document.getElementById('review-text').value;
+            if (!reviewText) return;
+            const user = window.currentUser;
+            if (!user) {
+                document.getElementById('auth-message').innerText = "Please log in to leave a review.";
+                document.getElementById('auth-message').classList.remove('hidden');
+                return;
+            }
+            
+            try {
+                await addDoc(collection(db, "reviews"), {
+                    userEmail: user.email,
+                    text: reviewText,
+                    createdAt: new Date()
+                });
+                document.getElementById('review-text').value = '';
+            } catch (error) {
+                console.error("Error adding review: ", error);
+            }
+        }
+
+        async function deleteReview(event, reviewId) {
+            event.preventDefault();
+            if (!window.currentUser || window.currentUser.role !== 'admin') return;
+            if (!confirm("Are you sure you want to delete this review?")) return;
+            try {
+                await deleteDoc(doc(db, "reviews", reviewId));
+            } catch (error) {
+                console.error("Error deleting review: ", error);
+            }
+        }
+
+        async function addUpdateRecipe(event) {
+            event.preventDefault();
+            if (!window.currentUser || window.currentUser.role !== 'admin') return;
+
+            const id = document.getElementById('recipe-id').value;
+            const name_en = document.getElementById('recipe-name-en').value;
+            const name_hi = document.getElementById('recipe-name-hi').value;
+            const name_mr = document.getElementById('recipe-name-mr').value;
+            const targets_en = document.getElementById('recipe-targets-en').value.split(',').map(s => s.trim());
+            const targets_hi = document.getElementById('recipe-targets-hi').value.split(',').map(s => s.trim());
+            const targets_mr = document.getElementById('recipe-targets-mr').value.split(',').map(s => s.trim());
+            const where_en = document.getElementById('recipe-where-en').value.split(',').map(s => s.trim());
+            const where_hi = document.getElementById('recipe-where-hi').value.split(',').map(s => s.trim());
+            const where_mr = document.getElementById('recipe-where-mr').value.split(',').map(s => s.trim());
+            const ingredients_en = document.getElementById('recipe-ingredients-en').value.split(',').map(s => s.trim());
+            const ingredients_hi = document.getElementById('recipe-ingredients-hi').value.split(',').map(s => s.trim());
+            const ingredients_mr = document.getElementById('recipe-ingredients-mr').value.split(',').map(s => s.trim());
+            const procedure_en = document.getElementById('recipe-procedure-en').value.split(',').map(s => s.trim());
+            const procedure_hi = document.getElementById('recipe-procedure-hi').value.split(',').map(s => s.trim());
+            const procedure_mr = document.getElementById('recipe-procedure-mr').value.split(',').map(s => s.trim());
+            const usage_en = document.getElementById('recipe-usage-en').value.split(',').map(s => s.trim());
+            const usage_hi = document.getElementById('recipe-usage-hi').value.split(',').map(s => s.trim());
+            const usage_mr = document.getElementById('recipe-usage-mr').value.split(',').map(s => s.trim());
+            const cost = parseFloat(document.getElementById('recipe-cost').value);
+
+            if (!name_en || !name_hi || !name_mr || !targets_en || isNaN(cost)) return;
+
+            const recipeData = {
+                name: { en: name_en, hi: name_hi, mr: name_mr },
+                targets: { en: targets_en, hi: targets_hi, mr: targets_mr },
+                where: { en: where_en, hi: where_hi, mr: where_mr },
+                ingredients: { en: ingredients_en, hi: ingredients_hi, mr: ingredients_mr },
+                procedure: { en: procedure_en, hi: procedure_hi, mr: procedure_mr },
+                usage: { en: usage_en, hi: usage_hi, mr: usage_mr },
+                cost: cost,
+            };
+
+            try {
+                if (id) {
+                    await setDoc(doc(db, "recipes", id), recipeData);
+                } else {
+                    await addDoc(collection(db, "recipes"), recipeData);
+                }
+                alert('Recipe saved successfully!');
+            } catch (error) {
+                console.error("Error saving recipe: ", error);
+                alert('Error saving recipe!');
+            }
+        }
+
+        async function deleteRecipe(event) {
+            event.preventDefault();
+            if (!window.currentUser || window.currentUser.role !== 'admin') return;
+            const id = document.getElementById('recipe-id').value;
+            if (!id) return;
+            if (confirm("Are you sure you want to delete this recipe?")) {
+                try {
+                    await deleteDoc(doc(db, "recipes", id));
+                    alert('Recipe deleted!');
+                } catch (error) {
+                    console.error("Error deleting recipe: ", error);
+                    alert('Error deleting recipe!');
+                }
+            }
+        }
+
+        async function addUpdateCalcData() {
+            if (!window.currentUser || window.currentUser.role !== 'admin') return;
+
+            const type = document.getElementById('calc-type-select').value;
+            const key = document.getElementById('calc-key').value;
+            const name_en = document.getElementById('calc-name-en').value;
+            const name_hi = document.getElementById('calc-name-hi').value;
+            const name_mr = document.getElementById('calc-name-mr').value;
+            const amount = parseFloat(document.getElementById('calc-amount').value);
+
+            if (!key || !name_en || !name_hi || !name_mr || isNaN(amount)) return;
+
+            const data = {
+                en: name_en,
+                hi: name_hi,
+                mr: name_mr,
+                amount: amount
+            };
+            
+            try {
+                await setDoc(doc(db, `${type}Data`, key), data);
+                alert(`${type} data saved successfully!`);
+            } catch (error) {
+                console.error("Error saving calculator data: ", error);
+                alert("Error saving calculator data.");
+            }
+        }
+
+        async function deleteCalcData() {
+            if (!window.currentUser || window.currentUser.role !== 'admin') return;
+            const type = document.getElementById('calc-type-select').value;
+            const key = document.getElementById('calc-key').value;
+            if (!key) return;
+            if (confirm("Are you sure you want to delete this calculator data?")) {
+                try {
+                    await deleteDoc(doc(db, `${type}Data`, key));
+                    alert('Data deleted!');
+                } catch (error) {
+                    console.error("Error deleting data: ", error);
+                    alert("Error deleting data.");
+                }
+            }
+        }
+
+        // --- UI Logic and Initialization ---
+
+        function filterRecipes() {
+            const keyword = document.getElementById('search').value.toLowerCase();
+            const lang = document.getElementById('language-selector').value;
+            const filtered = recipesData.filter(r => {
+                const name = r.name[lang] ? r.name[lang].toLowerCase() : '';
+                const targets = r.targets[lang] ? r.targets[lang].join(' ').toLowerCase() : '';
+                const where = r.where[lang] ? r.where[lang].join(' ').toLowerCase() : '';
+                return name.includes(keyword) || targets.includes(keyword) || where.includes(keyword);
+            });
+            renderRecipes(filtered);
+        }
+
+        function updateTextContent(lang) {
+            document.querySelectorAll('[data-key]').forEach(element => {
+                const key = element.getAttribute('data-key');
+                if (translations[lang] && translations[lang][key]) {
+                    if (typeof translations[lang][key] === 'function') {
+                        // This is for dynamic text like calculator results
+                    } else {
+                        element.innerHTML = translations[lang][key];
+                    }
+                }
+            });
+            
+            const searchInput = document.getElementById('search');
+            if(searchInput) searchInput.placeholder = translations[lang].recipes_search_placeholder;
+            renderRecipes(recipesData);
+            updateSeedDropdown();
+            updatePesticideDropdown();
+            renderReviews(reviewsData);
+            renderAdminReviews();
+        }
+
+        function setLanguage(lang) {
+            localStorage.setItem('language', lang);
+            updateTextContent(lang);
+        }
+
+        // Initial fetch and render
+        window.onload = function() {
+            fetchAllData();
+            updateTextContent(currentLang);
+            document.getElementById('language-selector').value = currentLang;
+        };
+
+        // Expose global functions
+        window.showSection = showSection;
+        window.toggleNav = toggleNav;
+        window.setLanguage = setLanguage;
+        window.filterRecipes = filterRecipes;
+        window.calculateSeeds = calculateSeeds;
+        window.calculatePesticides = calculatePesticides;
+        window.sendMessage = sendMessage;
+        window.userLogout = userLogout;
+        window.showUserLogin = showUserLogin;
+        window.showAdminLogin = showAdminLogin;
+        window.toggleForm = toggleForm;
+        window.addReview = addReview;
+        window.deleteReview = deleteReview;
+        window.addUpdateRecipe = addUpdateRecipe;
+        window.deleteRecipe = deleteRecipe;
+        window.addUpdateCalcData = addUpdateCalcData;
+        window.deleteCalcData = deleteCalcData;
+        window.handleAuthSubmit = handleAuthSubmit;
+        window.handleAdminLogin = handleAdminLogin;
+        window.calculateSeeds = function() {
+            const landSize = parseFloat(document.getElementById('land-size-seeds').value);
+            const seedType = document.getElementById('seed-type').value;
+            const seedDataForType = seedData[seedType];
+            const resultElement = document.getElementById('seed-result');
+            const lang = document.getElementById('language-selector').value;
+
+            resultElement.classList.remove('show');
+            void resultElement.offsetWidth;
+            
+            if (landSize && seedDataForType) {
+                const requiredAmount = landSize * seedDataForType.amount;
+                const seedName = seedDataForType[lang];
+                resultElement.innerHTML = translations[lang].calc_seeds_result(requiredAmount, seedName, landSize);
+                resultElement.classList.remove('hidden');
+                resultElement.classList.add('show');
+            } else {
+                resultElement.innerHTML = translations[lang].calc_seeds_error;
+                resultElement.classList.remove('hidden');
+                resultElement.classList.add('show');
+            }
+        };
+        window.calculatePesticides = function() {
+            const landSize = parseFloat(document.getElementById('land-size-pesticide').value);
+            const pesticideType = document.getElementById('pesticide-type').value;
+            const pesticideDataForType = pesticideData[pesticideType];
+            const resultElement = document.getElementById('pesticide-result');
+            const lang = document.getElementById('language-selector').value;
+            
+            resultElement.classList.remove('show');
+            void resultElement.offsetWidth;
+            
+            if (landSize && pesticideDataForType) {
+                const requiredAmount = landSize * pesticideDataForType.amount;
+                const pesticideName = pesticideDataForType[lang];
+                resultElement.innerHTML = translations[lang].calc_pesticides_result(requiredAmount, pesticideName, landSize);
+                resultElement.classList.remove('hidden');
+                resultElement.classList.add('show');
+            } else {
+                resultElement.innerHTML = translations[lang].calc_pesticides_error;
+                resultElement.classList.remove('hidden');
+                resultElement.classList.add('show');
+            }
+        };
+    </script>
+</body>
+</html>
