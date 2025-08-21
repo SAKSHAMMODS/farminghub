@@ -6,8 +6,201 @@
     <title>Farming Hub</title>
     <!-- Tailwind CSS is loaded from a CDN for a modern, responsive design -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Link to the external stylesheet -->
-    <link rel="stylesheet" href="style.css">
+    <style>
+        /* Custom styles to define a consistent, clean font and a background color */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0fdf4; /* A light, fresh green for a farming theme */
+        }
+        
+        /* Utility for consistent container width and spacing */
+        .container {
+            max-width: 1200px;
+            margin: auto;
+            padding: 2rem 1rem;
+        }
+
+        /* Styling for the recipe cards with subtle animations */
+        .recipe-card {
+            background-color: #ffffff; /* Use a solid white background for the recipe cards */
+            border-radius: 15px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            margin-bottom: 1.5rem;
+            opacity: 0; /* Initially hidden for staggered animation */
+            transform: translateY(20px);
+            animation: card-appear 0.6s ease-out forwards;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        /* Pop-up effect on hover */
+        .recipe-card:hover {
+            transform: translateY(-5px) scale(1.02);
+            box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+        }
+
+        /* Keyframes for the card appearance animation */
+        @keyframes card-appear {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Basic styling for section management */
+        .section {
+            display: none; /* Hide all sections by default */
+            animation: fadeIn 0.8s ease-in-out;
+        }
+        .section.active {
+            display: block; /* Show the active section */
+        }
+
+        /* Fade-in animation for page transitions */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* Styling for the Home section with a vibrant image background */
+        #home-section {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            overflow: hidden;
+            background-image: url('https://images.pexels.com/photos/2165688/pexels-photo-2165688.jpeg?cs=srgb&dl=pexels-quang-nguyen-vinh-222549-2165688.jpg&fm=jpg');
+            background-size: cover;
+            background-position: center;
+        }
+
+        /* Responsive navigation menu styling */
+        .nav-links {
+            display: flex;
+            gap: 1.5rem; /* Equivalent to space-x-6 in Tailwind */
+        }
+
+        /* Responsive design for mobile navigation */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none; /* Hide nav links on smaller screens by default */
+                flex-direction: column;
+                position: absolute;
+                top: 60px;
+                left: 0;
+                width: 100%;
+                background-color: white;
+                padding: 1rem;
+                box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            }
+            .nav-links.active {
+                display: flex; /* Show nav links when menu is toggled */
+            }
+        }
+
+        /* Active link styling */
+        .nav-links a.active {
+            color: #166534; /* Darker green for active link */
+            border-bottom: 2px solid #166534;
+        }
+        
+        /* Button press animation */
+        .btn-press:active {
+            transform: scale(0.95);
+        }
+
+        /* Result box animation */
+        .result-box.show {
+            animation: slide-down 0.5s ease-out forwards;
+        }
+
+        @keyframes slide-down {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Admin Theme styles */
+        .admin-theme {
+            background-color: #1f2937; /* Gray-800 */
+            color: #d1d5db; /* Gray-300 */
+        }
+        .admin-theme .nav-link-admin, .admin-theme .nav-link-admin.active {
+            color: #f9fafb; /* Gray-50 */
+            border-bottom: 2px solid #f9fafb;
+        }
+        .admin-card {
+            background-color: #374151; /* Gray-700 */
+            color: #f9fafb; /* Gray-50 */
+        }
+        .admin-input {
+            background-color: #4b5563; /* Gray-600 */
+            color: #f9fafb;
+            border-color: #6b7280;
+        }
+        .admin-button {
+            background-color: #6b7280; /* Gray-500 */
+            color: #f9fafb;
+        }
+    </style>
+    <!-- Firebase Libraries -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, signInWithCustomToken, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, doc, getDoc, setDoc, collection, getDocs, addDoc, deleteDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+        // Firebase global variables
+        const firebaseConfig = JSON.parse(typeof __firebase_config !== 'undefined' ? __firebase_config : '{}');
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+        
+        // Expose Firebase objects to the global scope for other scripts
+        window.firebase = { auth, db };
+
+        // Handle authentication state changes
+        onAuthStateChanged(auth, async (user) => {
+            if (user) {
+                // User is signed in, fetch their role
+                const userDoc = await getDoc(doc(db, "users", user.uid));
+                const userData = userDoc.exists() ? userDoc.data() : { role: 'user' }; // Default role
+                
+                // Store user and role in the global scope
+                window.currentUser = { uid: user.uid, email: user.email, role: userData.role };
+                
+                // Update UI based on logged-in state and user role
+                document.getElementById('login-section').classList.remove('active');
+                document.getElementById('main-app-content').classList.remove('hidden');
+                document.getElementById('nav-menu').classList.remove('hidden');
+                document.getElementById('nav-login').classList.add('hidden');
+                document.getElementById('nav-logout').classList.remove('hidden');
+
+                if (userData.role === 'admin') {
+                    // Admin UI setup
+                    document.body.classList.add('admin-theme');
+                    document.getElementById('admin-nav-link').classList.remove('hidden');
+                } else {
+                    // Regular user UI setup
+                    document.body.classList.remove('admin-theme');
+                    document.getElementById('admin-nav-link').classList.add('hidden');
+                }
+
+                showSection('home-section');
+
+            } else {
+                // User is signed out
+                window.currentUser = null;
+                document.getElementById('login-section').classList.add('active');
+                document.getElementById('main-app-content').classList.add('hidden');
+                document.getElementById('nav-menu').classList.add('hidden');
+                document.getElementById('nav-login').classList.remove('hidden');
+                document.getElementById('nav-logout').classList.add('hidden');
+                document.getElementById('admin-nav-link').classList.add('hidden');
+            }
+        });
+        
+    </script>
 </head>
 <body class="bg-gray-100 text-gray-800">
 
@@ -30,192 +223,862 @@
                 </button>
             </div>
             
-            <!-- Navigation links -->
-            <div id="nav-menu" class="nav-links">
+            <!-- Navigation links and Login/Logout -->
+            <div id="nav-menu" class="nav-links hidden">
                 <a href="#" class="text-gray-600 hover:text-green-500 transition-colors duration-300 font-semibold py-2 px-4 rounded-full" data-section="home-section" data-key="nav_home" onclick="showSection('home-section')">Home</a>
                 <a href="#" class="text-gray-600 hover:text-green-500 transition-colors duration-300 font-semibold py-2 px-4 rounded-full" data-section="recipes-section" data-key="nav_recipes" onclick="showSection('recipes-section')">Recipes</a>
-                <a href="#" class="text-gray-600 hover:text-green-500 transition-colors duration-300 font-semibold py-2 px-4 rounded-full" data-section="shop-section" data-key="nav_shop" onclick="showSection('shop-section')">Shop</a>
-                <a href="#" class="text-gray-600 hover:text-green-500 transition-colors duration-300 font-semibold py-2 px-4 rounded-full" data-section="e-learning-section" data-key="nav_elearning" onclick="showSection('e-learning-section')">E-learning</a>
                 <a href="#" class="text-gray-600 hover:text-green-500 transition-colors duration-300 font-semibold py-2 px-4 rounded-full" data-section="tools-section" data-key="nav_tools" onclick="showSection('tools-section')">Tools</a>
                 <a href="#" class="text-gray-600 hover:text-green-500 transition-colors duration-300 font-semibold py-2 px-4 rounded-full" data-section="reviews-section" data-key="nav_reviews" onclick="showSection('reviews-section')">Reviews</a>
+                <a href="#" class="text-gray-600 hover:text-green-500 transition-colors duration-300 font-semibold py-2 px-4 rounded-full hidden" data-section="admin-section" id="admin-nav-link" data-key="nav_admin" onclick="showSection('admin-section')">Admin</a>
                 <a href="#" class="text-gray-600 hover:text-green-500 transition-colors duration-300 font-semibold py-2 px-4 rounded-full" data-section="chatbot-section" data-key="nav_chatbot" onclick="showSection('chatbot-section')">Chat Bot</a>
+                <button id="nav-logout" onclick="userLogout()" class="text-white bg-red-600 hover:bg-red-700 transition-colors duration-300 font-semibold py-2 px-4 rounded-full ml-4" data-key="nav_logout">Logout</button>
             </div>
+             <a href="#" id="nav-login" class="text-white bg-green-600 hover:bg-green-700 transition-colors duration-300 font-semibold py-2 px-4 rounded-full hidden" data-key="nav_login" onclick="showSection('login-section')">Login / Sign Up</a>
         </div>
     </nav>
 
-    <!-- Home Section with a vibrant image background -->
-    <div id="home-section" class="section active text-center">
-        <!-- Content container placed over the image -->
-        <div class="relative z-10 bg-white bg-opacity-70 rounded-xl p-8 md:p-12 max-w-sm md:max-w-xl mx-auto shadow-lg">
-            <h1 class="text-4xl md:text-5xl font-extrabold text-green-800 mb-4" data-key="home_title">Welcome to Farming Hub</h1>
-            <p class="text-md md:text-lg text-gray-700" data-key="home_subtitle">Your one-stop destination for organic farming knowledge, sustainable practices, and community support.</p>
-        </div>
-    </div>
+    <!-- Login Section -->
+    <div id="login-section" class="section active flex items-center justify-center min-h-screen">
+        <div class="w-full max-w-md p-8 bg-white rounded-xl shadow-lg">
+            <h1 id="login-title" class="text-3xl font-bold text-center text-green-700 mb-6" data-key="login_title">Login / Sign Up</h1>
+            <p id="auth-message" class="text-red-500 text-center mb-4 hidden"></p>
 
-    <!-- Organic Pesticide Recipes Section (Index) -->
-    <div id="recipes-section" class="section">
-        <div class="container mx-auto">
-            <header class="text-center py-8">
-                <h1 class="text-3xl md:text-4xl font-extrabold text-green-700 mb-2" data-key="recipes_title">Organic Pesticide Recipes</h1>
-                <p class="text-gray-600 text-sm md:text-base" data-key="recipes_subtitle">Discover natural, homemade solutions for common garden pests.</p>
-            </header>
-            <div class="search-box text-center mb-8">
-                <input type="text" id="search" placeholder="Search by name, target, or crop..." oninput="filterRecipes()" class="w-full max-w-lg p-3 rounded-full border border-gray-300 shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500 transition-all duration-300">
-            </div>
-            <!-- Recipe cards grid that adjusts for different screen sizes -->
-            <div id="recipe-container" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"></div>
-        </div>
-    </div>
-
-    <!-- Shop Section with colorful cards -->
-    <div id="shop-section" class="section">
-        <div class="container mx-auto text-center py-16">
-            <h1 class="text-3xl md:text-4xl font-extrabold text-green-700 mb-4" data-key="shop_title">Farming Shop</h1>
-            <p class="text-gray-600 mb-8 text-sm md:text-base" data-key="shop_subtitle">Browse a selection of organic gardening tools, seeds, and supplies.</p>
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-                <div class="bg-white p-6 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300">
-                    <img src="https://placehold.co/400x300/60a5fa/ffffff?text=Organic+Seeds" alt="Organic Seeds" class="w-full rounded-lg mb-4">
-                    <h3 class="text-xl font-bold text-gray-800" data-key="shop_item1_title">Organic Seeds Pack</h3>
-                    <p class="text-gray-600" data-key="shop_item1_desc">A variety of non-GMO, heirloom seeds.</p>
-                    <button class="mt-4 bg-green-600 text-white py-2 px-4 rounded-full hover:bg-green-700 transition-colors duration-300 btn-press" data-key="shop_button">Add to Cart</button>
+            <!-- Login/Sign Up Form -->
+            <form id="login-form" class="space-y-4">
+                <div>
+                    <label for="login-email" class="block text-sm font-medium text-gray-700" data-key="login_email_label">Email</label>
+                    <input type="email" id="login-email" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring focus:ring-green-500 focus:ring-opacity-50">
                 </div>
-                <div class="bg-white p-6 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300">
-                    <img src="https://placehold.co/400x300/f87171/ffffff?text=Gardening+Tools" alt="Gardening Tools" class="w-full rounded-lg mb-4">
-                    <h3 class="text-xl font-bold text-gray-800" data-key="shop_item2_title">Eco-Friendly Tools Set</h3>
-                    <p class="text-gray-600" data-key="shop_item2_desc">Durable tools made from recycled materials.</p>
-                    <button class="mt-4 bg-green-600 text-white py-2 px-4 rounded-full hover:bg-green-700 transition-colors duration-300 btn-press" data-key="shop_button">Add to Cart</button>
+                <div>
+                    <label for="login-password" class="block text-sm font-medium text-gray-700" data-key="login_password_label">Password</label>
+                    <input type="password" id="login-password" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring focus:ring-green-500 focus:ring-opacity-50">
                 </div>
-                <div class="bg-white p-6 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300">
-                    <img src="https://placehold.co/400x300/fbbf24/ffffff?text=Compost+Bins" alt="Compost Bins" class="w-full rounded-lg mb-4">
-                    <h3 class="text-xl font-bold text-gray-800" data-key="shop_item3_title">Home Composter</h3>
-                    <p class="text-gray-600" data-key="shop_item3_desc">Create your own rich, organic soil.</p>
-                    <button class="mt-4 bg-green-600 text-white py-2 px-4 rounded-full hover:bg-green-700 transition-colors duration-300 btn-press" data-key="shop_button">Add to Cart</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- E-learning Section with colorful cards -->
-    <div id="e-learning-section" class="section">
-        <div class="container mx-auto text-center py-16">
-            <h1 class="text-3xl md:text-4xl font-extrabold text-green-700 mb-4" data-key="elearning_title">E-learning Center</h1>
-            <p class="text-gray-600 mb-8 text-sm md:text-base" data-key="elearning_subtitle">Learn the fundamentals of organic farming with our video tutorials and guides.</p>
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-                <div class="bg-white p-6 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300">
-                    <img src="https://placehold.co/400x300/a3e635/ffffff?text=Soil+Health" alt="Soil Health" class="w-full rounded-lg mb-4">
-                    <h3 class="text-xl font-bold text-gray-800" data-key="elearning_item1_title">Course 1: Soil Health</h3>
-                    <p class="text-gray-600" data-key="elearning_item1_desc">Master the art of creating nutrient-rich soil for your plants.</p>
-                </div>
-                <div class="bg-white p-6 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300">
-                    <img src="https://placehold.co/400x300/34d399/ffffff?text=Pest+Control" alt="Pest Control" class="w-full rounded-lg mb-4">
-                    <h3 class="text-xl font-bold text-gray-800" data-key="elearning_item2_title">Course 2: Organic Pest Control</h3>
-                    <p class="text-gray-600" data-key="elearning_item2_desc">Discover natural methods to protect your crops from pests.</p>
-                </div>
-                <div class="bg-white p-6 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300">
-                    <img src="https://placehold.co/400x300/4ade80/ffffff?text=Harvesting" alt="Harvesting" class="w-full rounded-lg mb-4">
-                    <h3 class="text-xl font-bold text-gray-800" data-key="elearning_item3_title">Course 3: Sustainable Harvesting</h3>
-                    <p class="text-gray-600" data-key="elearning_item3_desc">Learn how to harvest your crops efficiently and sustainably.</p>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Tools Section -->
-    <div id="tools-section" class="section">
-        <div class="container mx-auto text-center py-16">
-            <h1 class="text-3xl md:text-4xl font-extrabold text-green-700 mb-4" data-key="tools_title">Farming Tools & Calculators</h1>
-            <p class="text-gray-600 mb-8 text-sm md:text-base" data-key="tools_subtitle">Use our interactive tools to plan your farming activities efficiently.</p>
+                <button type="submit" id="login-button" class="w-full bg-green-600 text-white py-2 px-4 rounded-full hover:bg-green-700 transition-colors duration-300 btn-press" data-key="login_button">Login</button>
+            </form>
             
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <!-- Sowing Seeds Calculator -->
-                <div class="bg-white p-6 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300">
-                    <h2 class="text-2xl font-bold text-green-600 mb-4" data-key="calc_seeds_title">Sowing Seeds Calculator</h2>
-                    <div class="space-y-4 text-left">
-                        <div>
-                            <label for="land-size-seeds" class="block text-gray-700 font-semibold mb-1" data-key="calc_seeds_label1">Land Size (in acres)</label>
-                            <input type="number" id="land-size-seeds" value="1" min="0.1" step="0.1" class="w-full p-2 border rounded-md focus:ring-2 focus:ring-green-500">
+            <p id="login-switch-text" class="text-center text-gray-500 mt-4" data-key="login_switch_text">Don't have an account? <a href="#" class="text-green-600 hover:underline" onclick="toggleForm()">Sign up</a></p>
+            <p id="admin-switch-link" class="text-center text-gray-500 mt-4" data-key="login_admin_text">Admin login? <a href="#" class="text-green-600 hover:underline" onclick="showAdminLogin()">Click here</a></p>
+        </div>
+    </div>
+    
+    <!-- Admin Login Form (Hidden by default) -->
+    <div id="admin-login-section" class="section hidden flex items-center justify-center min-h-screen admin-theme">
+        <div class="w-full max-w-md p-8 bg-gray-800 rounded-xl shadow-lg">
+            <h2 id="admin-title" class="text-xl font-bold text-center text-gray-50 mb-6" data-key="admin_title">Admin Login</h2>
+            <p id="admin-auth-message" class="text-red-500 text-center mb-4 hidden"></p>
+            <form id="admin-form" class="space-y-4">
+                <div>
+                    <label for="admin-email" class="block text-sm font-medium text-gray-300" data-key="login_email_label">Email</label>
+                    <input type="email" id="admin-email" class="mt-1 block w-full rounded-md border-gray-600 bg-gray-700 shadow-sm focus:border-gray-500 focus:ring focus:ring-gray-500 focus:ring-opacity-50 text-gray-50">
+                </div>
+                <div>
+                    <label for="admin-password" class="block text-sm font-medium text-gray-300" data-key="login_password_label">Password</label>
+                    <input type="password" id="admin-password" class="mt-1 block w-full rounded-md border-gray-600 bg-gray-700 shadow-sm focus:border-gray-500 focus:ring focus:ring-gray-500 focus:ring-opacity-50 text-gray-50">
+                </div>
+                <button type="submit" id="admin-button" class="w-full bg-gray-600 text-gray-50 py-2 px-4 rounded-full hover:bg-gray-700 transition-colors duration-300 btn-press" data-key="admin_button">Admin Login</button>
+                <p id="admin-login-switch" class="text-center text-gray-300 mt-4" data-key="admin_switch_text">Go back to <a href="#" class="text-white hover:underline" onclick="showSection('login-section')">user login</a></p>
+            </form>
+        </div>
+    </div>
+
+    <!-- Main Content (Hidden until logged in) -->
+    <div id="main-app-content" class="hidden">
+        <!-- Home Section with a vibrant image background -->
+        <div id="home-section" class="section text-center">
+            <!-- Content container placed over the image -->
+            <div class="relative z-10 bg-white bg-opacity-70 rounded-xl p-8 md:p-12 max-w-sm md:max-w-xl mx-auto shadow-lg">
+                <h1 class="text-4xl md:text-5xl font-extrabold text-green-800 mb-4" data-key="home_title">Welcome to Farming Hub</h1>
+                <p class="text-md md:text-lg text-gray-700" data-key="home_subtitle">Your one-stop destination for organic farming knowledge, sustainable practices, and community support.</p>
+            </div>
+        </div>
+
+        <!-- Organic Pesticide Recipes Section (Index) -->
+        <div id="recipes-section" class="section">
+            <div class="container mx-auto">
+                <header class="text-center py-8">
+                    <h1 class="text-3xl md:text-4xl font-extrabold text-green-700 mb-2" data-key="recipes_title">Organic Pesticide Recipes</h1>
+                    <p class="text-gray-600 text-sm md:text-base" data-key="recipes_subtitle">Discover natural, homemade solutions for common garden pests.</p>
+                </header>
+                <div class="search-box text-center mb-8">
+                    <input type="text" id="search" placeholder="Search by name, target, or crop..." oninput="filterRecipes()" class="w-full max-w-lg p-3 rounded-full border border-gray-300 shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500 transition-all duration-300">
+                </div>
+                <!-- Recipe cards grid that adjusts for different screen sizes -->
+                <div id="recipe-container" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+            </div>
+        </div>
+
+
+        <!-- Tools Section -->
+        <div id="tools-section" class="section">
+            <div class="container mx-auto text-center py-16">
+                <h1 class="text-3xl md:text-4xl font-extrabold text-green-700 mb-4" data-key="tools_title">Farming Tools & Calculators</h1>
+                <p class="text-gray-600 mb-8 text-sm md:text-base" data-key="tools_subtitle">Use our interactive tools to plan your farming activities efficiently.</p>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <!-- Sowing Seeds Calculator -->
+                    <div class="bg-white p-6 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300">
+                        <h2 class="text-2xl font-bold text-green-600 mb-4" data-key="calc_seeds_title">Sowing Seeds Calculator</h2>
+                        <div class="space-y-4 text-left">
+                            <div>
+                                <label for="land-size-seeds" class="block text-gray-700 font-semibold mb-1" data-key="calc_seeds_label1">Land Size (in acres)</label>
+                                <input type="number" id="land-size-seeds" value="1" min="0.1" step="0.1" class="w-full p-2 border rounded-md focus:ring-2 focus:ring-green-500">
+                            </div>
+                            <div>
+                                <label for="seed-type" class="block text-gray-700 font-semibold mb-1" data-key="calc_seeds_label2">Seed Type</label>
+                                <select id="seed-type" class="w-full p-2 border rounded-md focus:ring-2 focus:ring-green-500">
+                                    <option value="groundnut" data-key="seed_type_groundnut">Groundnut</option>
+                                    <option value="corn" data-key="seed_type_corn">Corn</option>
+                                    <option value="rice" data-key="seed_type_rice">Rice</option>
+                                    <option value="wheat" data-key="seed_type_wheat">Wheat</option>
+                                </select>
+                            </div>
+                            <button onclick="calculateSeeds()" class="w-full bg-green-600 text-white py-2 px-4 rounded-full hover:bg-green-700 transition-colors duration-300 btn-press" data-key="calc_seeds_button">Calculate Seeds</button>
                         </div>
-                        <div>
-                            <label for="seed-type" class="block text-gray-700 font-semibold mb-1" data-key="calc_seeds_label2">Seed Type</label>
-                            <select id="seed-type" class="w-full p-2 border rounded-md focus:ring-2 focus:ring-green-500">
-                                <option value="groundnut" data-key="seed_type_groundnut">Groundnut</option>
-                                <option value="corn" data-key="seed_type_corn">Corn</option>
-                                <option value="rice" data-key="seed_type_rice">Rice</option>
-                                <option value="wheat" data-key="seed_type_wheat">Wheat</option>
-                            </select>
-                        </div>
-                        <button onclick="calculateSeeds()" class="w-full bg-green-600 text-white py-2 px-4 rounded-full hover:bg-green-700 transition-colors duration-300 btn-press" data-key="calc_seeds_button">Calculate Seeds</button>
+                        <div id="seed-result" class="mt-4 p-4 bg-green-50 rounded-lg text-green-800 font-medium hidden"></div>
                     </div>
-                    <div id="seed-result" class="mt-4 p-4 bg-green-50 rounded-lg text-green-800 font-medium hidden"></div>
-                </div>
 
-                <!-- Spreading Pesticides Calculator -->
-                <div class="bg-white p-6 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300">
-                    <h2 class="text-2xl font-bold text-green-600 mb-4" data-key="calc_pesticides_title">Pesticides Spreading Calculator</h2>
-                    <div class="space-y-4 text-left">
-                        <div>
-                            <label for="land-size-pesticide" class="block text-gray-700 font-semibold mb-1" data-key="calc_pesticides_label1">Land Size (in acres)</label>
-                            <input type="number" id="land-size-pesticide" value="1" min="0.1" step="0.1" class="w-full p-2 border rounded-md focus:ring-2 focus:ring-green-500">
+                    <!-- Spreading Pesticides Calculator -->
+                    <div class="bg-white p-6 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300">
+                        <h2 class="text-2xl font-bold text-green-600 mb-4" data-key="calc_pesticides_title">Pesticides Spreading Calculator</h2>
+                        <div class="space-y-4 text-left">
+                            <div>
+                                <label for="land-size-pesticide" class="block text-gray-700 font-semibold mb-1" data-key="calc_pesticides_label1">Land Size (in acres)</label>
+                                <input type="number" id="land-size-pesticide" value="1" min="0.1" step="0.1" class="w-full p-2 border rounded-md focus:ring-2 focus:ring-green-500">
+                            </div>
+                            <div>
+                                <label for="pesticide-type" class="block text-gray-700 font-semibold mb-1" data-key="calc_pesticides_label2">Pesticide Type</label>
+                                <select id="pesticide-type" class="w-full p-2 border rounded-md focus:ring-2 focus:ring-green-500">
+                                    <option value="neem-oil" data-key="pesticide_type_neem">Neem Oil Emulsion</option>
+                                    <option value="garlic-chilli" data-key="pesticide_type_garlic">Garlic-Chilli Spray</option>
+                                    <option value="tobacco" data-key="pesticide_type_tobacco">Tobacco Decoction</option>
+                                </select>
+                            </div>
+                            <button onclick="calculatePesticides()" class="w-full bg-green-600 text-white py-2 px-4 rounded-full hover:bg-green-700 transition-colors duration-300 btn-press" data-key="calc_pesticides_button">Calculate Pesticides</button>
                         </div>
-                        <div>
-                            <label for="pesticide-type" class="block text-gray-700 font-semibold mb-1" data-key="calc_pesticides_label2">Pesticide Type</label>
-                            <select id="pesticide-type" class="w-full p-2 border rounded-md focus:ring-2 focus:ring-green-500">
-                                <option value="neem-oil" data-key="pesticide_type_neem">Neem Oil Emulsion</option>
-                                <option value="garlic-chilli" data-key="pesticide_type_garlic">Garlic-Chilli Spray</option>
-                                <option value="tobacco" data-key="pesticide_type_tobacco">Tobacco Decoction</option>
-                            </select>
-                        </div>
-                        <button onclick="calculatePesticides()" class="w-full bg-green-600 text-white py-2 px-4 rounded-full hover:bg-green-700 transition-colors duration-300 btn-press" data-key="calc_pesticides_button">Calculate Pesticides</button>
+                        <div id="pesticide-result" class="mt-4 p-4 bg-green-50 rounded-lg text-green-800 font-medium hidden"></div>
                     </div>
-                    <div id="pesticide-result" class="mt-4 p-4 bg-green-50 rounded-lg text-green-800 font-medium hidden"></div>
                 </div>
             </div>
         </div>
-    </div>
 
-    <!-- Reviews/Feedback Section -->
-    <div id="reviews-section" class="section">
-        <div class="container mx-auto py-16">
-            <h1 class="text-3xl md:text-4xl font-extrabold text-center text-green-700 mb-8" data-key="reviews_title">Customer Reviews</h1>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <div class="bg-white p-6 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300">
-                    <p class="text-gray-600 italic mb-4" data-key="review1_text">"The Neem Oil Emulsion recipe saved my tomato plants! Simple and effective. Highly recommend this site."</p>
-                    <p class="font-semibold">- Jane Doe</p>
-                </div>
-                <div class="bg-white p-6 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300">
-                    <p class="text-gray-600 italic mb-4" data-key="review2_text">"I love the range of recipes and the clear instructions. The Ginger-Garlic mix is my new go-to for fungal spots."</p>
-                    <p class="font-semibold">- John Smith</p>
+        <!-- Reviews/Feedback Section -->
+        <div id="reviews-section" class="section">
+            <div class="container mx-auto py-16">
+                <h1 class="text-3xl md:text-4xl font-extrabold text-center text-green-700 mb-8" data-key="reviews_title">Customer Reviews</h1>
+                <div id="reviews-container" class="grid grid-cols-1 md:grid-cols-2 gap-8"></div>
+                <div class="mt-8 p-6 bg-white rounded-lg shadow-md">
+                    <h2 class="text-2xl font-bold text-green-600 mb-4" data-key="review_form_title">Leave a Review</h2>
+                    <form id="review-form" class="space-y-4">
+                        <div>
+                            <label for="review-text" class="block text-sm font-medium text-gray-700" data-key="review_label">Your Review</label>
+                            <textarea id="review-text" rows="4" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring focus:ring-green-500 focus:ring-opacity-50"></textarea>
+                        </div>
+                        <button type="submit" class="w-full bg-green-600 text-white py-2 px-4 rounded-full hover:bg-green-700 transition-colors duration-300 btn-press" data-key="review_button">Submit Review</button>
+                    </form>
                 </div>
             </div>
         </div>
-    </div>
 
-    <!-- Chat Bot Section -->
-    <div id="chatbot-section" class="section">
-        <div class="container mx-auto text-center py-16">
-            <h1 class="text-3xl md:text-4xl font-extrabold text-green-700 mb-4" data-key="chatbot_title">Farming Assistant Chat Bot</h1>
-            <p class="text-gray-600 mb-8 text-sm md:text-base" data-key="chatbot_subtitle">Ask our AI assistant for advice on pests, recipes, or general farming tips.</p>
-            <div class="max-w-lg mx-auto bg-white p-6 rounded-lg shadow-xl">
-                <div id="chatbot-messages" class="h-64 overflow-y-auto mb-4 border rounded-lg p-4 bg-gray-50">
-                    <p class="text-left text-gray-500" data-key="chatbot_initial_msg">Hello! I'm your farming assistant. How can I help you today?</p>
-                </div>
-                <!-- Chatbot 'is typing' indicator -->
-                <div id="typing-indicator" class="text-left text-gray-400 italic hidden">
-                    <span class="animate-pulse" data-key="chatbot_typing">Bot is typing...</span>
-                </div>
-                <div class="flex mt-4">
-                    <input type="text" id="chatbot-input" placeholder="Type your question here..." class="flex-grow p-3 rounded-l-full border border-gray-300 focus:outline-none">
-                    <button onclick="sendMessage()" class="bg-green-600 text-white py-2 px-4 rounded-full hover:bg-green-700 transition-colors duration-300 btn-press" data-key="chatbot_send_btn">Send</button>
+        <!-- Admin Dashboard Section -->
+        <div id="admin-section" class="section admin-theme">
+            <div class="container mx-auto py-16">
+                <h1 class="text-3xl md:text-4xl font-extrabold text-center text-gray-50 mb-8" data-key="admin_dashboard_title">Admin Dashboard</h1>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+
+                    <!-- Manage Recipes -->
+                    <div class="admin-card p-6 rounded-lg shadow-md">
+                        <h2 class="text-2xl font-bold mb-4" data-key="admin_recipes_title">Manage Recipes</h2>
+                        <form id="admin-recipe-form" class="space-y-4">
+                            <div>
+                                <label for="recipe-id" class="block text-sm font-medium text-gray-300" data-key="admin_recipes_id_label">Recipe ID (for update/delete)</label>
+                                <input type="text" id="recipe-id" class="mt-1 block w-full rounded-md admin-input">
+                            </div>
+                            <div>
+                                <label for="recipe-name-en" class="block text-sm font-medium text-gray-300" data-key="admin_recipes_name_label">Recipe Name (EN)</label>
+                                <input type="text" id="recipe-name-en" required class="mt-1 block w-full rounded-md admin-input">
+                            </div>
+                            <div>
+                                <label for="recipe-name-hi" class="block text-sm font-medium text-gray-300" data-key="admin_recipes_name_label">Recipe Name (HI)</label>
+                                <input type="text" id="recipe-name-hi" required class="mt-1 block w-full rounded-md admin-input">
+                            </div>
+                            <div>
+                                <label for="recipe-name-mr" class="block text-sm font-medium text-gray-300" data-key="admin_recipes_name_label">Recipe Name (MR)</label>
+                                <input type="text" id="recipe-name-mr" required class="mt-1 block w-full rounded-md admin-input">
+                            </div>
+                            <div>
+                                <label for="recipe-targets-en" class="block text-sm font-medium text-gray-300" data-key="admin_recipes_targets_label">Targets (comma-separated, EN)</label>
+                                <input type="text" id="recipe-targets-en" required class="mt-1 block w-full rounded-md admin-input">
+                            </div>
+                             <div>
+                                <label for="recipe-targets-hi" class="block text-sm font-medium text-gray-300" data-key="admin_recipes_targets_label">Targets (comma-separated, HI)</label>
+                                <input type="text" id="recipe-targets-hi" required class="mt-1 block w-full rounded-md admin-input">
+                            </div>
+                            <div>
+                                <label for="recipe-targets-mr" class="block text-sm font-medium text-gray-300" data-key="admin_recipes_targets_label">Targets (comma-separated, MR)</label>
+                                <input type="text" id="recipe-targets-mr" required class="mt-1 block w-full rounded-md admin-input">
+                            </div>
+                            <div>
+                                <label for="recipe-cost" class="block text-sm font-medium text-gray-300" data-key="admin_recipes_cost_label">Approximate Cost (₹)</label>
+                                <input type="number" id="recipe-cost" required class="mt-1 block w-full rounded-md admin-input">
+                            </div>
+                             <div>
+                                <label for="recipe-where-en" class="block text-sm font-medium text-gray-300">Where to Use (EN)</label>
+                                <input type="text" id="recipe-where-en" class="mt-1 block w-full rounded-md admin-input">
+                            </div>
+                            <div>
+                                <label for="recipe-where-hi" class="block text-sm font-medium text-gray-300">Where to Use (HI)</label>
+                                <input type="text" id="recipe-where-hi" class="mt-1 block w-full rounded-md admin-input">
+                            </div>
+                            <div>
+                                <label for="recipe-where-mr" class="block text-sm font-medium text-gray-300">Where to Use (MR)</label>
+                                <input type="text" id="recipe-where-mr" class="mt-1 block w-full rounded-md admin-input">
+                            </div>
+                             <div>
+                                <label for="recipe-ingredients-en" class="block text-sm font-medium text-gray-300">Ingredients (EN)</label>
+                                <input type="text" id="recipe-ingredients-en" class="mt-1 block w-full rounded-md admin-input">
+                            </div>
+                            <div>
+                                <label for="recipe-ingredients-hi" class="block text-sm font-medium text-gray-300">Ingredients (HI)</label>
+                                <input type="text" id="recipe-ingredients-hi" class="mt-1 block w-full rounded-md admin-input">
+                            </div>
+                            <div>
+                                <label for="recipe-ingredients-mr" class="block text-sm font-medium text-gray-300">Ingredients (MR)</label>
+                                <input type="text" id="recipe-ingredients-mr" class="mt-1 block w-full rounded-md admin-input">
+                            </div>
+                             <div>
+                                <label for="recipe-procedure-en" class="block text-sm font-medium text-gray-300">Procedure (EN)</label>
+                                <input type="text" id="recipe-procedure-en" class="mt-1 block w-full rounded-md admin-input">
+                            </div>
+                            <div>
+                                <label for="recipe-procedure-hi" class="block text-sm font-medium text-gray-300">Procedure (HI)</label>
+                                <input type="text" id="recipe-procedure-hi" class="mt-1 block w-full rounded-md admin-input">
+                            </div>
+                            <div>
+                                <label for="recipe-procedure-mr" class="block text-sm font-medium text-gray-300">Procedure (MR)</label>
+                                <input type="text" id="recipe-procedure-mr" class="mt-1 block w-full rounded-md admin-input">
+                            </div>
+                             <div>
+                                <label for="recipe-usage-en" class="block text-sm font-medium text-gray-300">How to Use (EN)</label>
+                                <input type="text" id="recipe-usage-en" class="mt-1 block w-full rounded-md admin-input">
+                            </div>
+                            <div>
+                                <label for="recipe-usage-hi" class="block text-sm font-medium text-gray-300">How to Use (HI)</label>
+                                <input type="text" id="recipe-usage-hi" class="mt-1 block w-full rounded-md admin-input">
+                            </div>
+                            <div>
+                                <label for="recipe-usage-mr" class="block text-sm font-medium text-gray-300">How to Use (MR)</label>
+                                <input type="text" id="recipe-usage-mr" class="mt-1 block w-full rounded-md admin-input">
+                            </div>
+                            <div class="flex space-x-4">
+                                <button type="submit" onclick="addUpdateRecipe(event)" class="w-full admin-button py-2 px-4 rounded-full hover:bg-gray-700 transition-colors duration-300 btn-press" data-key="admin_add_recipe">Add/Update</button>
+                                <button type="button" onclick="deleteRecipe(event)" class="w-full admin-button py-2 px-4 rounded-full hover:bg-gray-700 transition-colors duration-300 btn-press" data-key="admin_delete_recipe">Delete</button>
+                            </div>
+                        </form>
+                    </div>
+
+                    <!-- Manage Calculator Data -->
+                    <div class="admin-card p-6 rounded-lg shadow-md">
+                        <h2 class="text-2xl font-bold mb-4" data-key="admin_calc_title">Manage Calculator Data</h2>
+                        <form id="admin-calc-form" class="space-y-4">
+                            <div>
+                                <label for="calc-type-select" class="block text-sm font-medium text-gray-300" data-key="admin_calc_type_label">Type</label>
+                                <select id="calc-type-select" class="mt-1 block w-full rounded-md admin-input">
+                                    <option value="seed">Seed Type</option>
+                                    <option value="pesticide">Pesticide Type</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label for="calc-key" class="block text-sm font-medium text-gray-300" data-key="admin_calc_key_label">Key (e.g., 'corn')</label>
+                                <input type="text" id="calc-key" class="mt-1 block w-full rounded-md admin-input">
+                            </div>
+                            <div>
+                                <label for="calc-name-en" class="block text-sm font-medium text-gray-300" data-key="admin_calc_name_label">Name (EN)</label>
+                                <input type="text" id="calc-name-en" class="mt-1 block w-full rounded-md admin-input">
+                            </div>
+                            <div>
+                                <label for="calc-name-hi" class="block text-sm font-medium text-gray-300" data-key="admin_calc_name_label">Name (HI)</label>
+                                <input type="text" id="calc-name-hi" class="mt-1 block w-full rounded-md admin-input">
+                            </div>
+                             <div>
+                                <label for="calc-name-mr" class="block text-sm font-medium text-gray-300" data-key="admin_calc_name_label">Name (MR)</label>
+                                <input type="text" id="calc-name-mr" class="mt-1 block w-full rounded-md admin-input">
+                            </div>
+                            <div>
+                                <label for="calc-amount" class="block text-sm font-medium text-gray-300" data-key="admin_calc_amount_label">Amount (kg or L)</label>
+                                <input type="number" id="calc-amount" class="mt-1 block w-full rounded-md admin-input">
+                            </div>
+                            <div class="flex space-x-4">
+                                <button type="button" onclick="addUpdateCalcData()" class="w-full admin-button py-2 px-4 rounded-full hover:bg-gray-700 transition-colors duration-300 btn-press" data-key="admin_add_calc">Add/Update</button>
+                                <button type="button" onclick="deleteCalcData()" class="w-full admin-button py-2 px-4 rounded-full hover:bg-gray-700 transition-colors duration-300 btn-press" data-key="admin_delete_calc">Delete</button>
+                            </div>
+                        </form>
+                    </div>
+
+                    <!-- Manage Reviews -->
+                    <div class="admin-card p-6 rounded-lg shadow-md md:col-span-2">
+                        <h2 class="text-2xl font-bold mb-4" data-key="admin_reviews_title">Manage Reviews</h2>
+                        <div id="admin-reviews-list" class="space-y-4">
+                            <!-- Reviews will be dynamically loaded here -->
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
+
+        <!-- Chat Bot Section -->
+        <div id="chatbot-section" class="section">
+            <div class="container mx-auto text-center py-16">
+                <h1 class="text-3xl md:text-4xl font-extrabold text-green-700 mb-4" data-key="chatbot_title">Farming Assistant Chat Bot</h1>
+                <p class="text-gray-600 mb-8 text-sm md:text-base" data-key="chatbot_subtitle">Ask our AI assistant for advice on pests, recipes, or general farming tips.</p>
+                <div class="max-w-lg mx-auto bg-white p-6 rounded-lg shadow-xl">
+                    <div id="chatbot-messages" class="h-64 overflow-y-auto mb-4 border rounded-lg p-4 bg-gray-50">
+                        <p class="text-left text-gray-500" data-key="chatbot_initial_msg">Hello! I'm your farming assistant. How can I help you today?</p>
+                    </div>
+                    <!-- Chatbot 'is typing' indicator -->
+                    <div class="flex mt-4">
+                        <input type="text" id="chatbot-input" placeholder="Type your question here..." class="flex-grow p-3 rounded-l-full border border-gray-300 focus:outline-none">
+                        <button onclick="sendMessage()" class="bg-green-600 text-white py-2 px-4 rounded-full hover:bg-green-700 transition-colors duration-300 btn-press" data-key="chatbot_send_btn">Send</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <footer class="bg-gray-800 text-white text-center py-6">
+            <p data-key="footer_text">© 2025 Farming Hub. All rights reserved. Made by Saksham Bhor | Email: <a href="mailto:sakshambhor@gmail.com" class="text-green-400 hover:text-green-300 transition-colors duration-300">sakshambhor@gmail.com</a></p>
+        </footer>
     </div>
 
-    <footer class="bg-gray-800 text-white text-center py-6">
-        <p data-key="footer_text">© 2025 Farming Hub. All rights reserved. Made by Saksham Bhor | Email: <a href="mailto:sakshambhor@gmail.com" class="text-green-400 hover:text-green-300 transition-colors duration-300">sakshambhor@gmail.com</a></p>
-    </footer>
+    <script type="module">
+        import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, doc, setDoc, getDoc, collection, onSnapshot, getDocs, addDoc, deleteDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
-    <!-- Link to the external JavaScript file -->
-    <script src="script.js"></script>
+        // Firebase objects from the initial script block
+        const auth = window.firebase.auth;
+        const db = window.firebase.db;
+
+        // Data and translation objects
+        const translations = {
+            en: {
+                nav_home: "Home", nav_recipes: "Recipes", nav_tools: "Tools", nav_reviews: "Reviews", nav_chatbot: "Chat Bot", nav_admin: "Admin", nav_logout: "Logout", nav_login: "Login / Sign Up",
+                home_title: "Welcome to Farming Hub", home_subtitle: "Your one-stop destination for organic farming knowledge, sustainable practices, and community support.",
+                recipes_title: "Organic Pesticide Recipes", recipes_subtitle: "Discover natural, homemade solutions for common garden pests.", recipes_search_placeholder: "Search by name, target, or crop...", recipes_no_found: "No recipes found. Try a different search term.", recipes_card_targets: "🎯 Targets:", recipes_card_where: "📍 Where to Use:", recipes_card_ingredients: "🧾 Ingredients:", recipes_card_procedure: "⚙️ Procedure:", recipes_card_usage: "💡 How to Use:", recipes_card_cost: "💰 Approximate Cost:",
+                tools_title: "Farming Tools & Calculators", tools_subtitle: "Use our interactive tools to plan your farming activities efficiently.", calc_seeds_title: "Sowing Seeds Calculator", calc_seeds_label1: "Land Size (in acres)", calc_seeds_label2: "Seed Type", calc_seeds_button: "Calculate Seeds", calc_seeds_result: (amount, type, size) => `You will need approximately <strong>${amount} kg</strong> of ${type} seeds for ${size} acres.`, calc_seeds_error: "Please enter a valid land size.",
+                calc_pesticides_title: "Pesticides Spreading Calculator", calc_pesticides_label1: "Land Size (in acres)", calc_pesticides_label2: "Pesticide Type", calc_pesticides_button: "Calculate Pesticides", calc_pesticides_result: (amount, type, size) => `You will need approximately <strong>${amount} L</strong> of ${type} for ${size} acres.`, calc_pesticides_error: "Please enter a valid land size.",
+                reviews_title: "Customer Reviews", review1_text: `"The Neem Oil Emulsion recipe saved my tomato plants! Simple and effective. Highly recommend this site."`, review2_text: `"I love the range of recipes and the clear instructions. The Ginger-Garlic mix is my new go-to for fungal spots."`, review_form_title: "Leave a Review", review_label: "Your Review", review_button: "Submit Review",
+                chatbot_title: "Farming Assistant Chat Bot", chatbot_subtitle: "Ask our AI assistant for advice on pests, recipes, or general farming tips.", chatbot_initial_msg: "Hello! I'm your farming assistant. How can I help you today?", chatbot_typing: "Bot is typing...", chatbot_send_btn: "Send", chatbot_user_label: "You:", chatbot_bot_label: "Bot:", chatbot_placeholder: "Type your question here...", chatbot_static_response: `I'm an AI assistant. I can't generate new content right now, but I can help you search the recipes. Try searching for "aphids" or "fungal" in the recipes section!`, chatbot_error: "Error: Failed to get response. Please try again.",
+                footer_text: "© 2025 Farming Hub. All rights reserved. Made by Saksham Bhor | Email:",
+                login_title: "Login / Sign Up", login_email_label: "Email", login_password_label: "Password", login_button: "Login", login_switch_text: "Don't have an account? <a>Sign up</a>", login_admin_text: "Admin login? <a>Click here</a>",
+                admin_title: "Admin Login", admin_password_label: "Admin Password", admin_button: "Admin Login", admin_switch_text: "Go back to <a>user login</a>",
+                signup_button: "Sign Up", signup_title: "Sign Up",
+                admin_dashboard_title: "Admin Dashboard", admin_recipes_title: "Manage Recipes", admin_recipes_id_label: "Recipe ID (for update/delete)", admin_recipes_name_label: "Recipe Name", admin_recipes_targets_label: "Targets (comma-separated)", admin_recipes_cost_label: "Approximate Cost (₹)", admin_add_recipe: "Add/Update", admin_delete_recipe: "Delete", admin_calc_title: "Manage Calculator Data", admin_calc_type_label: "Type", admin_calc_key_label: "Key (e.g., 'corn')", admin_calc_name_label: "Name", admin_calc_amount_label: "Amount (kg or L)", admin_add_calc: "Add/Update", admin_delete_calc: "Delete", admin_reviews_title: "Manage Reviews",
+            },
+            hi: {
+                nav_home: "होम", nav_recipes: "रेसिपी", nav_tools: "टूल", nav_reviews: "रिव्यू", nav_chatbot: "चैट बॉट", nav_admin: "एडमिन", nav_logout: "लॉगआउट", nav_login: "लॉगिन / साइन अप",
+                home_title: "फ़ार्मिंग हब में आपका स्वागत है", home_subtitle: "जैविक खेती के ज्ञान, टिकाऊ प्रथाओं और सामुदायिक सहायता के लिए आपका वन-स्टॉप डेस्टिनेशन।",
+                recipes_title: "जैविक कीटनाशक रेसिपी", recipes_subtitle: "आम बगीचे के कीटों के लिए प्राकृतिक, घर पर बने समाधानों की खोज करें।", recipes_search_placeholder: "नाम, लक्ष्य या फसल के अनुसार खोजें...", recipes_no_found: "कोई रेसिपी नहीं मिली। एक अलग खोज शब्द का प्रयास करें।", recipes_card_targets: "🎯 लक्ष्य:", recipes_card_where: "📍 कहाँ उपयोग करें:", recipes_card_ingredients: "🧾 सामग्री:", recipes_card_procedure: "⚙️ प्रक्रिया:", recipes_card_usage: "💡 उपयोग कैसे करें:", recipes_card_cost: "💰 अनुमानित लागत:",
+                tools_title: "खेती के उपकरण और कैलकुलेटर", tools_subtitle: "अपनी खेती की गतिविधियों को कुशलतापूर्वक योजना बनाने के लिए हमारे इंटरैक्टिव टूल का उपयोग करें।", calc_seeds_title: "बीज बोने का कैलकुलेटर", calc_seeds_label1: "भूमि का आकार (एकड़ में)", calc_seeds_label2: "बीज का प्रकार", calc_seeds_button: "बीज की गणना करें", calc_seeds_result: (amount, type, size) => `${size} एकड़ के लिए आपको लगभग <strong>${amount} किलो</strong> ${type} बीज की आवश्यकता होगी।`, calc_seeds_error: "कृपया एक वैध भूमि का आकार दर्ज करें।",
+                calc_pesticides_title: "कीटनाशक फैलाने वाला कैलकुलेटर", calc_pesticides_label1: "भूमि का आकार (एकड़ में)", calc_pesticides_label2: "कीटनाशक का प्रकार", calc_pesticides_button: "कीटनाशकों की गणना करें", calc_pesticides_result: (amount, type, size) => `${size} एकड़ के लिए आपको लगभग <strong>${amount} L</strong> ${type} की आवश्यकता होगी।`, calc_pesticides_error: "कृपया एक वैध भूमि का आकार दर्ज करें।",
+                reviews_title: "ग्राहक समीक्षाएं", review1_text: `"नीम तेल इमल्शन रेसिपी ने मेरे टमाटर के पौधों को बचा लिया! सरल और प्रभावी। इस साइट की अत्यधिक अनुशंसा करता हूं।"`, review2_text: `"मुझे व्यंजनों की रेंज और स्पष्ट निर्देश पसंद हैं। अदरक-लहसुन का मिश्रण फंगल धब्बों के लिए मेरा नया उपाय है।"`, review_form_title: "एक रिव्यू छोड़ें", review_label: "आपका रिव्यू", review_button: "रिव्यू सबमिट करें",
+                chatbot_title: "खेती सहायक चैट बॉट", chatbot_subtitle: "कीटों, व्यंजनों या सामान्य खेती युक्तियों पर हमारे एआई सहायक से सलाह लें।", chatbot_initial_msg: "नमस्ते! मैं आपका खेती सहायक हूँ। मैं आज आपकी क्या मदद कर सकता हूँ?", chatbot_typing: "बॉट टाइप कर रहा है...", chatbot_send_btn: "भेजें", chatbot_user_label: "आप:", chatbot_bot_label: "बॉट:", chatbot_placeholder: "यहां अपना प्रश्न टाइप करें...", chatbot_static_response: "मैं एक AI सहायक हूँ। मैं अभी नई सामग्री नहीं बना सकता, लेकिन मैं व्यंजनों को खोजने में आपकी मदद कर सकता हूँ। रेसिपी अनुभाग में 'एफिड्स' या 'फंगल' खोजें!", chatbot_error: "त्रुटि: प्रतिक्रिया प्राप्त करने में विफल। कृपया पुन: प्रयास करें।",
+                footer_text: "© 2025 फार्मिंग हब। सर्वाधिकार सुरक्षित। द्वारा बनाया गया: Saksham Bhor | ईमेल:",
+                login_title: "लॉगिन / साइन अप", login_email_label: "ईमेल", login_password_label: "पासवर्ड", login_button: "लॉगिन", login_switch_text: "खाता नहीं है? <a>साइन अप करें</a>", login_admin_text: "एडमिन लॉगिन? <a>यहाँ क्लिक करें</a>",
+                admin_title: "एडमिन लॉगिन", admin_password_label: "एडमिन पासवर्ड", admin_button: "एडमिन लॉगिन", admin_switch_text: "<a>उपयोगकर्ता लॉगिन</a> पर वापस जाएं",
+                signup_button: "साइन अप करें", signup_title: "साइन अप करें",
+                admin_dashboard_title: "एडमिन डैशबोर्ड", admin_recipes_title: "रेसिपी प्रबंधित करें", admin_recipes_id_label: "रेसिपी आईडी (अपडेट/डिलीट के लिए)", admin_recipes_name_label: "रेसिपी का नाम", admin_recipes_targets_label: "लक्ष्य (कॉमा-सेपरेटेड)", admin_recipes_cost_label: "अनुमानित लागत (₹)", admin_add_recipe: "जोड़ें/अपडेट करें", admin_delete_recipe: "डिलीट करें", admin_calc_title: "कैलकुलेटर डेटा प्रबंधित करें", admin_calc_type_label: "प्रकार", admin_calc_key_label: "कुंजी (उदाहरण: 'corn')", admin_calc_name_label: "नाम", admin_calc_amount_label: "राशि (किलो या लीटर)", admin_add_calc: "जोड़ें/अपडेट करें", admin_delete_calc: "डिलीट करें", admin_reviews_title: "रिव्यू प्रबंधित करें",
+            },
+            mr: {
+                nav_home: "होम", nav_recipes: "रेसिपी", nav_tools: "साधने", nav_reviews: "पुनरावलोकने", nav_chatbot: "चॅट बॉट", nav_admin: "प्रशासक", nav_logout: "लॉगआउट", nav_login: "लॉगिन / साइन अप",
+                home_title: "फार्मिंग हबमध्ये आपले स्वागत आहे", home_subtitle: "सेंद्रिय शेतीचे ज्ञान, शाश्वत पद्धती आणि सामुदायिक समर्थनासाठी तुमचे वन-स्टॉप डेस्टिनेशन.",
+                recipes_title: "सेंद्रिय कीटकनाशक रेसिपी", recipes_subtitle: "सामान्य बागेतील कीटकांवर नैसर्गिक, घरगुती उपाय शोधा.", recipes_search_placeholder: "नाव, लक्ष्य किंवा पिकानुसार शोधा...", recipes_no_found: "कोणत्याही रेसिपी सापडल्या नाहीत. वेगळा शोध शब्द वापरून पहा.", recipes_card_targets: "🎯 लक्ष्य:", recipes_card_where: "📍 कुठे वापरावे:", recipes_card_ingredients: "🧾 साहित्य:", recipes_card_procedure: "⚙️ प्रक्रिया:", recipes_card_usage: "💡 कसे वापरावे:", recipes_card_cost: "💰 अंदाजे खर्च:",
+                shop_title: "शेत दुकान", shop_subtitle: "सेंद्रिय बागकाम साधने, बियाणे आणि पुरवठा यांचा संग्रह पहा.", shop_item1_title: "सेंद्रिय बियाणे पॅक", shop_item1_desc: "विविध प्रकारचे गैर-जीएमओ, वारसा बियाणे.", shop_item2_title: "पर्यावरण-अनुकूल साधनांचा संच", shop_item2_desc: "पुनर्वापर केलेल्या सामग्रीपासून बनवलेली टिकाऊ साधने.", shop_item3_title: "घरगुती कंपोस्टर", shop_item3_desc: "तुमची स्वतःची समृद्ध, सेंद्रिय माती तयार करा.", shop_button: "कार्टमध्ये जोडा",
+                elearning_title: "ई-लर्निंग केंद्र", elearning_subtitle: "आमच्या व्हिडिओ ट्यूटोरियल आणि मार्गदर्शकांसह सेंद्रिय शेतीची मूलतत्त्वे शिका.", elearning_item1_title: "पाठ्यक्रम 1: मातीचे आरोग्य", elearning_item1_desc: "तुमच्या रोपांसाठी पोषक तत्वांनी समृद्ध माती तयार करण्याची कला आत्मसात करा.", elearning_item2_title: "पाठ्यक्रम 2: सेंद्रिय कीटक नियंत्रण", elearning_item2_desc: "तुमच्या पिकांना कीटकांपासून वाचवण्यासाठी नैसर्गिक पद्धती शोधा.", elearning_item3_title: "पाठ्यक्रम 3: शाश्वत काढणी", elearning_item3_desc: "तुमच्या पिकांची कार्यक्षमतेने आणि शाश्वतपणे काढणी कशी करावी ते शिका.",
+                tools_title: "शेती साधने आणि कॅल्क्युलेटर", tools_subtitle: "तुमच्या शेतीच्या कामांची कार्यक्षमतेने योजना करण्यासाठी आमच्या परस्परसंवादी साधनांचा वापर करा.", calc_seeds_title: "बियाणे पेरणी कॅल्क्युलेटर", calc_seeds_label1: "जमिनीचा आकार (एकरमध्ये)", calc_seeds_label2: "बियाण्याचा प्रकार", calc_seeds_button: "बियाणे मोजा", calc_seeds_result: (amount, type, size) => `${size} एकरसाठी तुम्हाला अंदाजे <strong>${amount} किलो</strong> ${type} बियाणे लागेल.`, calc_seeds_error: "कृपया जमिनीचा वैध आकार प्रविष्ट करा.",
+                calc_pesticides_title: "कीटकनाशक फवारणी कॅल्क्युलेटर", calc_pesticides_label1: "जमिनीचा आकार (एकरमध्ये)", calc_pesticides_label2: "कीटकनाशक प्रकार", calc_pesticides_button: "कीटकनाशके मोजा", calc_pesticides_result: (amount, type, size) => `${size} एकरसाठी तुम्हाला अंदाजे <strong>${amount} L</strong> ${type} लागेल.`, calc_pesticides_error: "कृपया जमिनीचा वैध आकार प्रविष्ट करा.",
+                reviews_title: "ग्राहक पुनरावलोकने", review1_text: `"नीम ऑइल इमल्शन रेसिपीने माझ्या टोमॅटोच्या रोपांना वाचवले! सोपी आणि प्रभावी. मी या साइटची खूप शिफारस करतो."`, review2_text: `"मला रेसिपींची रेंज आणि स्पष्ट सूचना आवडल्या. फंगल स्पॉट्ससाठी आले-लसूण मिश्रण माझा नवीन उपाय आहे."`, review_form_title: "एक पुनरावलोकन द्या", review_label: "तुमचे पुनरावलोकन", review_button: "पुनरावलोकन सबमिट करा",
+                chatbot_title: "शेती सहायक चॅट बॉट", chatbot_subtitle: "कीटक, रेसिपी किंवा सामान्य शेती टिप्ससाठी आमच्या AI सहाय्याला विचारा.", chatbot_initial_msg: "नमस्कार! मी तुमचा शेती सहायक आहे. मी आज तुम्हाला कशी मदत करू शकतो?", chatbot_typing: "बॉट टाइप करत आहे...", chatbot_send_btn: "पाठवा", chatbot_user_label: "तुम्ही:", chatbot_bot_label: "बॉट:", chatbot_placeholder: "येथे तुमचा प्रश्न टाइप करा...", chatbot_static_response: "मी एक AI सहायक आहे. मी आत्ता नवीन सामग्री तयार करू शकत नाही, पण मी तुम्हाला रेसिपी शोधण्यात मदत करू शकतो. रेसिपी विभागात 'ऍफिड्स' किंवा 'फंगल' शोधण्याचा प्रयत्न करा!", chatbot_error: "त्रुटी: प्रतिसाद मिळविण्यात अयशस्वी. कृपया पुन्हा प्रयत्न करा.",
+                footer_text: "© 2025 फार्मिंग हब. सर्व हक्क राखीव. बनवणारे: Saksham Bhor | ईमेल:",
+                login_title: "लॉगिन / साइन अप", login_email_label: "ईमेल", login_password_label: "पासवर्ड", login_button: "लॉगिन", login_switch_text: "खाते नाही? <a>साइन अप करा</a>", login_admin_text: "प्रशासक लॉगिन? <a>येथे क्लिक करा</a>",
+                admin_title: "प्रशासक लॉगिन", admin_password_label: "प्रशासक पासवर्ड", admin_button: "प्रशासक लॉगिन", admin_switch_text: "<a>वापरकर्ता लॉगिन</a> वर परत जा",
+                signup_button: "साइन अप करा", signup_title: "साइन अप करा",
+                admin_dashboard_title: "प्रशासक डॅशबोर्ड", admin_recipes_title: "रेसिपी व्यवस्थापित करा", admin_recipes_id_label: "रेसिपी आयडी (अपडेट/डिलीटसाठी)", admin_recipes_name_label: "रेसिपीचे नाव", admin_recipes_targets_label: "लक्ष्य (कॉमा-सेपरेटेड)", admin_recipes_cost_label: "अंदाजे खर्च (₹)", admin_add_recipe: "जोडा/अपडेट करा", admin_delete_recipe: "डिलीट करा", admin_calc_title: "कॅल्क्युलेटर डेटा व्यवस्थापित करा", admin_calc_type_label: "प्रकार", admin_calc_key_label: "की (उदा. 'corn')", admin_calc_name_label: "नाव", admin_calc_amount_label: "प्रमाण (किलो किंवा लिटर)", admin_add_calc: "जोडा/अपडेट करा", admin_delete_calc: "डिलीट करा", admin_reviews_title: "पुनरावलोकने व्यवस्थापित करा",
+            },
+        };
+
+        const currentLang = localStorage.getItem('language') || 'en';
+        let isSignupMode = false;
+
+        let recipesData = [];
+        let seedData = {};
+        let pesticideData = {};
+        let reviewsData = [];
+
+        document.getElementById('login-form').addEventListener('submit', handleAuthSubmit);
+        document.getElementById('admin-form').addEventListener('submit', handleAdminLogin);
+        document.getElementById('review-form').addEventListener('submit', addReview);
+
+        function showUserLogin() {
+            isSignupMode = false;
+            document.getElementById('login-title').innerHTML = translations[currentLang].login_title;
+            document.getElementById('login-button').innerHTML = translations[currentLang].login_button;
+            document.getElementById('admin-login-section').classList.add('hidden');
+            document.getElementById('login-section').classList.remove('hidden');
+            document.getElementById('login-form').querySelector('button').innerHTML = translations[currentLang].login_button;
+            document.getElementById('login-switch-text').innerHTML = translations[currentLang].login_switch_text;
+        }
+
+        function showAdminLogin() {
+            document.getElementById('login-section').classList.add('hidden');
+            document.getElementById('admin-login-section').classList.remove('hidden');
+        }
+
+        function toggleForm() {
+            isSignupMode = !isSignupMode;
+            const loginTitle = document.getElementById('login-title');
+            const loginButton = document.getElementById('login-button');
+            const loginSwitchText = document.getElementById('login-switch-text');
+
+            if (isSignupMode) {
+                loginTitle.innerHTML = translations[currentLang].signup_title;
+                loginButton.innerHTML = translations[currentLang].signup_button;
+                loginSwitchText.innerHTML = translations[currentLang].login_switch_text.replace(translations.en.login_switch_text.split(' ')[2], translations.en.login_button);
+            } else {
+                loginTitle.innerHTML = translations[currentLang].login_title;
+                loginButton.innerHTML = translations[currentLang].login_button;
+                loginSwitchText.innerHTML = translations[currentLang].login_switch_text;
+            }
+        }
+
+        async function handleAuthSubmit(event) {
+            event.preventDefault();
+            const email = document.getElementById('login-email').value;
+            const password = document.getElementById('login-password').value;
+            const authMessage = document.getElementById('auth-message');
+            authMessage.classList.add('hidden');
+
+            try {
+                if (isSignupMode) {
+                    const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+                    await setDoc(doc(db, "users", userCredential.user.uid), { role: 'user' });
+                } else {
+                    await signInWithEmailAndPassword(auth, email, password);
+                }
+            } catch (error) {
+                authMessage.innerText = error.message;
+                authMessage.classList.remove('hidden');
+            }
+        }
+
+        async function handleAdminLogin(event) {
+            event.preventDefault();
+            const email = document.getElementById('admin-email').value;
+            const password = document.getElementById('admin-password').value;
+            const authMessage = document.getElementById('admin-auth-message');
+            authMessage.classList.add('hidden');
+            
+            try {
+                await signInWithEmailAndPassword(auth, email, password);
+            } catch (error) {
+                authMessage.innerText = error.message;
+                authMessage.classList.remove('hidden');
+            }
+        }
+
+        function userLogout() {
+            signOut(auth);
+            showSection('login-section');
+        }
+
+        // --- Data Fetching and Real-time Listeners ---
+
+        function fetchAllData() {
+            onSnapshot(collection(db, "recipes"), (snapshot) => {
+                recipesData = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+                renderRecipes(recipesData);
+            });
+            onSnapshot(collection(db, "seedData"), (snapshot) => {
+                seedData = snapshot.docs.reduce((acc, doc) => ({ ...acc, [doc.id]: doc.data() }), {});
+                updateSeedDropdown();
+            });
+            onSnapshot(collection(db, "pesticideData"), (snapshot) => {
+                pesticideData = snapshot.docs.reduce((acc, doc) => ({ ...acc, [doc.id]: doc.data() }), {});
+                updatePesticideDropdown();
+            });
+            onSnapshot(collection(db, "reviews"), (snapshot) => {
+                reviewsData = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+                renderReviews(reviewsData);
+                renderAdminReviews();
+            });
+        }
+
+        function updateSeedDropdown() {
+            const select = document.getElementById('seed-type');
+            select.innerHTML = '';
+            for (const key in seedData) {
+                const option = document.createElement('option');
+                option.value = key;
+                option.text = seedData[key][currentLang];
+                select.appendChild(option);
+            }
+        }
+
+        function updatePesticideDropdown() {
+            const select = document.getElementById('pesticide-type');
+            select.innerHTML = '';
+            for (const key in pesticideData) {
+                const option = document.createElement('option');
+                option.value = key;
+                option.text = pesticideData[key][currentLang];
+                select.appendChild(option);
+            }
+        }
+
+        // --- UI Rendering Functions ---
+
+        function showSection(sectionId) {
+            document.querySelectorAll('.section').forEach(section => {
+                section.classList.remove('active');
+            });
+            document.getElementById(sectionId).classList.add('active');
+            document.querySelectorAll('.nav-links a').forEach(link => {
+                link.classList.remove('active');
+            });
+            const activeLink = document.querySelector(`.nav-links a[data-section="${sectionId}"]`);
+            if (activeLink) {
+                activeLink.classList.add('active');
+            }
+            const navMenu = document.getElementById('nav-menu');
+            if (navMenu.classList.contains('active')) {
+                toggleNav();
+            }
+            if (sectionId === 'recipes-section') {
+                renderRecipes(recipesData);
+            }
+            if (sectionId === 'admin-section') {
+                renderAdminReviews();
+            }
+        }
+
+        function toggleNav() {
+            document.getElementById('nav-menu').classList.toggle('active');
+        }
+
+        function renderRecipes(list) {
+            const container = document.getElementById('recipe-container');
+            const lang = document.getElementById('language-selector').value;
+            if (!container) return;
+            container.innerHTML = '';
+            if (list.length === 0) {
+                container.innerHTML = `<p class="col-span-full text-center text-gray-500 text-lg">${translations[lang].recipes_no_found}</p>`;
+                return;
+            }
+            list.forEach((recipe, index) => {
+                const card = document.createElement('div');
+                card.className = 'recipe-card';
+                card.style.animationDelay = `${index * 0.1}s`;
+                card.innerHTML = `
+                    <h2 class="text-2xl font-bold text-green-600 mb-2">${recipe.name[lang]}</h2>
+                    <p class="text-sm text-gray-500 mb-4">ID: ${recipe.id}</p>
+                    <div class="mb-3"><strong>${translations[lang].recipes_card_targets}</strong> <span class="text-gray-700">${recipe.targets[lang].join(', ')}</span></div>
+                    <div class="mb-3"><strong>${translations[lang].recipes_card_where}</strong> <span class="text-gray-700">${recipe.where[lang].join(', ')}</span></div>
+                    <div class="mb-3"><strong>${translations[lang].recipes_card_ingredients}</strong>
+                        <ul class="list-disc list-inside mt-1">${recipe.ingredients[lang].map(i=>`<li>${i}</li>`).join('')}</ul>
+                    </div>
+                    <div class="mb-3"><strong>${translations[lang].recipes_card_procedure}</strong>
+                        <ol class="list-decimal list-inside mt-1">${recipe.procedure[lang].map(p=>`<li>${p}</li>`).join('')}</ol>
+                    </div>
+                    <div class="mb-3"><strong>${translations[lang].recipes_card_usage}</strong>
+                        <ul class="list-disc list-inside mt-1">${recipe.usage[lang].map(u=>`<li>${u}</li>`).join('')}</ul>
+                    </div>
+                    <div><strong>${translations[lang].recipes_card_cost}</strong> <span class="text-gray-700">₹${recipe.cost}</span></div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        function renderReviews(list) {
+            const container = document.getElementById('reviews-container');
+            if (!container) return;
+            container.innerHTML = '';
+            list.forEach(review => {
+                const card = document.createElement('div');
+                card.className = 'bg-white p-6 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300';
+                card.innerHTML = `
+                    <p class="text-gray-600 italic mb-4">"${review.text}"</p>
+                    <p class="font-semibold">- ${review.userEmail}</p>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        function renderAdminReviews() {
+            const container = document.getElementById('admin-reviews-list');
+            container.innerHTML = '';
+            reviewsData.forEach(review => {
+                const card = document.createElement('div');
+                card.className = 'admin-card p-4 rounded-lg shadow-md flex justify-between items-center';
+                card.innerHTML = `
+                    <div>
+                        <p class="text-gray-300 italic">"${review.text}"</p>
+                        <p class="font-semibold text-white">- ${review.userEmail} (ID: ${review.id})</p>
+                    </div>
+                    <button onclick="deleteReview('${review.id}')" class="bg-red-600 text-white py-1 px-3 rounded-full hover:bg-red-700 transition-colors duration-300 btn-press">Delete</button>
+                `;
+                container.appendChild(card);
+            });
+        }
+        
+        // --- Data Management Functions ---
+
+        async function addReview(event) {
+            event.preventDefault();
+            const reviewText = document.getElementById('review-text').value;
+            if (!reviewText) return;
+            const user = window.currentUser;
+            if (!user) return;
+            
+            try {
+                await addDoc(collection(db, "reviews"), {
+                    userEmail: user.email,
+                    text: reviewText,
+                    createdAt: new Date()
+                });
+                document.getElementById('review-text').value = '';
+            } catch (error) {
+                console.error("Error adding review: ", error);
+            }
+        }
+
+        async function deleteReview(reviewId) {
+            if (!window.currentUser || window.currentUser.role !== 'admin') return;
+            if (!confirm("Are you sure you want to delete this review?")) return;
+            try {
+                await deleteDoc(doc(db, "reviews", reviewId));
+            } catch (error) {
+                console.error("Error deleting review: ", error);
+            }
+        }
+
+        async function addUpdateRecipe(event) {
+            event.preventDefault();
+            if (!window.currentUser || window.currentUser.role !== 'admin') return;
+
+            const id = document.getElementById('recipe-id').value;
+            const name_en = document.getElementById('recipe-name-en').value;
+            const name_hi = document.getElementById('recipe-name-hi').value;
+            const name_mr = document.getElementById('recipe-name-mr').value;
+            const targets_en = document.getElementById('recipe-targets-en').value.split(',').map(s => s.trim());
+            const targets_hi = document.getElementById('recipe-targets-hi').value.split(',').map(s => s.trim());
+            const targets_mr = document.getElementById('recipe-targets-mr').value.split(',').map(s => s.trim());
+            const where_en = document.getElementById('recipe-where-en').value.split(',').map(s => s.trim());
+            const where_hi = document.getElementById('recipe-where-hi').value.split(',').map(s => s.trim());
+            const where_mr = document.getElementById('recipe-where-mr').value.split(',').map(s => s.trim());
+            const ingredients_en = document.getElementById('recipe-ingredients-en').value.split(',').map(s => s.trim());
+            const ingredients_hi = document.getElementById('recipe-ingredients-hi').value.split(',').map(s => s.trim());
+            const ingredients_mr = document.getElementById('recipe-ingredients-mr').value.split(',').map(s => s.trim());
+            const procedure_en = document.getElementById('recipe-procedure-en').value.split(',').map(s => s.trim());
+            const procedure_hi = document.getElementById('recipe-procedure-hi').value.split(',').map(s => s.trim());
+            const procedure_mr = document.getElementById('recipe-procedure-mr').value.split(',').map(s => s.trim());
+            const usage_en = document.getElementById('recipe-usage-en').value.split(',').map(s => s.trim());
+            const usage_hi = document.getElementById('recipe-usage-hi').value.split(',').map(s => s.trim());
+            const usage_mr = document.getElementById('recipe-usage-mr').value.split(',').map(s => s.trim());
+            const cost = parseFloat(document.getElementById('recipe-cost').value);
+
+            if (!name_en || !name_hi || !name_mr || !targets_en || isNaN(cost)) return;
+
+            const recipeData = {
+                name: { en: name_en, hi: name_hi, mr: name_mr },
+                targets: { en: targets_en, hi: targets_hi, mr: targets_mr },
+                where: { en: where_en, hi: where_hi, mr: where_mr },
+                ingredients: { en: ingredients_en, hi: ingredients_hi, mr: ingredients_mr },
+                procedure: { en: procedure_en, hi: procedure_hi, mr: procedure_mr },
+                usage: { en: usage_en, hi: usage_hi, mr: usage_mr },
+                cost: cost,
+            };
+
+            try {
+                if (id) {
+                    await setDoc(doc(db, "recipes", id), recipeData);
+                } else {
+                    await addDoc(collection(db, "recipes"), recipeData);
+                }
+                alert('Recipe saved successfully!');
+            } catch (error) {
+                console.error("Error saving recipe: ", error);
+                alert('Error saving recipe!');
+            }
+        }
+
+        async function deleteRecipe(event) {
+            event.preventDefault();
+            if (!window.currentUser || window.currentUser.role !== 'admin') return;
+            const id = document.getElementById('recipe-id').value;
+            if (!id) return;
+            if (confirm("Are you sure you want to delete this recipe?")) {
+                try {
+                    await deleteDoc(doc(db, "recipes", id));
+                    alert('Recipe deleted!');
+                } catch (error) {
+                    console.error("Error deleting recipe: ", error);
+                    alert('Error deleting recipe!');
+                }
+            }
+        }
+
+        async function addUpdateCalcData() {
+            if (!window.currentUser || window.currentUser.role !== 'admin') return;
+
+            const type = document.getElementById('calc-type-select').value;
+            const key = document.getElementById('calc-key').value;
+            const name_en = document.getElementById('calc-name-en').value;
+            const name_hi = document.getElementById('calc-name-hi').value;
+            const name_mr = document.getElementById('calc-name-mr').value;
+            const amount = parseFloat(document.getElementById('calc-amount').value);
+
+            if (!key || !name_en || !name_hi || !name_mr || isNaN(amount)) return;
+
+            const data = {
+                en: name_en,
+                hi: name_hi,
+                mr: name_mr,
+                amount: amount
+            };
+            
+            try {
+                await setDoc(doc(db, `${type}Data`, key), data);
+                alert(`${type} data saved successfully!`);
+            } catch (error) {
+                console.error("Error saving calculator data: ", error);
+                alert("Error saving calculator data.");
+            }
+        }
+
+        async function deleteCalcData() {
+            if (!window.currentUser || window.currentUser.role !== 'admin') return;
+            const type = document.getElementById('calc-type-select').value;
+            const key = document.getElementById('calc-key').value;
+            if (!key) return;
+            if (confirm("Are you sure you want to delete this calculator data?")) {
+                try {
+                    await deleteDoc(doc(db, `${type}Data`, key));
+                    alert('Data deleted!');
+                } catch (error) {
+                    console.error("Error deleting data: ", error);
+                    alert("Error deleting data.");
+                }
+            }
+        }
+
+        // --- UI Logic and Initialization ---
+
+        function filterRecipes() {
+            const keyword = document.getElementById('search').value.toLowerCase();
+            const lang = document.getElementById('language-selector').value;
+            const filtered = recipesData.filter(r => {
+                const name = r.name[lang] ? r.name[lang].toLowerCase() : '';
+                const targets = r.targets[lang] ? r.targets[lang].join(' ').toLowerCase() : '';
+                const where = r.where[lang] ? r.where[lang].join(' ').toLowerCase() : '';
+                return name.includes(keyword) || targets.includes(keyword) || where.includes(keyword);
+            });
+            renderRecipes(filtered);
+        }
+
+        function updateTextContent(lang) {
+            document.querySelectorAll('[data-key]').forEach(element => {
+                const key = element.getAttribute('data-key');
+                if (translations[lang] && translations[lang][key]) {
+                    if (typeof translations[lang][key] === 'function') {
+                        // This is for dynamic text like calculator results
+                    } else {
+                        element.innerHTML = translations[lang][key];
+                    }
+                }
+            });
+            
+            const searchInput = document.getElementById('search');
+            if(searchInput) searchInput.placeholder = translations[lang].recipes_search_placeholder;
+            renderRecipes(recipesData);
+            updateSeedDropdown();
+            updatePesticideDropdown();
+            renderReviews(reviewsData);
+            renderAdminReviews();
+        }
+
+        function setLanguage(lang) {
+            localStorage.setItem('language', lang);
+            updateTextContent(lang);
+        }
+
+        // Initial fetch and render
+        window.onload = function() {
+            fetchAllData();
+            updateTextContent(currentLang);
+            document.getElementById('language-selector').value = currentLang;
+        };
+
+        // Expose global functions
+        window.showSection = showSection;
+        window.toggleNav = toggleNav;
+        window.setLanguage = setLanguage;
+        window.filterRecipes = filterRecipes;
+        window.calculateSeeds = calculateSeeds;
+        window.calculatePesticides = calculatePesticides;
+        window.sendMessage = sendMessage;
+        window.userLogout = userLogout;
+        window.showUserLogin = showUserLogin;
+        window.showAdminLogin = showAdminLogin;
+        window.toggleForm = toggleForm;
+        window.addReview = addReview;
+        window.deleteReview = deleteReview;
+        window.addUpdateRecipe = addUpdateRecipe;
+        window.deleteRecipe = deleteRecipe;
+        window.addUpdateCalcData = addUpdateCalcData;
+        window.deleteCalcData = deleteCalcData;
+        window.handleAuthSubmit = handleAuthSubmit;
+        window.handleAdminLogin = handleAdminLogin;
+        window.calculateSeeds = function() {
+            const landSize = parseFloat(document.getElementById('land-size-seeds').value);
+            const seedType = document.getElementById('seed-type').value;
+            const seedDataForType = seedData[seedType];
+            const resultElement = document.getElementById('seed-result');
+            const lang = document.getElementById('language-selector').value;
+
+            resultElement.classList.remove('show');
+            void resultElement.offsetWidth;
+            
+            if (landSize && seedDataForType) {
+                const requiredAmount = landSize * seedDataForType.amount;
+                const seedName = seedDataForType[lang];
+                resultElement.innerHTML = translations[lang].calc_seeds_result(requiredAmount, seedName, landSize);
+                resultElement.classList.remove('hidden');
+                resultElement.classList.add('show');
+            } else {
+                resultElement.innerHTML = translations[lang].calc_seeds_error;
+                resultElement.classList.remove('hidden');
+                resultElement.classList.add('show');
+            }
+        };
+        window.calculatePesticides = function() {
+            const landSize = parseFloat(document.getElementById('land-size-pesticide').value);
+            const pesticideType = document.getElementById('pesticide-type').value;
+            const pesticideDataForType = pesticideData[pesticideType];
+            const resultElement = document.getElementById('pesticide-result');
+            const lang = document.getElementById('language-selector').value;
+            
+            resultElement.classList.remove('show');
+            void resultElement.offsetWidth;
+            
+            if (landSize && pesticideDataForType) {
+                const requiredAmount = landSize * pesticideDataForType.amount;
+                const pesticideName = pesticideDataForType[lang];
+                resultElement.innerHTML = translations[lang].calc_pesticides_result(requiredAmount, pesticideName, landSize);
+                resultElement.classList.remove('hidden');
+                resultElement.classList.add('show');
+            } else {
+                resultElement.innerHTML = translations[lang].calc_pesticides_error;
+                resultElement.classList.remove('hidden');
+                resultElement.classList.add('show');
+            }
+        };
+    </script>
 </body>
 </html>
