@@ -6,58 +6,175 @@
     <title>Farming Hub</title>
     <!-- Tailwind CSS is loaded from a CDN for a modern, responsive design -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Link to the external stylesheet -->
-    <link rel="stylesheet" href="style.css">
+    <style>
+        /* Custom styles to define a consistent, clean font and a background color */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0fdf4; /* A light, fresh green for a farming theme */
+        }
+        
+        /* Utility for consistent container width and spacing */
+        .container {
+            max-width: 1200px;
+            margin: auto;
+            padding: 2rem 1rem;
+        }
+
+        /* Styling for the recipe cards with subtle animations */
+        .recipe-card {
+            background-color: #ffffff; /* Use a solid white background for the recipe cards */
+            border-radius: 15px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            margin-bottom: 1.5rem;
+            opacity: 0; /* Initially hidden for staggered animation */
+            transform: translateY(20px);
+            animation: card-appear 0.6s ease-out forwards;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        /* Pop-up effect on hover */
+        .recipe-card:hover {
+            transform: translateY(-5px) scale(1.02);
+            box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+        }
+
+        /* Keyframes for the card appearance animation */
+        @keyframes card-appear {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Basic styling for section management */
+        .section {
+            display: none; /* Hide all sections by default */
+            animation: fadeIn 0.8s ease-in-out;
+        }
+        .section.active {
+            display: block; /* Show the active section */
+        }
+
+        /* Fade-in animation for page transitions */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* Styling for the Home section with a vibrant image background */
+        #home-section {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            overflow: hidden;
+            background-image: url('https://images.pexels.com/photos/2165688/pexels-photo-2165688.jpeg?cs=srgb&dl=pexels-quang-nguyen-vinh-222549-2165688.jpg&fm=jpg');
+            background-size: cover;
+            background-position: center;
+        }
+
+        /* Responsive navigation menu styling */
+        .nav-links {
+            display: flex;
+            gap: 1.5rem; /* Equivalent to space-x-6 in Tailwind */
+        }
+
+        /* Responsive design for mobile navigation */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none; /* Hide nav links on smaller screens by default */
+                flex-direction: column;
+                position: absolute;
+                top: 60px;
+                left: 0;
+                width: 100%;
+                background-color: white;
+                padding: 1rem;
+                box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            }
+            .nav-links.active {
+                display: flex; /* Show nav links when menu is toggled */
+            }
+        }
+
+        /* Active link styling */
+        .nav-links a.active {
+            color: #166534; /* Darker green for active link */
+            border-bottom: 2px solid #166534;
+        }
+        
+        /* Button press animation */
+        .btn-press:active {
+            transform: scale(0.95);
+        }
+
+        /* Result box animation */
+        .result-box.show {
+            animation: slide-down 0.5s ease-out forwards;
+        }
+
+        @keyframes slide-down {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Admin Theme styles */
+        .admin-theme {
+            background-color: #1f2937; /* Gray-800 */
+            color: #d1d5db; /* Gray-300 */
+        }
+        .admin-theme .nav-link-admin, .admin-theme .nav-link-admin.active {
+            color: #f9fafb; /* Gray-50 */
+            border-bottom: 2px solid #f9fafb;
+        }
+        .admin-card {
+            background-color: #374151; /* Gray-700 */
+            color: #f9fafb; /* Gray-50 */
+        }
+        .admin-input {
+            background-color: #4b5563; /* Gray-600 */
+            color: #f9fafb;
+            border-color: #6b7280;
+        }
+        .admin-button {
+            background-color: #6b7280; /* Gray-500 */
+            color: #f9fafb;
+        }
+
+        /* Login UI Styles */
+        .login-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        .login-card {
+            background: linear-gradient(135deg, #f0fdf4 0%, #d1f7e0 100%);
+            border-radius: 1.5rem;
+            box-shadow: 0 25px 50px -12px rgba(0,0,0,0.25);
+            padding: 2.5rem;
+            max-width: 400px;
+            width: 90%;
+            transition: all 0.5s ease-in-out;
+            transform: scale(1);
+        }
+        .login-card.hidden {
+            transform: scale(0.95);
+            opacity: 0;
+            display: none;
+        }
+        .login-card.active {
+            display: block;
+        }
+    </style>
 </head>
 <body>
 
-    <!-- Login/Auth Sections -->
-    <div id="login-section" class="login-container section active">
-        <div id="login-card" class="login-card">
-            <h1 id="login-title" class="text-3xl font-bold text-center text-green-700 mb-6" data-key="login_title">Login / Sign Up</h1>
-            <p id="auth-message" class="text-red-500 text-center mb-4 hidden"></p>
-
-            <!-- Login/Sign Up Form -->
-            <form id="login-form" class="space-y-4">
-                <div>
-                    <label for="login-email" class="block text-sm font-medium text-gray-700" data-key="login_email_label">Email</label>
-                    <input type="email" id="login-email" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring focus:ring-green-500 focus:ring-opacity-50">
-                </div>
-                <div>
-                    <label for="login-password" class="block text-sm font-medium text-gray-700" data-key="login_password_label">Password</label>
-                    <input type="password" id="login-password" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring focus:ring-green-500 focus:ring-opacity-50">
-                </div>
-                <button type="submit" id="login-button" class="w-full bg-green-600 text-white py-2 px-4 rounded-full hover:bg-green-700 transition-colors duration-300 btn-press" data-key="login_button">Login</button>
-            </form>
-            
-            <p id="login-switch-text" class="text-center text-gray-500 mt-4" data-key="login_switch_text">Don't have an account? <a href="#" class="text-green-600 hover:underline" onclick="toggleForm(event)">Sign up</a></p>
-            <p id="admin-switch-link" class="text-center text-gray-500 mt-4" data-key="login_admin_text">Admin login? <a href="#" class="text-green-600 hover:underline" onclick="showAdminLogin(event)">Click here</a></p>
-        </div>
-        
-    </div>
-    
-    <!-- Admin Login Form (Hidden by default) -->
-    <div id="admin-login-section" class="login-container section hidden admin-theme">
-        <div id="admin-login-card" class="admin-card p-8 rounded-xl shadow-lg">
-            <h2 id="admin-title" class="text-xl font-bold text-center text-gray-50 mb-6" data-key="admin_title">Admin Login</h2>
-            <p id="admin-auth-message" class="text-red-500 text-center mb-4 hidden"></p>
-            <form id="admin-form" class="space-y-4">
-                <div>
-                    <label for="admin-email" class="block text-sm font-medium text-gray-300" data-key="login_email_label">Email</label>
-                    <input type="email" id="admin-email" class="mt-1 block w-full rounded-md border-gray-600 bg-gray-700 shadow-sm focus:border-gray-500 focus:ring focus:ring-gray-500 focus:ring-opacity-50 text-gray-50">
-                </div>
-                <div>
-                    <label for="admin-password" class="block text-sm font-medium text-gray-300" data-key="login_password_label">Password</label>
-                    <input type="password" id="admin-password" class="mt-1 block w-full rounded-md border-gray-600 bg-gray-700 shadow-sm focus:border-gray-500 focus:ring focus:ring-gray-500 focus:ring-opacity-50 text-gray-50">
-                </div>
-                <button type="submit" id="admin-button" class="w-full bg-gray-600 text-gray-50 py-2 px-4 rounded-full hover:bg-gray-700 transition-colors duration-300 btn-press" data-key="admin_button">Admin Login</button>
-                <p id="admin-login-switch" class="text-center text-gray-300 mt-4" data-key="admin_switch_text">Go back to <a href="#" class="text-white hover:underline" onclick="showUserLogin(event)">user login</a></p>
-            </form>
-        </div>
-    </div>
-
-    <!-- Main Content (Hidden until logged in) -->
-    <div id="nav-and-content" class="hidden">
+    <!-- Main Content (All sections are visible by default) -->
+    <div id="nav-and-content">
         <!-- Navigation Bar -->
         <nav class="bg-white shadow-lg sticky top-0 z-50">
             <div class="container mx-auto px-6 py-3 flex justify-between items-center flex-wrap md:flex-nowrap">
@@ -77,24 +194,22 @@
                     </button>
                 </div>
                 
-                <!-- Navigation links and Login/Logout -->
-                <div id="nav-menu" class="nav-links hidden">
+                <!-- Navigation links -->
+                <div id="nav-menu" class="nav-links">
                     <a href="#" class="text-gray-600 hover:text-green-500 transition-colors duration-300 font-semibold py-2 px-4 rounded-full" data-section="home-section" data-key="nav_home" onclick="showSection('home-section')">Home</a>
                     <a href="#" class="text-gray-600 hover:text-green-500 transition-colors duration-300 font-semibold py-2 px-4 rounded-full" data-section="recipes-section" data-key="nav_recipes" onclick="showSection('recipes-section')">Recipes</a>
                     <a href="#" class="text-gray-600 hover:text-green-500 transition-colors duration-300 font-semibold py-2 px-4 rounded-full" data-section="tools-section" data-key="nav_tools" onclick="showSection('tools-section')">Tools</a>
                     <a href="#" class="text-gray-600 hover:text-green-500 transition-colors duration-300 font-semibold py-2 px-4 rounded-full" data-section="reviews-section" data-key="nav_reviews" onclick="showSection('reviews-section')">Reviews</a>
                     <a href="#" class="text-gray-600 hover:text-green-500 transition-colors duration-300 font-semibold py-2 px-4 rounded-full hidden" data-section="admin-section" id="admin-nav-link" data-key="nav_admin" onclick="showSection('admin-section')">Admin</a>
                     <a href="#" class="text-gray-600 hover:text-green-500 transition-colors duration-300 font-semibold py-2 px-4 rounded-full" data-section="chatbot-section" data-key="nav_chatbot" onclick="showSection('chatbot-section')">Chat Bot</a>
-                    <button id="nav-logout" onclick="userLogout()" class="text-white bg-red-600 hover:bg-red-700 transition-colors duration-300 font-semibold py-2 px-4 rounded-full ml-4" data-key="nav_logout">Logout</button>
                 </div>
-                 <a href="#" id="nav-login" class="text-white bg-green-600 hover:bg-green-700 transition-colors duration-300 font-semibold py-2 px-4 rounded-full hidden" data-key="nav_login" onclick="showSection('login-section')">Login / Sign Up</a>
             </div>
         </nav>
         
         <!-- Main Application Content -->
         <div id="main-app-content">
             <!-- Home Section with a vibrant image background -->
-            <div id="home-section" class="section text-center">
+            <div id="home-section" class="section text-center active">
                 <!-- Content container placed over the image -->
                 <div class="relative z-10 bg-white bg-opacity-70 rounded-xl p-8 md:p-12 max-w-sm md:max-w-xl mx-auto shadow-lg">
                     <h1 class="text-4xl md:text-5xl font-extrabold text-green-800 mb-4" data-key="home_title">Welcome to Farming Hub</h1>
