@@ -209,6 +209,7 @@
                 document.getElementById('nav-menu').classList.remove('hidden');
                 document.getElementById('nav-login').classList.add('hidden');
                 document.getElementById('nav-logout').classList.remove('hidden');
+                document.getElementById('admin-login-section').classList.add('hidden');
 
                 if (userData.role === 'admin') {
                     // Admin UI setup
@@ -585,7 +586,7 @@
 
     <script type="module">
         import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-        import { getFirestore, doc, setDoc, getDoc, collection, onSnapshot, getDocs, addDoc, deleteDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+        import { getFirestore, doc, setDoc, getDoc, collection, onSnapshot, addDoc, deleteDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
         // Your web app's Firebase configuration
         const firebaseConfig = {
@@ -996,13 +997,68 @@
     </div>
 
     <script type="module">
-        import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
         import { getFirestore, doc, setDoc, getDoc, collection, onSnapshot, addDoc, deleteDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
-        // Firebase objects from the initial script block
-        const auth = window.firebase.auth;
-        const db = window.firebase.db;
+        const firebaseConfig = {
+          apiKey: "AIzaSyDhOG6mUIYzRRxgrINmP-sef_Z3jufqauw",
+          authDomain: "farminghubsaksham.firebaseapp.com",
+          projectId: "farminghubsaksham",
+          storageBucket: "farminghubsaksham.firebasestorage.app",
+          messagingSenderId: "361791915485",
+          appId: "1:361791915485:web:b097bed6af1319d14ea234",
+          measurementId: "G-27EF1PBHJ3"
+        };
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+        
+        // Expose Firebase objects to the global scope for other scripts
+        window.firebase = { auth, db };
 
+        // Handle authentication state changes
+        onAuthStateChanged(auth, async (user) => {
+            if (user) {
+                // User is signed in, fetch their role
+                const userDoc = await getDoc(doc(db, "users", user.uid));
+                const userData = userDoc.exists() ? userDoc.data() : { role: 'user' }; // Default role
+                
+                // Store user and role in the global scope
+                window.currentUser = { uid: user.uid, email: user.email, role: userData.role };
+                
+                // Update UI based on logged-in state and user role
+                document.getElementById('login-section').classList.remove('active');
+                document.getElementById('main-app-content').classList.remove('hidden');
+                document.getElementById('nav-menu').classList.remove('hidden');
+                document.getElementById('nav-login').classList.add('hidden');
+                document.getElementById('nav-logout').classList.remove('hidden');
+                document.getElementById('admin-login-section').classList.add('hidden');
+
+                if (userData.role === 'admin') {
+                    // Admin UI setup
+                    document.body.classList.add('admin-theme');
+                    document.getElementById('admin-nav-link').classList.remove('hidden');
+                } else {
+                    // Regular user UI setup
+                    document.body.classList.remove('admin-theme');
+                    document.getElementById('admin-nav-link').classList.add('hidden');
+                }
+
+                showSection('home-section');
+
+            } else {
+                // User is signed out
+                window.currentUser = null;
+                document.getElementById('login-section').classList.add('active');
+                document.getElementById('main-app-content').classList.add('hidden');
+                document.getElementById('nav-menu').classList.add('hidden');
+                document.getElementById('nav-login').classList.remove('hidden');
+                document.getElementById('nav-logout').classList.add('hidden');
+                document.getElementById('admin-nav-link').classList.add('hidden');
+            }
+        });
+        
         // Data and translation objects
         const translations = {
             en: {
@@ -1042,9 +1098,9 @@
                 tools_title: "शेती साधने आणि कॅल्क्युलेटर", tools_subtitle: "तुमच्या शेतीच्या कामांची कार्यक्षमतेने योजना करण्यासाठी आमच्या परस्परसंवादी साधनांचा वापर करा.", calc_seeds_title: "बियाणे पेरणी कॅल्क्युलेटर", calc_seeds_label1: "जमिनीचा आकार (एकरमध्ये)", calc_seeds_label2: "बियाण्याचा प्रकार", calc_seeds_button: "बियाणे मोजा", calc_seeds_result: (amount, type, size) => `${size} एकरसाठी तुम्हाला अंदाजे <strong>${amount} किलो</strong> ${type} बियाणे लागेल.`, calc_seeds_error: "कृपया जमिनीचा वैध आकार प्रविष्ट करा.",
                 calc_pesticides_title: "कीटकनाशक फवारणी कॅल्क्युलेटर", calc_pesticides_label1: "जमिनीचा आकार (एकरमध्ये)", calc_pesticides_label2: "कीटकनाशक प्रकार", calc_pesticides_button: "कीटकनाशके मोजा", calc_pesticides_result: (amount, type, size) => `${size} एकरसाठी तुम्हाला अंदाजे <strong>${amount} L</strong> ${type} लागेल.`, calc_pesticides_error: "कृपया जमिनीचा वैध आकार प्रविष्ट करा.",
                 reviews_title: "ग्राहक पुनरावलोकने", review_form_title: "एक पुनरावलोकन द्या", review_label: "तुमचे पुनरावलोकन", review_button: "पुनरावलोकन सबमिट करा",
-                chatbot_title: "शेती सहायक चॅट बॉट", chatbot_subtitle: "कीटक, रेसिपी किंवा सामान्य शेती टिप्ससाठी आमच्या AI सहाय्याला विचारा.", chatbot_initial_msg: "नमस्कार! मी तुमचा शेती सहायक आहे. मी आज तुम्हाला कशी मदत करू शकतो?", chatbot_typing: "बॉट टाइप करत आहे...", chatbot_send_btn: "पाठवा", chatbot_user_label: "तुम्ही:", chatbot_bot_label: "बॉट:", chatbot_placeholder: "येथे तुमचा प्रश्न टाइप करा...", chatbot_static_response: "मी एक AI सहायक आहे. मी आत्ता नवीन सामग्री तयार करू शकत नाही, पण मी तुम्हाला रेसिपी शोधण्यात मदत करू शकतो. रेसिपी विभागात 'ऍफिड्स' किंवा 'फंगल' शोधण्याचा प्रयत्न करा!", chatbot_error: "त्रुटी: प्रतिसाद मिळविण्यात अयशस्वी. कृपया पुन्हा प्रयत्न करा।",
+                chatbot_title: "शेती सहायक चॅट बॉट", chatbot_subtitle: "कीटक, रेसिपी किंवा सामान्य शेती टिप्ससाठी आमच्या AI सहाय्याला विचारा.", chatbot_initial_msg: "नमस्कार! मी तुमचा शेती सहायक आहे. मी आज तुम्हाला कशी मदत करू शकतो?", chatbot_typing: "बॉट टाइप करत आहे...", chatbot_send_btn: "पाठवा", chatbot_user_label: "तुम्ही:", chatbot_bot_label: "बॉट:", chatbot_placeholder: "येथे तुमचा प्रश्न टाइप करा...", chatbot_static_response: "मी एक AI सहायक आहे। मी आत्ता नवीन सामग्री तयार करू शकत नाही, पण मी तुम्हाला रेसिपी शोधण्यात मदत करू शकतो। रेसिपी विभागात 'ऍफिड्स' किंवा 'फंगल' शोधण्याचा प्रयत्न करा!", chatbot_error: "त्रुटी: प्रतिसाद मिळविण्यात अयशस्वी. कृपया पुन्हा प्रयत्न करा।",
                 footer_text: "© 2025 फार्मिंग हब. सर्व हक्क राखीव. बनवणारे: Saksham Bhor | ईमेल:",
-                login_title: "लॉगिन / साइन अप", login_email_label: "ईमेल", login_password_label: "पासवर्ड", login_button: "लॉगिन", login_switch_text: "खाते नाही? <a>साइन अप करा</a>", login_admin_text: "प्रशासक लॉगिन? <a>येथे क्लिक करा</a>",
+                login_title: "लॉगिन / साइन अप", login_email_label: "ईमेल", login_password_label: "पासवर्ड", login_button: "लॉगिन", login_switch_text: "खाता नाही? <a>साइन अप करा</a>", login_admin_text: "प्रशासक लॉगिन? <a>येथे क्लिक करा</a>",
                 admin_title: "प्रशासक लॉगिन", admin_password_label: "प्रशासक पासवर्ड", admin_button: "प्रशासक लॉगिन", admin_switch_text: "<a>वापरकर्ता लॉगिन</a> वर परत जा",
                 signup_button: "साइन अप करा", signup_title: "साइन अप करा",
                 admin_dashboard_title: "प्रशासक डॅशबोर्ड", admin_recipes_title: "रेसिपी व्यवस्थापित करा", admin_recipes_id_label: "रेसिपी आयडी (अपडेट/डिलीटसाठी)", admin_recipes_name_label: "रेसिपीचे नाव", admin_recipes_targets_label: "लक्ष्य (कॉमा-सेपरेटेड)", admin_recipes_cost_label: "अंदाजे खर्च (₹)", admin_add_recipe: "जोडा/अपडेट करा", admin_delete_recipe: "डिलीट करा", admin_calc_title: "कॅल्क्युलेटर डेटा व्यवस्थापित करा", admin_calc_type_label: "प्रकार", admin_calc_key_label: "की (उदा. 'corn')", admin_calc_name_label: "नाव", admin_calc_amount_label: "प्रमाण (किलो किंवा लिटर)", admin_add_calc: "जोडा/अपडेट करा", admin_delete_calc: "डिलीट करा", admin_reviews_title: "पुनरावलोकने व्यवस्थापित करा",
@@ -1534,3 +1590,4 @@
     </script>
 </body>
 </html>
+
