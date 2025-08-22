@@ -283,7 +283,7 @@ const translations = {
                 alert("Review submitted successfully!");
             } catch (error) {
                 console.error("Error adding review: ", error);
-                alert("Error submitting review!");
+                alert('Error submitting review!');
             }
         }
 
