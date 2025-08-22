@@ -14,9 +14,9 @@ body {
 /* Styling for the recipe cards with subtle animations */
 .recipe-card {
     background-color: #ffffff; /* Use a solid white background for the recipe cards */
-    border-radius: 15px;
+    border-radius: 25px;
     padding: 1.5rem;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    box-shadow: 0 8px 8px rgba(0,0,0,0.1);
     margin-bottom: 1.5rem;
     opacity: 0; /* Initially hidden for staggered animation */
     transform: translateY(20px);
@@ -104,7 +104,7 @@ body {
 
 /* Result box animation */
 .result-box.show {
-    animation: slide-down 0.5s ease-out forwards;
+    animation: slide-down 0.2s ease-out forwards;
 }
 
 @keyframes slide-down {
