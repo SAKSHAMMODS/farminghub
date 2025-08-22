@@ -6,202 +6,54 @@
     <title>Farming Hub</title>
     <!-- Tailwind CSS is loaded from a CDN for a modern, responsive design -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-        /* Custom styles to define a consistent, clean font and a background color */
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: #f0fdf4; /* A light, fresh green for a farming theme */
-        }
-        
-        /* Utility for consistent container width and spacing */
-        .container {
-            max-width: 1200px;
-            margin: auto;
-            padding: 2rem 1rem;
-        }
-
-        /* Styling for the recipe cards with subtle animations */
-        .recipe-card {
-            background-color: #ffffff; /* Use a solid white background for the recipe cards */
-            border-radius: 15px;
-            padding: 1.5rem;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-            margin-bottom: 1.5rem;
-            opacity: 0; /* Initially hidden for staggered animation */
-            transform: translateY(20px);
-            animation: card-appear 0.6s ease-out forwards;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        /* Pop-up effect on hover */
-        .recipe-card:hover {
-            transform: translateY(-5px) scale(1.02);
-            box-shadow: 0 8px 16px rgba(0,0,0,0.2);
-        }
-
-        /* Keyframes for the card appearance animation */
-        @keyframes card-appear {
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        /* Basic styling for section management */
-        .section {
-            display: none; /* Hide all sections by default */
-            animation: fadeIn 0.8s ease-in-out;
-        }
-        .section.active {
-            display: block; /* Show the active section */
-        }
-
-        /* Fade-in animation for page transitions */
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-
-        /* Styling for the Home section with a vibrant image background */
-        #home-section {
-            position: relative;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            min-height: 100vh;
-            overflow: hidden;
-            background-image: url('https://images.pexels.com/photos/2165688/pexels-photo-2165688.jpeg?cs=srgb&dl=pexels-quang-nguyen-vinh-222549-2165688.jpg&fm=jpg');
-            background-size: cover;
-            background-position: center;
-        }
-
-        /* Responsive navigation menu styling */
-        .nav-links {
-            display: flex;
-            gap: 1.5rem; /* Equivalent to space-x-6 in Tailwind */
-        }
-
-        /* Responsive design for mobile navigation */
-        @media (max-width: 768px) {
-            .nav-links {
-                display: none; /* Hide nav links on smaller screens by default */
-                flex-direction: column;
-                position: absolute;
-                top: 60px;
-                left: 0;
-                width: 100%;
-                background-color: white;
-                padding: 1rem;
-                box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-            }
-            .nav-links.active {
-                display: flex; /* Show nav links when menu is toggled */
-            }
-        }
-
-        /* Active link styling */
-        .nav-links a.active {
-            color: #166534; /* Darker green for active link */
-            border-bottom: 2px solid #166534;
-        }
-        
-        /* Button press animation */
-        .btn-press:active {
-            transform: scale(0.95);
-        }
-
-        /* Result box animation */
-        .result-box.show {
-            animation: slide-down 0.5s ease-out forwards;
-        }
-
-        @keyframes slide-down {
-            from { opacity: 0; transform: translateY(-20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* Admin Theme styles */
-        .admin-theme {
-            background-color: #1f2937; /* Gray-800 */
-            color: #d1d5db; /* Gray-300 */
-        }
-        .admin-theme .nav-link-admin, .admin-theme .nav-link-admin.active {
-            color: #f9fafb; /* Gray-50 */
-            border-bottom: 2px solid #f9fafb;
-        }
-        .admin-card {
-            background-color: #374151; /* Gray-700 */
-            color: #f9fafb; /* Gray-50 */
-        }
-        .admin-input {
-            background-color: #4b5563; /* Gray-600 */
-            color: #f9fafb;
-            border-color: #6b7280;
-        }
-        .admin-button {
-            background-color: #6b7280; /* Gray-500 */
-            color: #f9fafb;
-        }
-
-        /* Login UI Styles */
-        .login-container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-        }
-        .login-card {
-            background: linear-gradient(135deg, #f0fdf4 0%, #d1f7e0 100%);
-            border-radius: 1.5rem;
-            box-shadow: 0 25px 50px -12px rgba(0,0,0,0.25);
-            padding: 2.5rem;
-            max-width: 400px;
-            width: 90%;
-            transition: all 0.5s ease-in-out;
-            transform: scale(1);
-        }
-        .login-card.hidden {
-            transform: scale(0.95);
-            opacity: 0;
-            display: none;
-        }
-        .login-card.active {
-            display: block;
-        }
-    </style>
+    <!-- Link to the external stylesheet -->
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <!-- Main Content (All sections are visible by default) -->
-    <div id="nav-and-content">
+    <!-- Role Selection Page -->
+    <div id="role-selection-section" class="login-container active">
+        <div id="role-selection-card" class="bg-gray-800 p-8 rounded-xl shadow-lg w-full max-w-sm">
+            <h2 class="text-3xl font-semibold text-center text-white mb-6">Farming Hub Login</h2>
+            <p id="auth-message" class="text-red-500 text-center mb-4 hidden"></p>
+            <p class="text-gray-400 mb-4">Please select your role to access the site.</p>
+            <div class="flex flex-col space-y-4">
+                <button onclick="loginAsUser()" class="w-full bg-blue-600 text-white py-3 px-4 rounded-full font-semibold hover:bg-blue-700 transition-colors duration-300 btn-press">Continue as User</button>
+                <button onclick="loginAsAdmin()" class="w-full bg-gray-600 text-white py-3 px-4 rounded-full font-semibold hover:bg-gray-700 transition-colors duration-300 btn-press">Continue as Admin</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content (Hidden initially) -->
+    <div id="nav-and-content" class="hidden">
         <!-- Navigation Bar -->
-        <nav class="bg-white shadow-lg sticky top-0 z-50">
+        <nav class="bg-gray-800 shadow-lg sticky top-0 z-50">
             <div class="container mx-auto px-6 py-3 flex justify-between items-center flex-wrap md:flex-nowrap">
-                <a href="#" class="text-3xl font-bold text-green-700 transition-colors duration-300 hover:text-green-500" onclick="showSection('home-section')">🌱 Farming Hub</a>
+                <a href="#" class="text-3xl font-bold text-green-500 transition-colors duration-300 hover:text-green-400" onclick="showSection('home-section')">🌱 Farming Hub</a>
                 
                 <!-- Language Selector and Hamburger Menu -->
                 <div class="flex items-center space-x-4">
-                    <select id="language-selector" class="p-2 rounded-md border border-gray-300 bg-white" onchange="setLanguage(this.value)">
+                    <select id="language-selector" class="p-2 rounded-md border border-gray-600 bg-gray-700 text-white" onchange="setLanguage(this.value)">
                         <option value="en">English</option>
                         <option value="hi">हिन्दी</option>
                         <option value="mr">मराठी</option>
                     </select>
-                    <button class="md:hidden text-gray-600 focus:outline-none" onclick="toggleNav()">
+                    <button class="md:hidden text-gray-400 focus:outline-none" onclick="toggleNav()">
                         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
                         </svg>
                     </button>
                 </div>
                 
-                <!-- Navigation links -->
+                <!-- Navigation links and Logout button -->
                 <div id="nav-menu" class="nav-links">
-                    <a href="#" class="text-gray-600 hover:text-green-500 transition-colors duration-300 font-semibold py-2 px-4 rounded-full" data-section="home-section" data-key="nav_home" onclick="showSection('home-section')">Home</a>
-                    <a href="#" class="text-gray-600 hover:text-green-500 transition-colors duration-300 font-semibold py-2 px-4 rounded-full" data-section="recipes-section" data-key="nav_recipes" onclick="showSection('recipes-section')">Recipes</a>
-                    <a href="#" class="text-gray-600 hover:text-green-500 transition-colors duration-300 font-semibold py-2 px-4 rounded-full" data-section="tools-section" data-key="nav_tools" onclick="showSection('tools-section')">Tools</a>
-                    <a href="#" class="text-gray-600 hover:text-green-500 transition-colors duration-300 font-semibold py-2 px-4 rounded-full" data-section="reviews-section" data-key="nav_reviews" onclick="showSection('reviews-section')">Reviews</a>
-                    <a href="#" class="text-gray-600 hover:text-green-500 transition-colors duration-300 font-semibold py-2 px-4 rounded-full hidden" data-section="admin-section" id="admin-nav-link" data-key="nav_admin" onclick="showSection('admin-section')">Admin</a>
-                    <a href="#" class="text-gray-600 hover:text-green-500 transition-colors duration-300 font-semibold py-2 px-4 rounded-full" data-section="chatbot-section" data-key="nav_chatbot" onclick="showSection('chatbot-section')">Chat Bot</a>
+                    <a href="#" class="text-gray-300 hover:text-blue-400 transition-colors duration-300 font-semibold py-2 px-4 rounded-full" data-section="home-section" data-key="nav_home" onclick="showSection('home-section')">Home</a>
+                    <a href="#" class="text-gray-300 hover:text-blue-400 transition-colors duration-300 font-semibold py-2 px-4 rounded-full" data-section="recipes-section" data-key="nav_recipes" onclick="showSection('recipes-section')">Recipes</a>
+                    <a href="#" class="text-gray-300 hover:text-blue-400 transition-colors duration-300 font-semibold py-2 px-4 rounded-full" data-section="tools-section" data-key="nav_tools" onclick="showSection('tools-section')">Tools</a>
+                    <a href="#" class="text-gray-300 hover:text-blue-400 transition-colors duration-300 font-semibold py-2 px-4 rounded-full" data-section="reviews-section" data-key="nav_reviews" onclick="showSection('reviews-section')">Reviews</a>
+                    <a href="#" class="text-gray-300 hover:text-blue-400 transition-colors duration-300 font-semibold py-2 px-4 rounded-full hidden" data-section="admin-section" id="admin-nav-link" data-key="nav_admin" onclick="showSection('admin-section')">Admin</a>
+                    <a href="#" class="text-gray-300 hover:text-blue-400 transition-colors duration-300 font-semibold py-2 px-4 rounded-full" data-section="chatbot-section" data-key="nav_chatbot" onclick="showSection('chatbot-section')">Chat Bot</a>
+                    <button id="nav-logout" onclick="userLogout()" class="text-white bg-blue-600 hover:bg-blue-700 transition-colors duration-300 font-semibold py-2 px-4 rounded-full ml-4" data-key="nav_logout">Logout</button>
                 </div>
             </div>
         </nav>
@@ -211,9 +63,9 @@
             <!-- Home Section with a vibrant image background -->
             <div id="home-section" class="section text-center active">
                 <!-- Content container placed over the image -->
-                <div class="relative z-10 bg-white bg-opacity-70 rounded-xl p-8 md:p-12 max-w-sm md:max-w-xl mx-auto shadow-lg">
-                    <h1 class="text-4xl md:text-5xl font-extrabold text-green-800 mb-4" data-key="home_title">Welcome to Farming Hub</h1>
-                    <p class="text-md md:text-lg text-gray-700" data-key="home_subtitle">Your one-stop destination for organic farming knowledge, sustainable practices, and community support.</p>
+                <div class="relative z-10 bg-gray-800 bg-opacity-70 rounded-xl p-8 md:p-12 max-w-sm md:max-w-xl mx-auto shadow-lg">
+                    <h1 class="text-4xl md:text-5xl font-extrabold text-green-500 mb-4" data-key="home_title">Welcome to Farming Hub</h1>
+                    <p class="text-md md:text-lg text-gray-300" data-key="home_subtitle">Your one-stop destination for organic farming knowledge, sustainable practices, and community support.</p>
                 </div>
             </div>
 
@@ -221,11 +73,11 @@
             <div id="recipes-section" class="section">
                 <div class="container mx-auto">
                     <header class="text-center py-8">
-                        <h1 class="text-3xl md:text-4xl font-extrabold text-green-700 mb-2" data-key="recipes_title">Organic Pesticide Recipes</h1>
-                        <p class="text-gray-600 text-sm md:text-base" data-key="recipes_subtitle">Discover natural, homemade solutions for common garden pests.</p>
+                        <h1 class="text-3xl md:text-4xl font-extrabold text-green-500 mb-2" data-key="recipes_title">Organic Pesticide Recipes</h1>
+                        <p class="text-gray-400 text-sm md:text-base" data-key="recipes_subtitle">Discover natural, homemade solutions for common garden pests.</p>
                     </header>
                     <div class="search-box text-center mb-8">
-                        <input type="text" id="search" placeholder="Search by name, target, or crop..." oninput="filterRecipes()" class="w-full max-w-lg p-3 rounded-full border border-gray-300 shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500 transition-all duration-300">
+                        <input type="text" id="search" placeholder="Search by name, target, or crop..." oninput="filterRecipes()" class="w-full max-w-lg p-3 rounded-full bg-gray-700 border border-gray-600 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors">
                     </div>
                     <!-- Recipe cards grid that adjusts for different screen sizes -->
                     <div id="recipe-container" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"></div>
@@ -236,245 +88,243 @@
             <!-- Tools Section -->
             <div id="tools-section" class="section">
                 <div class="container mx-auto text-center py-16">
-                    <h1 class="text-3xl md:text-4xl font-extrabold text-green-700 mb-4" data-key="tools_title">Farming Tools & Calculators</h1>
-                    <p class="text-gray-600 mb-8 text-sm md:text-base" data-key="tools_subtitle">Use our interactive tools to plan your farming activities efficiently.</p>
+                    <h1 class="text-3xl md:text-4xl font-extrabold text-green-500 mb-4" data-key="tools_title">Farming Tools & Calculators</h1>
+                    <p class="text-gray-400 mb-8 text-sm md:text-base" data-key="tools_subtitle">Use our interactive tools to plan your farming activities efficiently.</p>
                     
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                         <!-- Sowing Seeds Calculator -->
-                        <div class="bg-white p-6 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300">
-                            <h2 class="text-2xl font-bold text-green-600 mb-4" data-key="calc_seeds_title">Sowing Seeds Calculator</h2>
+                        <div class="bg-gray-800 p-6 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300">
+                            <h2 class="text-2xl font-bold text-green-500 mb-4" data-key="calc_seeds_title">Sowing Seeds Calculator</h2>
                             <div class="space-y-4 text-left">
                                 <div>
-                                    <label for="land-size-seeds" class="block text-gray-700 font-semibold mb-1" data-key="calc_seeds_label1">Land Size (in acres)</label>
-                                    <input type="number" id="land-size-seeds" value="1" min="0.1" step="0.1" class="w-full p-2 border rounded-md focus:ring-2 focus:ring-green-500">
+                                    <label for="land-size-seeds" class="block text-gray-300 font-semibold mb-1" data-key="calc_seeds_label1">Land Size (in acres)</label>
+                                    <input type="number" id="land-size-seeds" value="1" min="0.1" step="0.1" class="w-full p-2 bg-gray-700 border rounded-md border-gray-600 focus:ring-2 focus:ring-blue-500">
                                 </div>
                                 <div>
-                                    <label for="seed-type" class="block text-gray-700 font-semibold mb-1" data-key="calc_seeds_label2">Seed Type</label>
-                                    <select id="seed-type" class="w-full p-2 border rounded-md focus:ring-2 focus:ring-green-500">
+                                    <label for="seed-type" class="block text-gray-300 font-semibold mb-1" data-key="calc_seeds_label2">Seed Type</label>
+                                    <select id="seed-type" class="w-full p-2 bg-gray-700 border rounded-md border-gray-600 focus:ring-2 focus:ring-blue-500">
                                         <option value="groundnut" data-key="seed_type_groundnut">Groundnut</option>
                                         <option value="corn" data-key="seed_type_corn">Corn</option>
                                         <option value="rice" data-key="seed_type_rice">Rice</option>
                                         <option value="wheat" data-key="seed_type_wheat">Wheat</option>
                                     </select>
                                 </div>
-                                <button onclick="calculateSeeds()" class="w-full bg-green-600 text-white py-2 px-4 rounded-full hover:bg-green-700 transition-colors duration-300 btn-press" data-key="calc_seeds_button">Calculate Seeds</button>
+                                <button onclick="calculateSeeds()" class="w-full bg-blue-600 text-white py-2 px-4 rounded-full font-semibold hover:bg-blue-700 transition-colors duration-300 btn-press" data-key="calc_seeds_button">Calculate Seeds</button>
                             </div>
-                            <div id="seed-result" class="mt-4 p-4 bg-green-50 rounded-lg text-green-800 font-medium hidden"></div>
+                            <div id="seed-result" class="mt-4 p-4 bg-gray-700 rounded-lg text-green-400 font-medium hidden"></div>
                         </div>
 
                         <!-- Spreading Pesticides Calculator -->
-                        <div class="bg-white p-6 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300">
-                            <h2 class="text-2xl font-bold text-green-600 mb-4" data-key="calc_pesticides_title">Pesticides Spreading Calculator</h2>
+                        <div class="bg-gray-800 p-6 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300">
+                            <h2 class="text-2xl font-bold text-green-500 mb-4" data-key="calc_pesticides_title">Pesticides Spreading Calculator</h2>
                             <div class="space-y-4 text-left">
                                 <div>
-                                    <label for="land-size-pesticide" class="block text-gray-700 font-semibold mb-1" data-key="calc_pesticides_label1">Land Size (in acres)</label>
-                                    <input type="number" id="land-size-pesticide" value="1" min="0.1" step="0.1" class="w-full p-2 border rounded-md focus:ring-2 focus:ring-green-500">
+                                    <label for="land-size-pesticide" class="block text-gray-300 font-semibold mb-1" data-key="calc_pesticides_label1">Land Size (in acres)</label>
+                                    <input type="number" id="land-size-pesticide" value="1" min="0.1" step="0.1" class="w-full p-2 bg-gray-700 border rounded-md border-gray-600 focus:ring-2 focus:ring-blue-500">
                                 </div>
                                 <div>
-                                    <label for="pesticide-type" class="block text-gray-700 font-semibold mb-1" data-key="calc_pesticides_label2">Pesticide Type</label>
-                                    <select id="pesticide-type" class="w-full p-2 border rounded-md focus:ring-2 focus:ring-green-500">
+                                    <label for="pesticide-type" class="block text-gray-300 font-semibold mb-1" data-key="calc_pesticides_label2">Pesticide Type</label>
+                                    <select id="pesticide-type" class="w-full p-2 bg-gray-700 border rounded-md border-gray-600 focus:ring-2 focus:ring-blue-500">
                                         <option value="neem-oil" data-key="pesticide_type_neem">Neem Oil Emulsion</option>
                                         <option value="garlic-chilli" data-key="pesticide_type_garlic">Garlic-Chilli Spray</option>
                                         <option value="tobacco" data-key="pesticide_type_tobacco">Tobacco Decoction</option>
                                     </select>
                                 </div>
-                                <button onclick="calculatePesticides()" class="w-full bg-green-600 text-white py-2 px-4 rounded-full hover:bg-green-700 transition-colors duration-300 btn-press" data-key="calc_pesticides_button">Calculate Pesticides</button>
+                                <button onclick="calculatePesticides()" class="w-full bg-blue-600 text-white py-2 px-4 rounded-full font-semibold hover:bg-blue-700 transition-colors duration-300 btn-press" data-key="calc_pesticides_button">Calculate Pesticides</button>
                             </div>
-                            <div id="pesticide-result" class="mt-4 p-4 bg-green-50 rounded-lg text-green-800 font-medium hidden"></div>
+                            <div id="pesticide-result" class="mt-4 p-4 bg-gray-700 rounded-lg text-green-400 font-medium hidden"></div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
 
-        <!-- Reviews/Feedback Section -->
-        <div id="reviews-section" class="section">
-            <div class="container mx-auto py-16">
-                <h1 class="text-3xl md:text-4xl font-extrabold text-center text-green-700 mb-8" data-key="reviews_title">Customer Reviews</h1>
-                <div id="reviews-container" class="grid grid-cols-1 md:grid-cols-2 gap-8"></div>
-                <div class="mt-8 p-6 bg-white rounded-lg shadow-md">
-                    <h2 class="text-2xl font-bold text-green-600 mb-4" data-key="review_form_title">Leave a Review</h2>
-                    <form id="review-form" class="space-y-4">
-                        <div>
-                            <label for="review-text" class="block text-sm font-medium text-gray-700" data-key="review_label">Your Review</label>
-                            <textarea id="review-text" rows="4" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring focus:ring-green-500 focus:ring-opacity-50"></textarea>
-                        </div>
-                        <button type="submit" class="w-full bg-green-600 text-white py-2 px-4 rounded-full hover:bg-green-700 transition-colors duration-300 btn-press" data-key="review_button">Submit Review</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-
-        <!-- Admin Dashboard Section -->
-        <div id="admin-section" class="section admin-theme">
-            <div class="container mx-auto py-16">
-                <h1 class="text-3xl md:text-4xl font-extrabold text-center text-gray-50 mb-8" data-key="admin_dashboard_title">Admin Dashboard</h1>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-
-                    <!-- Manage Recipes -->
-                    <div class="admin-card p-6 rounded-lg shadow-md">
-                        <h2 class="text-2xl font-bold mb-4" data-key="admin_recipes_title">Manage Recipes</h2>
-                        <form id="admin-recipe-form" class="space-y-4">
+            <!-- Reviews/Feedback Section -->
+            <div id="reviews-section" class="section">
+                <div class="container mx-auto py-16">
+                    <h1 class="text-3xl md:text-4xl font-extrabold text-green-500 text-center mb-8" data-key="reviews_title">Customer Reviews</h1>
+                    <div id="reviews-container" class="grid grid-cols-1 md:grid-cols-2 gap-8"></div>
+                    <div class="mt-8 p-6 bg-gray-800 rounded-lg shadow-md">
+                        <h2 class="text-2xl font-bold text-green-500 mb-4" data-key="review_form_title">Leave a Review</h2>
+                        <form id="review-form" class="space-y-4">
                             <div>
-                                <label for="recipe-id" class="block text-sm font-medium text-gray-300" data-key="admin_recipes_id_label">Recipe ID (for update/delete)</label>
-                                <input type="text" id="recipe-id" class="mt-1 block w-full rounded-md admin-input">
+                                <label for="review-text" class="block text-sm font-medium text-gray-300" data-key="review_label">Your Review</label>
+                                <textarea id="review-text" rows="4" class="mt-1 block w-full rounded-md bg-gray-700 border border-gray-600 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors"></textarea>
                             </div>
-                            <div>
-                                <label for="recipe-name-en" class="block text-sm font-medium text-gray-300" data-key="admin_recipes_name_label">Recipe Name (EN)</label>
-                                <input type="text" id="recipe-name-en" required class="mt-1 block w-full rounded-md admin-input">
-                            </div>
-                            <div>
-                                <label for="recipe-name-hi" class="block text-sm font-medium text-gray-300" data-key="admin_recipes_name_label">Recipe Name (HI)</label>
-                                <input type="text" id="recipe-name-hi" required class="mt-1 block w-full rounded-md admin-input">
-                            </div>
-                            <div>
-                                <label for="recipe-name-mr" class="block text-sm font-medium text-gray-300" data-key="admin_recipes_name_label">Recipe Name (MR)</label>
-                                <input type="text" id="recipe-name-mr" required class="mt-1 block w-full rounded-md admin-input">
-                            </div>
-                            <div>
-                                <label for="recipe-targets-en" class="block text-sm font-medium text-gray-300" data-key="admin_recipes_targets_label">Targets (comma-separated, EN)</label>
-                                <input type="text" id="recipe-targets-en" required class="mt-1 block w-full rounded-md admin-input">
-                            </div>
-                             <div>
-                                <label for="recipe-targets-hi" class="block text-sm font-medium text-gray-300" data-key="admin_recipes_targets_label">Targets (comma-separated, HI)</label>
-                                <input type="text" id="recipe-targets-hi" required class="mt-1 block w-full rounded-md admin-input">
-                            </div>
-                            <div>
-                                <label for="recipe-targets-mr" class="block text-sm font-medium text-gray-300" data-key="admin_recipes_targets_label">Targets (comma-separated, MR)</label>
-                                <input type="text" id="recipe-targets-mr" required class="mt-1 block w-full rounded-md admin-input">
-                            </div>
-                            <div>
-                                <label for="recipe-cost" class="block text-sm font-medium text-gray-300" data-key="admin_recipes_cost_label">Approximate Cost (₹)</label>
-                                <input type="number" id="recipe-cost" required class="mt-1 block w-full rounded-md admin-input">
-                            </div>
-                             <div>
-                                <label for="recipe-where-en" class="block text-sm font-medium text-gray-300">Where to Use (EN)</label>
-                                <input type="text" id="recipe-where-en" class="mt-1 block w-full rounded-md admin-input">
-                            </div>
-                            <div>
-                                <label for="recipe-where-hi" class="block text-sm font-medium text-gray-300">Where to Use (HI)</label>
-                                <input type="text" id="recipe-where-hi" class="mt-1 block w-full rounded-md admin-input">
-                            </div>
-                            <div>
-                                <label for="recipe-where-mr" class="block text-sm font-medium text-gray-300">Where to Use (MR)</label>
-                                <input type="text" id="recipe-where-mr" class="mt-1 block w-full rounded-md admin-input">
-                            </div>
-                             <div>
-                                <label for="recipe-ingredients-en" class="block text-sm font-medium text-gray-300">Ingredients (EN)</label>
-                                <input type="text" id="recipe-ingredients-en" class="mt-1 block w-full rounded-md admin-input">
-                            </div>
-                            <div>
-                                <label for="recipe-ingredients-hi" class="block text-sm font-medium text-gray-300">Ingredients (HI)</label>
-                                <input type="text" id="recipe-ingredients-hi" class="mt-1 block w-full rounded-md admin-input">
-                            </div>
-                            <div>
-                                <label for="recipe-ingredients-mr" class="block text-sm font-medium text-gray-300">Ingredients (MR)</label>
-                                <input type="text" id="recipe-ingredients-mr" class="mt-1 block w-full rounded-md admin-input">
-                            </div>
-                             <div>
-                                <label for="recipe-procedure-en" class="block text-sm font-medium text-gray-300">Procedure (EN)</label>
-                                <input type="text" id="recipe-procedure-en" class="mt-1 block w-full rounded-md admin-input">
-                            </div>
-                            <div>
-                                <label for="recipe-procedure-hi" class="block text-sm font-medium text-gray-300">Procedure (HI)</label>
-                                <input type="text" id="recipe-procedure-hi" class="mt-1 block w-full rounded-md admin-input">
-                            </div>
-                            <div>
-                                <label for="recipe-procedure-mr" class="block text-sm font-medium text-gray-300">Procedure (MR)</label>
-                                <input type="text" id="recipe-procedure-mr" class="mt-1 block w-full rounded-md admin-input">
-                            </div>
-                             <div>
-                                <label for="recipe-usage-en" class="block text-sm font-medium text-gray-300">How to Use (EN)</label>
-                                <input type="text" id="recipe-usage-en" class="mt-1 block w-full rounded-md admin-input">
-                            </div>
-                            <div>
-                                <label for="recipe-usage-hi" class="block text-sm font-medium text-gray-300">How to Use (HI)</label>
-                                <input type="text" id="recipe-usage-hi" class="mt-1 block w-full rounded-md admin-input">
-                            </div>
-                            <div>
-                                <label for="recipe-usage-mr" class="block text-sm font-medium text-gray-300">How to Use (MR)</label>
-                                <input type="text" id="recipe-usage-mr" class="mt-1 block w-full rounded-md admin-input">
-                            </div>
-                            <div class="flex space-x-4">
-                                <button type="submit" onclick="addUpdateRecipe(event)" class="w-full admin-button py-2 px-4 rounded-full hover:bg-gray-700 transition-colors duration-300 btn-press" data-key="admin_add_recipe">Add/Update</button>
-                                <button type="button" onclick="deleteRecipe(event)" class="w-full admin-button py-2 px-4 rounded-full hover:bg-gray-700 transition-colors duration-300 btn-press" data-key="admin_delete_recipe">Delete</button>
-                            </div>
+                            <button type="submit" class="w-full bg-blue-600 text-white py-2 px-4 rounded-full font-semibold hover:bg-blue-700 transition-colors duration-300 btn-press" data-key="review_button">Submit Review</button>
                         </form>
                     </div>
+                </div>
+            </div>
 
-                    <!-- Manage Calculator Data -->
-                    <div class="admin-card p-6 rounded-lg shadow-md">
-                        <h2 class="text-2xl font-bold mb-4" data-key="admin_calc_title">Manage Calculator Data</h2>
-                        <form id="admin-calc-form" class="space-y-4">
-                            <div>
-                                <label for="calc-type-select" class="block text-sm font-medium text-gray-300" data-key="admin_calc_type_label">Type</label>
-                                <select id="calc-type-select" class="mt-1 block w-full rounded-md admin-input">
-                                    <option value="seed">Seed Type</option>
-                                    <option value="pesticide">Pesticide Type</option>
-                                </select>
-                            </div>
-                            <div>
-                                <label for="calc-key" class="block text-sm font-medium text-gray-300" data-key="admin_calc_key_label">Key (e.g., 'corn')</label>
-                                <input type="text" id="calc-key" class="mt-1 block w-full rounded-md admin-input">
-                            </div>
-                            <div>
-                                <label for="calc-name-en" class="block text-sm font-medium text-gray-300" data-key="admin_calc_name_label">Name (EN)</label>
-                                <input type="text" id="calc-name-en" class="mt-1 block w-full rounded-md admin-input">
-                            </div>
-                            <div>
-                                <label for="calc-name-hi" class="block text-sm font-medium text-gray-300" data-key="admin_calc_name_label">Name (HI)</label>
-                                <input type="text" id="calc-name-hi" class="mt-1 block w-full rounded-md admin-input">
-                            </div>
-                             <div>
-                                <label for="calc-name-mr" class="block text-sm font-medium text-gray-300" data-key="admin_calc_name_label">Name (MR)</label>
-                                <input type="text" id="calc-name-mr" class="mt-1 block w-full rounded-md admin-input">
-                            </div>
-                            <div>
-                                <label for="calc-amount" class="block text-sm font-medium text-gray-300" data-key="admin_calc_amount_label">Amount (kg or L)</label>
-                                <input type="number" id="calc-amount" class="mt-1 block w-full rounded-md admin-input">
-                            </div>
-                            <div class="flex space-x-4">
-                                <button type="button" onclick="addUpdateCalcData()" class="w-full admin-button py-2 px-4 rounded-full hover:bg-gray-700 transition-colors duration-300 btn-press" data-key="admin_add_calc">Add/Update</button>
-                                <button type="button" onclick="deleteCalcData()" class="w-full admin-button py-2 px-4 rounded-full hover:bg-gray-700 transition-colors duration-300 btn-press" data-key="admin_delete_calc">Delete</button>
-                            </div>
-                        </form>
-                    </div>
+            <!-- Admin Dashboard Section -->
+            <div id="admin-section" class="section admin-theme">
+                <div class="container mx-auto py-16">
+                    <h1 class="text-3xl md:text-4xl font-extrabold text-center text-gray-50 mb-8" data-key="admin_dashboard_title">Admin Dashboard</h1>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
 
-                    <!-- Manage Reviews -->
-                    <div class="admin-card p-6 rounded-lg shadow-md md:col-span-2">
-                        <h2 class="text-2xl font-bold mb-4" data-key="admin_reviews_title">Manage Reviews</h2>
-                        <div id="admin-reviews-list" class="space-y-4">
-                            <!-- Reviews will be dynamically loaded here -->
+                        <!-- Manage Recipes -->
+                        <div class="admin-card p-6 rounded-lg shadow-md">
+                            <h2 class="text-2xl font-bold mb-4" data-key="admin_recipes_title">Manage Recipes</h2>
+                            <form id="admin-recipe-form" class="space-y-4">
+                                <div>
+                                    <label for="recipe-id" class="block text-sm font-medium text-gray-300" data-key="admin_recipes_id_label">Recipe ID (for update/delete)</label>
+                                    <input type="text" id="recipe-id" class="mt-1 block w-full rounded-md admin-input">
+                                </div>
+                                <div>
+                                    <label for="recipe-name-en" class="block text-sm font-medium text-gray-300" data-key="admin_recipes_name_label">Recipe Name (EN)</label>
+                                    <input type="text" id="recipe-name-en" required class="mt-1 block w-full rounded-md admin-input">
+                                </div>
+                                <div>
+                                    <label for="recipe-name-hi" class="block text-sm font-medium text-gray-300" data-key="admin_recipes_name_label">Recipe Name (HI)</label>
+                                    <input type="text" id="recipe-name-hi" required class="mt-1 block w-full rounded-md admin-input">
+                                </div>
+                                <div>
+                                    <label for="recipe-name-mr" class="block text-sm font-medium text-gray-300" data-key="admin_recipes_name_label">Recipe Name (MR)</label>
+                                    <input type="text" id="recipe-name-mr" required class="mt-1 block w-full rounded-md admin-input">
+                                </div>
+                                <div>
+                                    <label for="recipe-targets-en" class="block text-sm font-medium text-gray-300" data-key="admin_recipes_targets_label">Targets (comma-separated, EN)</label>
+                                    <input type="text" id="recipe-targets-en" required class="mt-1 block w-full rounded-md admin-input">
+                                </div>
+                                 <div>
+                                    <label for="recipe-targets-hi" class="block text-sm font-medium text-gray-300" data-key="admin_recipes_targets_label">Targets (comma-separated, HI)</label>
+                                    <input type="text" id="recipe-targets-hi" required class="mt-1 block w-full rounded-md admin-input">
+                                </div>
+                                <div>
+                                    <label for="recipe-targets-mr" class="block text-sm font-medium text-gray-300" data-key="admin_recipes_targets_label">Targets (comma-separated, MR)</label>
+                                    <input type="text" id="recipe-targets-mr" required class="mt-1 block w-full rounded-md admin-input">
+                                </div>
+                                <div>
+                                    <label for="recipe-cost" class="block text-sm font-medium text-gray-300" data-key="admin_recipes_cost_label">Approximate Cost (₹)</label>
+                                    <input type="number" id="recipe-cost" required class="mt-1 block w-full rounded-md admin-input">
+                                </div>
+                                 <div>
+                                    <label for="recipe-where-en" class="block text-sm font-medium text-gray-300">Where to Use (EN)</label>
+                                    <input type="text" id="recipe-where-en" class="mt-1 block w-full rounded-md admin-input">
+                                </div>
+                                <div>
+                                    <label for="recipe-where-hi" class="block text-sm font-medium text-gray-300">Where to Use (HI)</label>
+                                    <input type="text" id="recipe-where-hi" class="mt-1 block w-full rounded-md admin-input">
+                                </div>
+                                <div>
+                                    <label for="recipe-where-mr" class="block text-sm font-medium text-gray-300">Where to Use (MR)</label>
+                                    <input type="text" id="recipe-where-mr" class="mt-1 block w-full rounded-md admin-input">
+                                </div>
+                                 <div>
+                                    <label for="recipe-ingredients-en" class="block text-sm font-medium text-gray-300">Ingredients (EN)</label>
+                                    <input type="text" id="recipe-ingredients-en" class="mt-1 block w-full rounded-md admin-input">
+                                </div>
+                                <div>
+                                    <label for="recipe-ingredients-hi" class="block text-sm font-medium text-gray-300">Ingredients (HI)</label>
+                                    <input type="text" id="recipe-ingredients-hi" class="mt-1 block w-full rounded-md admin-input">
+                                </div>
+                                <div>
+                                    <label for="recipe-ingredients-mr" class="block text-sm font-medium text-gray-300">Ingredients (MR)</label>
+                                    <input type="text" id="recipe-ingredients-mr" class="mt-1 block w-full rounded-md admin-input">
+                                </div>
+                                 <div>
+                                    <label for="recipe-procedure-en" class="block text-sm font-medium text-gray-300">Procedure (EN)</label>
+                                    <input type="text" id="recipe-procedure-en" class="mt-1 block w-full rounded-md admin-input">
+                                </div>
+                                <div>
+                                    <label for="recipe-procedure-hi" class="block text-sm font-medium text-gray-300">Procedure (HI)</label>
+                                    <input type="text" id="recipe-procedure-hi" class="mt-1 block w-full rounded-md admin-input">
+                                </div>
+                                <div>
+                                    <label for="recipe-procedure-mr" class="block text-sm font-medium text-gray-300">Procedure (MR)</label>
+                                    <input type="text" id="recipe-procedure-mr" class="mt-1 block w-full rounded-md admin-input">
+                                </div>
+                                 <div>
+                                    <label for="recipe-usage-en" class="block text-sm font-medium text-gray-300">How to Use (EN)</label>
+                                    <input type="text" id="recipe-usage-en" class="mt-1 block w-full rounded-md admin-input">
+                                </div>
+                                <div>
+                                    <label for="recipe-usage-hi" class="block text-sm font-medium text-gray-300">How to Use (HI)</label>
+                                    <input type="text" id="recipe-usage-hi" class="mt-1 block w-full rounded-md admin-input">
+                                </div>
+                                <div>
+                                    <label for="recipe-usage-mr" class="block text-sm font-medium text-gray-300">How to Use (MR)</label>
+                                    <input type="text" id="recipe-usage-mr" class="mt-1 block w-full rounded-md admin-input">
+                                </div>
+                                <div class="flex space-x-4">
+                                    <button type="submit" onclick="addUpdateRecipe(event)" class="w-full admin-button py-2 px-4 rounded-full hover:bg-gray-700 transition-colors duration-300 btn-press" data-key="admin_add_recipe">Add/Update</button>
+                                    <button type="button" onclick="deleteRecipe(event)" class="w-full admin-button py-2 px-4 rounded-full hover:bg-gray-700 transition-colors duration-300 btn-press" data-key="admin_delete_recipe">Delete</button>
+                                </div>
+                            </form>
+                        </div>
+
+                        <div class="admin-card p-6 rounded-lg shadow-md">
+                            <h2 class="text-2xl font-bold mb-4" data-key="admin_calc_title">Manage Calculator Data</h2>
+                            <form id="admin-calc-form" class="space-y-4">
+                                <div>
+                                    <label for="calc-type-select" class="block text-sm font-medium text-gray-300" data-key="admin_calc_type_label">Type</label>
+                                    <select id="calc-type-select" class="mt-1 block w-full rounded-md admin-input">
+                                        <option value="seed">Seed Type</option>
+                                        <option value="pesticide">Pesticide Type</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label for="calc-key" class="block text-sm font-medium text-gray-300" data-key="admin_calc_key_label">Key (e.g., 'corn')</label>
+                                    <input type="text" id="calc-key" class="mt-1 block w-full rounded-md admin-input">
+                                </div>
+                                <div>
+                                    <label for="calc-name-en" class="block text-sm font-medium text-gray-300" data-key="admin_calc_name_label">Name (EN)</label>
+                                    <input type="text" id="calc-name-en" class="mt-1 block w-full rounded-md admin-input">
+                                </div>
+                                <div>
+                                    <label for="calc-name-hi" class="block text-sm font-medium text-gray-300" data-key="admin_calc_name_label">Name (HI)</label>
+                                    <input type="text" id="calc-name-hi" class="mt-1 block w-full rounded-md admin-input">
+                                </div>
+                                 <div>
+                                    <label for="calc-name-mr" class="block text-sm font-medium text-gray-300" data-key="admin_calc_name_label">Name (MR)</label>
+                                    <input type="text" id="calc-name-mr" class="mt-1 block w-full rounded-md admin-input">
+                                </div>
+                                <div>
+                                    <label for="calc-amount" class="block text-sm font-medium text-gray-300" data-key="admin_calc_amount_label">Amount (kg or L)</label>
+                                    <input type="number" id="calc-amount" class="mt-1 block w-full rounded-md admin-input">
+                                </div>
+                                <div class="flex space-x-4">
+                                    <button type="button" onclick="addUpdateCalcData()" class="w-full admin-button py-2 px-4 rounded-full hover:bg-gray-700 transition-colors duration-300 btn-press" data-key="admin_add_calc">Add/Update</button>
+                                    <button type="button" onclick="deleteCalcData()" class="w-full admin-button py-2 px-4 rounded-full hover:bg-gray-700 transition-colors duration-300 btn-press" data-key="admin_delete_calc">Delete</button>
+                                </div>
+                            </form>
+                        </div>
+
+                        <div class="admin-card p-6 rounded-lg shadow-md md:col-span-2">
+                            <h2 class="text-2xl font-bold mb-4" data-key="admin_reviews_title">Manage Reviews</h2>
+                            <div id="admin-reviews-list" class="space-y-4">
+                                </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
 
-        <!-- Chat Bot Section -->
-        <div id="chatbot-section" class="section">
-            <div class="container mx-auto text-center py-16">
-                <h1 class="text-3xl md:text-4xl font-extrabold text-green-700 mb-4" data-key="chatbot_title">Farming Assistant Chat Bot</h1>
-                <p class="text-gray-600 mb-8 text-sm md:text-base" data-key="chatbot_subtitle">Ask our AI assistant for advice on pests, recipes, or general farming tips.</p>
-                <div class="max-w-lg mx-auto bg-white p-6 rounded-lg shadow-xl">
-                    <div id="chatbot-messages" class="h-64 overflow-y-auto mb-4 border rounded-lg p-4 bg-gray-50">
-                        <p class="text-left text-gray-500" data-key="chatbot_initial_msg">Hello! I'm your farming assistant. How can I help you today?</p>
-                    </div>
-                    <!-- Chatbot 'is typing' indicator -->
-                    <div class="flex mt-4">
-                        <input type="text" id="chatbot-input" placeholder="Type your question here..." class="flex-grow p-3 rounded-l-full border border-gray-300 focus:outline-none">
-                        <button onclick="sendMessage()" class="bg-green-600 text-white py-2 px-4 rounded-full hover:bg-green-700 transition-colors duration-300 btn-press" data-key="chatbot_send_btn">Send</button>
+            <div id="chatbot-section" class="section">
+                <div class="container mx-auto text-center py-16">
+                    <h1 class="text-3xl md:text-4xl font-extrabold text-green-500 mb-4" data-key="chatbot_title">Farming Assistant Chat Bot</h1>
+                    <p class="text-gray-400 mb-8 text-sm md:text-base" data-key="chatbot_subtitle">Ask our AI assistant for advice on pests, recipes, or general farming tips.</p>
+                    <div class="max-w-lg mx-auto bg-gray-800 p-6 rounded-lg shadow-xl">
+                        <div id="chatbot-messages" class="h-64 overflow-y-auto mb-4 border rounded-lg p-4 bg-gray-700">
+                            <p class="text-left text-gray-300" data-key="chatbot_initial_msg">Hello! I'm your farming assistant. How can I help you today?</p>
+                        </div>
+                        <div id="typing-indicator" class="text-left text-gray-500 italic hidden">
+                            <span class="animate-pulse" data-key="chatbot_typing">Bot is typing...</span>
+                        </div>
+                        <div class="flex mt-4">
+                            <input type="text" id="chatbot-input" placeholder="Type your question here..." class="flex-grow p-3 rounded-l-full border border-gray-600 bg-gray-700 focus:outline-none text-gray-300">
+                            <button onclick="sendMessage()" class="bg-blue-600 text-white py-2 px-4 rounded-r-full font-semibold hover:bg-blue-700 transition-colors duration-300 btn-press" data-key="chatbot_send_btn">Send</button>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
 
-        <footer class="bg-gray-800 text-white text-center py-6">
-            <p data-key="footer_text">© 2025 Farming Hub. All rights reserved. Made by Saksham Bhor | Email: <a href="mailto:sakshambhor@gmail.com" class="text-green-400 hover:text-green-300 transition-colors duration-300">sakshambhor@gmail.com</a></p>
-        </footer>
-    </div>
+            <footer class="bg-gray-800 text-white text-center py-6">
+                <p data-key="footer_text">© 2025 Farming Hub. All rights reserved. Made by Saksham Bhor | Email: <a href="mailto:sakshambhor@gmail.com" class="text-blue-400 hover:text-blue-300 transition-colors duration-300">sakshambhor@gmail.com</a></p>
+            </footer>
+        </div>
     
     <script src="script.js" type="module"></script>
     
 </body>
 </html>
+
