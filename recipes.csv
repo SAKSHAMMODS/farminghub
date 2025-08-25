@@ -1,300 +1,301 @@
 id,name,targets,whereToUse,ingredients,procedure,howToUse,cost
-1,Neem Seed Kernel Extract (NSKE),Caterpillars; Aphids; Whiteflies,Vegetables; pulses; cotton,Neem seeds – 500 g; Water – 10 L,Collect dried neem seeds and grind them into powder. Soak the powder in 10 liters of water overnight. Filter before use.,Spray directly on affected crops in the evening.,80
-2,Garlic–Chili Extract,Aphids; Thrips; Mites,Vegetables; fruits,Garlic cloves – 100 g; Green chili – 50 g; Water – 2 L,Crush garlic and chili into a paste. Mix in 2 liters of water; ferment overnight. Filter before use.,Spray on leaf undersides weekly.,40
-3,Tobacco Leaf Extract,Caterpillars; Leaf miners,Cotton; okra; brinjal,Dried tobacco leaves – 250 g; Water – 5 L,Soak leaves in water overnight. Boil for 20 minutes; cool; and filter.,Dilute 1:10 with water; spray in evening.,100
-4,Buttermilk–Turmeric Spray,Fungal spots; Mildew,Leafy vegetables; gourds,Buttermilk – 1 L; Turmeric powder – 50 g; Water – 5 L,Mix buttermilk; turmeric; and water well.,Spray on infected leaves every 7 days.,30
-5,Onion–Garlic–Chili Mix,Aphids; Mites; Thrips,Tomato; brinjal; okra,Onion – 100 g; Garlic – 100 g; Chili – 50 g; Water – 2 L,Crush into paste; soak overnight in water; filter.,Spray on affected plants.,50
-6,Neem Oil–Soap Spray,Aphids; Mealybugs; Whiteflies,Vegetables; cotton; fruits,Neem oil – 50 ml; Soap solution – 10 g; Water – 1 L,Mix neem oil with soap; dilute in water.,Spray evenly on plant leaves.,60
-7,Asafoetida Solution,Aphids; Caterpillars,Legumes; cucurbits,Asafoetida – 10 g; Water – 1 L,Dissolve asafoetida in water.,Spray on crops weekly.,25
-8,Lemon Peel Extract,Ants; Aphids; Whiteflies,Fruits; vegetables,Lemon peel – 200 g; Water – 2 L,Boil peel in water for 20 mins; cool and filter.,Spray directly on affected crops.,30
-9,Aloe Vera Gel Spray,Mites; Thrips; Whiteflies,Vegetables; floriculture,Aloe vera gel – 200 g; Water – 5 L,Blend gel into water.,Spray on leaves in evening.,40
-10,Cow Urine Solution,Caterpillars; Aphids; Fungal spots,All field crops,Fresh cow urine – 5 L; Water – 10 L,Dilute cow urine with water.,Spray every 10 days.,10
-12,Curry Leaf Extract,Aphids; Caterpillars,Vegetables; fruits,Fresh curry leaves – 250 g; Water – 2 L,Crush leaves; boil in water; cool; filter.,Spray directly on crops.,30
-13,Tobacco–Neem Mix,Leaf miners; Caterpillars,Cotton; vegetables,Tobacco leaves – 100 g; Neem leaves – 250 g; Water – 5 L,Soak leaves overnight; boil for 20 mins; filter.,Spray after diluting 1:5 with water.,90
-14,Drumstick Leaf Extract,Caterpillars; Beetles,Pulses; brinjal; okra,Drumstick leaves – 500 g; Water – 5 L,Crush leaves; soak in water; filter.,Spray on foliage.,50
-15,Aloe Vera–Neem Blend,Whiteflies; Mites,Tomato; okra; gourds,Aloe vera gel – 200 g; Neem leaves – 250 g; Water – 5 L,Blend aloe and neem in water; ferment overnight.,Spray once a week.,60
-16,Clove Oil Spray,Aphids; Whiteflies; Thrips,Vegetables; spices,Clove oil – 20 ml; Soap solution – 5 g; Water – 1 L,Mix oil with soap solution; dilute with water.,Spray on infested plants.,70
-17,Ash–Buttermilk Spray,Fungal diseases; Mildew,Vegetables; leafy crops,Wood ash – 500 g; Buttermilk – 1 L; Water – 5 L,Mix ash and buttermilk into water; ferment 1 day.,Spray on leaves every 10 days.,20
-18,Tamarind Leaf Extract,Aphids; Caterpillars,Vegetables; pulses,Tamarind leaves – 250 g; Water – 2 L,Crush leaves; soak in water overnight; filter.,Spray on affected plants.,25
-19,Aloe–Garlic Mix,Mites; Thrips; Whiteflies,Tomato; brinjal; gourds,Aloe vera gel – 150 g; Garlic – 100 g; Water – 3 L,Blend garlic and aloe in water; filter.,Spray every 7–10 days.,40
-20,Ginger–Turmeric Extract,Fungal infections; Aphids,Vegetables; fruits,Fresh ginger – 100 g; Turmeric powder – 50 g; Water – 2 L,Grind ginger; mix with turmeric; soak overnight.,Spray on affected leaves.,35
-21,Papaya Leaf Extract,Whiteflies; Caterpillars,Vegetables; papaya orchards,Papaya leaves – 500 g; Water – 5 L,Crush leaves; soak overnight; filter.,Spray on crops weekly.,40
-22,Eucalyptus Leaf Extract,Aphids; Thrips; Mites,Vegetables; cotton,Eucalyptus leaves – 200 g; Water – 2 L,Crush and boil leaves; filter after cooling.,Spray directly on crops.,30
-23,Turmeric–Lime Solution,Fungal spots; Bacterial blight,Vegetables; fruits,Turmeric powder – 50 g; Lime (chuna) – 20 g; Water – 2 L,Mix turmeric and lime in water thoroughly.,Spray weekly as preventive.,20
-24,Mint Leaf Extract,Aphids; Whiteflies; Caterpillars,Vegetables; flowers,Fresh mint leaves – 200 g; Water – 2 L,Crush leaves; soak overnight; filter.,Spray on infested crops.,25
-25,Pepper–Garlic Extract,Caterpillars; Aphids,Tomato; okra; brinjal,Black pepper – 20 g; Garlic – 100 g; Water – 2 L,Grind into paste; soak overnight; filter.,Spray on affected crops.,40
-26,Lemon–Garlic Spray,Aphids; Thrips,Vegetables; fruits,Lemon juice – 50 ml; Garlic – 100 g; Water – 2 L,Blend garlic with lemon juice and water.,Spray every 7 days.,30
-27,Jaggery–Asafoetida Mix,Fruit flies; Leaf borers,Vegetables; fruits,Jaggery – 200 g; Asafoetida – 5 g; Water – 2 L,Dissolve jaggery and asafoetida in water.,Use as trap spray or foliar spray.,35
-28,Custard Apple Leaf Extract,Caterpillars; Beetles,Vegetables; pulses,Custard apple leaves – 200 g; Water – 2 L,Crush leaves; soak overnight; filter.,Spray directly on affected crops.,25
-29,Fenugreek Seed Extract,Aphids; Mites,Vegetables; oilseeds,Fenugreek seeds – 100 g; Water – 2 L,Soak seeds overnight; grind; filter.,Spray once in 7–10 days.,30
-30,Tulsi Leaf Extract,Whiteflies; Caterpillars,Vegetables; fruits,Fresh tulsi leaves – 250 g; Water – 3 L,Crush leaves; soak overnight; filter.,Spray on foliage weekly.,20
-31,Basil Leaf Extract,Aphids; Caterpillars,Vegetables; flowers,Fresh basil leaves – 200 g; Water – 2 L,Crush leaves; soak overnight; filter.,Spray weekly as preventive.,25
-32,Onion–Chili Spray,Thrips; Aphids,Tomato; onion; okra,Onion – 100 g; Green chili – 50 g; Water – 2 L,Grind onion and chili; soak overnight; filter.,Spray directly on crops.,30
-33,Bitter Gourd Leaf Extract,Whiteflies; Caterpillars,Cucurbits; gourds,Bitter gourd leaves – 200 g; Water – 2 L,Crush leaves; soak overnight; filter.,Spray every 7 days.,20
-34,Black Pepper–Neem Spray,Caterpillars; Mites,Vegetables; fruits,Black pepper – 25 g; Neem leaves – 250 g; Water – 2 L,Grind pepper; soak with neem leaves; filter.,Spray on foliage.,50
-35,Garlic–Mustard Mix,Aphids; Caterpillars,Mustard; pulses; vegetables,Garlic – 100 g; Mustard seeds – 50 g; Water – 2 L,Grind into paste; soak in water overnight; filter.,Spray on affected areas.,40
-36,Banana Peel Extract,Aphids; Whiteflies,Vegetables; fruits,Banana peels – 5 pieces; Water – 2 L,Chop peels; ferment in water 3 days; filter.,Spray weekly.,15
-37,Curry Powder Spray,Caterpillars; Aphids,Vegetables; spices,Curry powder – 20 g; Soap water – 1 L,Mix curry powder with soap water; stir well.,Spray on crops.,20
-38,Mustard Cake Extract,Aphids; Root grubs,Vegetables; oilseeds,Mustard cake – 200 g; Water – 5 L,Soak cake in water for 48 hours; filter.,Spray or drench soil.,35
-39,Green Tea Extract,Mites; Aphids,Vegetables; flowers,Green tea leaves – 20 g; Water – 1 L,Boil tea in water; cool; filter.,Spray on foliage.,15
-40,Rice Wash Water,Whiteflies; Aphids,Vegetables; rice fields,Rice wash water – 2 L,Collect rice wash; ferment for 24 hours.,Spray directly.,0
-41,Lemon Leaf Extract,Whiteflies; Caterpillars,Vegetables; lemon orchards,Lemon leaves – 200 g; Water – 2 L,Crush leaves; soak overnight; filter.,Spray on foliage.,20
-42,Radish Leaf Extract,Aphids; Thrips,Vegetables; pulses,Radish leaves – 200 g; Water – 2 L,Crush leaves; soak in water; filter.,Spray directly.,15
-43,Cabbage Leaf Extract,Caterpillars; Aphids,Cabbage; cauliflower; vegetables,Cabbage leaves – 200 g; Water – 2 L,Crush leaves; soak; filter.,Spray on crops.,20
-44,Guava Leaf Extract,Whiteflies; Caterpillars,Vegetables; guava orchards,Guava leaves – 250 g; Water – 2 L,Crush leaves; soak overnight; filter.,Spray once in 7 days.,25
-45,Mint–Chili Mix,Aphids; Thrips,Vegetables; flowers,Fresh mint leaves – 100 g; Green chili – 50 g; Water – 2 L,Grind mint and chili; soak overnight; filter.,Spray weekly.,30
-46,Spinach Leaf Extract,Caterpillars; Aphids,Vegetables; leafy greens,Spinach leaves – 200 g; Water – 2 L,Crush; soak in water; filter.,Spray directly.,15
-47,Cumin Seed Extract,Mites; Aphids,Vegetables; spices,Cumin seeds – 50 g; Water – 2 L,Soak seeds overnight; grind; filter.,Spray every 7 days.,40
-48,Rose Leaf Extract,Aphids; Whiteflies,Vegetables; rose gardens,Rose leaves – 100 g; Water – 1 L,Crush; soak; filter.,Spray directly on leaves.,20
-49,Chickpea Flour Spray,Caterpillars; Thrips,Pulses; vegetables,Chickpea flour – 50 g; Water – 2 L,Mix flour with water; stir well.,Spray on foliage as sticky coating.,20
-50,Carrot Leaf Extract,Aphids; Caterpillars,Vegetables; carrot fields,Carrot leaves – 200 g; Water – 2 L,Crush; soak in water; filter.,Spray on crops.,15
-51,Groundnut Leaf Extract,Aphids; Caterpillars,Groundnut; vegetables,Groundnut leaves – 250 g; Water – 2 L,Crush leaves; soak overnight; filter.,Spray directly.,20
-52,Pepper–Turmeric Mix,Fungal diseases; Aphids,Vegetables; fruits,Black pepper – 20 g; Turmeric powder – 50 g; Water – 2 L,Mix well; soak overnight.,Spray weekly.,30
-53,Okra Leaf Extract,Whiteflies; Caterpillars,Okra; vegetables,Okra leaves – 200 g; Water – 2 L,Crush; soak; filter.,Spray directly.,15
-54,Coriander Seed Extract,Mites; Aphids,Vegetables; spices,Coriander seeds – 50 g; Water – 2 L,Soak overnight; grind; filter.,Spray weekly.,30
-55,Pomegranate Peel Extract,Caterpillars; Whiteflies,Vegetables; fruits,Pomegranate peels – 200 g; Water – 2 L,Dry peels; grind; soak overnight; filter.,Spray on foliage.,25
-56,Bay Leaf Extract,Aphids; Caterpillars,Vegetables; spices,Bay leaves – 50 g; Water – 1 L,Crush; boil in water; cool; filter.,Spray on crops.,20
-57,Lemon Grass Extract,Whiteflies; Mites,Vegetables; fruits,Lemongrass – 100 g; Water – 2 L,Crush; boil; cool; filter.,Spray every 7 days.,25
-58,Mustard Seed Oil Spray,Aphids; Whiteflies,Vegetables; oilseeds,Mustard oil – 20 ml; Soap water – 1 L,Mix oil with soap water.,Spray on foliage.,25
-59,Castor Leaf Extract,Caterpillars; Beetles,Castor; vegetables,Castor leaves – 200 g; Water – 2 L,Crush; soak overnight; filter.,Spray weekly.,20
-60,Orange Peel Extract,Aphids; Thrips; Whiteflies,Vegetables; fruits,Orange peels – 200 g; Water – 2 L,Dry peels; boil in water; filter.,Spray every 10 days.,25
-61,Tamarind Leaf Extract,Aphids; Caterpillars,Tamarind orchards; vegetables,Tamarind leaves – 200 g; Water – 2 L,Crush leaves; soak overnight; filter.,Spray weekly on foliage.,20
-62,Aloe Vera Gel Spray,Whiteflies; Thrips,Vegetables; fruits,Aloe vera gel – 100 g; Water – 1 L,Blend gel with water; stir well.,Spray on affected leaves.,30
-63,Wheat Flour Dust,Caterpillars; Beetles,Wheat; maize; vegetables,Wheat flour – 100 g,Sprinkle directly on infested crops.,Apply in the morning when leaves are wet.,10
-64,Neem Oil–Soap Spray,Aphids; Whiteflies; Mites,Vegetables; fruits; pulses,Neem oil – 30 ml; Soap solution – 1 L,Mix oil with soap water.,Spray every 10 days.,40
-65,Garlic–Turmeric Extract,Caterpillars; Aphids; Fungal diseases,Vegetables; pulses,Garlic – 100 g; Turmeric – 50 g; Water – 2 L,Grind garlic and turmeric; soak overnight; filter.,Spray on foliage.,35
-66,Eucalyptus Leaf Extract,Whiteflies; Caterpillars,Vegetables; fruits; eucalyptus areas,Eucalyptus leaves – 200 g; Water – 2 L,Crush; boil in water; cool; filter.,Spray weekly.,25
-67,Coffee Powder Spray,Ants; Aphids; Beetles,Vegetables; flowers,Coffee powder – 20 g; Water – 1 L,Mix coffee with water; stir well.,Spray on infested areas.,20
-68,Coconut Husk Extract,Aphids; Whiteflies,Coconut; vegetables,Coconut husk – 200 g; Water – 2 L,Chop husk; soak for 2 days; filter.,Spray weekly.,15
-69,Fenugreek Seed Extract,Aphids; Mites,Vegetables; spices,Fenugreek seeds – 50 g; Water – 1 L,Soak seeds overnight; grind; filter.,Spray on crops.,25
-70,Sesame Seed Extract,Caterpillars; Thrips,Vegetables; oilseeds,Sesame seeds – 50 g; Water – 1 L,Soak seeds overnight; grind; filter.,Spray weekly.,30
-71,Papaya Leaf Extract,Aphids; Caterpillars; Whiteflies,Vegetables; papaya orchards,Papaya leaves – 200 g; Water – 2 L,Crush leaves; soak overnight; filter.,Spray every 7 days.,15
-72,Pineapple Peel Extract,Aphids; Thrips,Vegetables; fruits,Pineapple peel – 200 g; Water – 2 L,Chop peels; soak overnight; filter.,Spray weekly.,25
-73,Ginger–Garlic Spray,Caterpillars; Aphids,Vegetables; pulses,Ginger – 50 g; Garlic – 100 g; Water – 2 L,Grind ginger and garlic; soak overnight; filter.,Spray on leaves.,35
-74,Tea Waste Extract,Aphids; Thrips,Vegetables; flowers,Used tea leaves – 100 g; Water – 2 L,Ferment tea waste for 24 hours; filter.,Spray weekly.,10
-75,Aloe–Turmeric Mix,Fungal diseases; Aphids,Vegetables; fruits,Aloe vera gel – 50 g; Turmeric powder – 20 g; Water – 1 L,Blend gel and turmeric with water.,Spray directly.,20
-76,Jaggery–Soap Mix,Whiteflies; Aphids,Vegetables; pulses,Jaggery – 50 g; Soap solution – 1 L,Dissolve jaggery in soap solution.,Spray every 7 days.,15
-77,Coconut Oil Spray,Mites; Aphids,Vegetables; fruits; coconut,Coconut oil – 30 ml; Soap water – 1 L,Mix oil with soap solution.,Spray on affected crops.,35
-78,Ginger Extract,Caterpillars; Aphids,Vegetables; pulses,Fresh ginger – 100 g; Water – 2 L,Crush ginger; soak overnight; filter.,Spray weekly.,30
-79,Hibiscus Leaf Extract,Whiteflies; Aphids,Vegetables; hibiscus gardens,Hibiscus leaves – 200 g; Water – 2 L,Crush; soak overnight; filter.,Spray on leaves.,20
-80,Apple Peel Extract,Aphids; Caterpillars,Vegetables; fruits,Apple peels – 200 g; Water – 2 L,Chop peels; ferment for 2 days; filter.,Spray weekly.,30
-81,Pigeon Pea Leaf Extract,Aphids; Caterpillars,Pulses; vegetables,Pigeon pea leaves – 200 g; Water – 2 L,Crush; soak overnight; filter.,Spray on crops.,15
-82,Tamarind Seed Extract,Whiteflies; Caterpillars,Vegetables; tamarind orchards,Tamarind seeds – 50 g; Water – 1 L,Soak seeds overnight; grind; filter.,Spray weekly.,20
-83,Green Chili–Soap Spray,Aphids; Thrips,Vegetables; spices,Green chili – 50 g; Soap solution – 1 L,Grind chili; mix with soap water; filter.,Spray on affected areas.,20
-84,Mango Leaf Extract,Caterpillars; Whiteflies,Vegetables; mango orchards,Mango leaves – 200 g; Water – 2 L,Crush leaves; soak overnight; filter.,Spray every 10 days.,20
-85,Fig Leaf Extract,Aphids; Caterpillars,Vegetables; fig orchards,Fig leaves – 200 g; Water – 2 L,Crush; soak overnight; filter.,Spray on crops.,25
-86,Cucumber Peel Extract,Whiteflies; Thrips,Vegetables; gourds,Cucumber peels – 200 g; Water – 2 L,Chop peels; ferment for 24 hours; filter.,Spray weekly.,15
-87,Aloe–Neem Mix,Aphids; Whiteflies; Mites,Vegetables; fruits,Aloe vera gel – 50 g; Neem leaves – 200 g; Water – 2 L,Crush neem; mix with aloe; soak overnight; filter.,Spray on foliage.,30
-88,Drumstick Leaf Extract,Caterpillars; Aphids,Vegetables; drumstick trees,Drumstick leaves – 200 g; Water – 2 L,Crush leaves; soak overnight; filter.,Spray weekly.,20
-89,Tulsi–Garlic Mix,Aphids; Thrips; Caterpillars,Vegetables; flowers,Tulsi leaves – 100 g; Garlic – 50 g; Water – 1 L,Grind tulsi and garlic; soak overnight; filter.,Spray directly.,25
-90,Bottle Gourd Leaf Extract,Whiteflies; Caterpillars,Gourds; vegetables,Bottle gourd leaves – 200 g; Water – 2 L,Crush leaves; soak overnight; filter.,Spray weekly.,15
-91,Ash Gourd Leaf Extract,Aphids; Whiteflies,Vegetables; gourds,Ash gourd leaves – 200 g; Water – 2 L,Crush leaves; soak overnight; filter.,Spray weekly.,20
-92,Mustard Oil Spray,Aphids; Thrips; Whiteflies,Mustard fields; vegetables,Mustard oil – 20 ml; Soap water – 1 L,Mix oil with soap solution.,Spray on affected crops.,30
-93,Lemon Peel Extract,Aphids; Mites; Thrips,Vegetables; fruits,Lemon peels – 200 g; Water – 2 L,Chop peels; soak overnight; filter.,Spray weekly.,25
-94,Bitter Gourd Leaf Extract,Caterpillars; Aphids,Vegetables; gourds,Bitter gourd leaves – 200 g; Water – 2 L,Crush; soak overnight; filter.,Spray every 7 days.,20
-95,Guava Leaf Extract,Whiteflies; Caterpillars,Guava orchards; vegetables,Guava leaves – 200 g; Water – 2 L,Crush leaves; soak overnight; filter.,Spray weekly.,15
-96,Turmeric–Soap Spray,Aphids; Fungal diseases,Vegetables; pulses,Turmeric powder – 30 g; Soap solution – 1 L,Mix turmeric with soap water; stir well.,Spray directly.,20
-97,Aloe–Garlic Mix,Caterpillars; Whiteflies; Aphids,Vegetables; fruits,Aloe vera gel – 50 g; Garlic – 100 g; Water – 2 L,Grind garlic; mix with aloe gel; dilute in water; filter.,Spray weekly.,30
-98,Onion Peel Extract,Mites; Thrips,Vegetables; spices,Onion peels – 100 g; Water – 1 L,Soak peels in water overnight; filter.,Spray on leaves.,10
-99,Neem Seed Powder Spray,Whiteflies; Aphids; Caterpillars,Vegetables; pulses; orchards,Neem seed powder – 100 g; Water – 1 L,Soak powder overnight; stir; filter.,Spray every 7–10 days.,25
-100,Spinach Leaf Extract,Caterpillars; Aphids,Spinach; leafy greens,Spinach leaves – 200 g; Water – 2 L,Crush; soak; filter.,Spray directly.,15
-101,Brinjal Leaf Extract,Whiteflies; Caterpillars,Brinjal fields; vegetables,Brinjal leaves – 200 g; Water – 2 L,Crush leaves; soak overnight.,Spray weekly.,15
-102,Aloe–Pepper Spray,Thrips; Aphids,Vegetables; fruits,Aloe vera gel – 50 g; Red chili powder – 20 g; Water – 1 L,Mix ingredients; stir well; filter.,Spray every 7 days.,25
-103,Carrot Leaf Extract,Caterpillars; Aphids,Carrot farms; vegetables,Carrot leaves – 200 g; Water – 2 L,Crush; soak; filter.,Spray on crops.,15
-104,Radish Leaf Extract,Whiteflies; Aphids,Radish farms; vegetables,Radish leaves – 200 g; Water – 2 L,Crush and soak overnight; filter.,Spray weekly.,15
-105,Curry Leaf Extract,Caterpillars; Whiteflies,Vegetables; spices,Curry leaves – 200 g; Water – 2 L,Crush leaves; soak overnight.,Spray weekly.,20
-106,Banana Leaf Extract,Aphids; Whiteflies,Banana orchards; vegetables,Banana leaves – 200 g; Water – 2 L,Chop; soak overnight; filter.,Spray on crops.,10
-107,Aloe–Curry Leaf Mix,Aphids; Thrips,Vegetables; fruits,Aloe vera gel – 50 g; Curry leaves – 100 g; Water – 1 L,Grind curry leaves; mix with aloe; filter.,Spray weekly.,25
-108,Mint–Turmeric Spray,Whiteflies; Fungal diseases,Vegetables; spices,Mint leaves – 100 g; Turmeric powder – 20 g; Water – 1 L,Crush mint; mix with turmeric water; filter.,Spray directly.,20
-109,Jackfruit Leaf Extract,Caterpillars; Aphids,Vegetables; jackfruit orchards,Jackfruit leaves – 200 g; Water – 2 L,Crush leaves; soak overnight.,Spray weekly.,20
-110,Aloe–Fenugreek Mix,Mites; Aphids,Vegetables; spices,Aloe vera gel – 50 g; Fenugreek seeds – 50 g; Water – 1 L,Soak seeds overnight; grind; mix with aloe and water.,Spray every 10 days.,25
-111,Sweet Potato Leaf Extract,Aphids; Whiteflies,Sweet potato farms; vegetables,Sweet potato leaves – 200 g; Water – 2 L,Crush leaves; soak; filter.,Spray on crops.,15
-112,Groundnut Shell Extract,Caterpillars; Whiteflies,Groundnut fields; vegetables,Groundnut shells – 200 g; Water – 2 L,Boil shells; cool; filter.,Spray weekly.,15
-113,Tamarind Peel Extract,Thrips; Aphids,Tamarind orchards; vegetables,Tamarind peels – 200 g; Water – 2 L,Chop peels; soak overnight.,Spray weekly.,20
-114,Aloe–Jaggery Mix,Aphids; Whiteflies,Vegetables; pulses,Aloe vera gel – 50 g; Jaggery – 20 g; Water – 1 L,Mix aloe and jaggery in water.,Spray every 7 days.,15
-115,Pumpkin Leaf Extract,Caterpillars; Aphids,Pumpkin fields; vegetables,Pumpkin leaves – 200 g; Water – 2 L,Crush leaves; soak overnight.,Spray weekly.,15
-116,Watermelon Peel Extract,Whiteflies; Thrips,Vegetables; melons,Watermelon peel – 200 g; Water – 2 L,Chop; ferment 24 hrs; filter.,Spray weekly.,15
-117,Aloe–Chili Mix,Aphids; Caterpillars,Vegetables; spices,Aloe vera gel – 50 g; Green chili – 50 g; Water – 1 L,Grind chili; mix with aloe; dilute with water; filter.,Spray every 7 days.,25
-118,Gooseberry Leaf Extract,Aphids; Caterpillars,Vegetables; gooseberry orchards,Gooseberry leaves – 200 g; Water – 2 L,Crush; soak overnight; filter.,Spray weekly.,20
-119,Sapota Leaf Extract,Whiteflies; Caterpillars,Vegetables; sapota orchards,Sapota leaves – 200 g; Water – 2 L,Crush leaves; soak; filter.,Spray every 10 days.,20
-120,Beetroot Peel Extract,Aphids; Whiteflies,Vegetables; beetroot farms,Beetroot peels – 200 g; Water – 2 L,Chop peels; soak overnight; filter.,Spray on crops.,15
-121,Papaya Leaf Extract,Whiteflies; Aphids,Papaya orchards; vegetables,Papaya leaves – 200 g; Water – 2 L,Crush leaves; soak overnight; filter.,Spray every 7–10 days.,15
-122,Cabbage Leaf Extract,Caterpillars; Aphids,Cabbage fields; leafy vegetables,Cabbage leaves – 200 g; Water – 2 L,Crush leaves; soak overnight; filter.,Spray weekly.,10
-123,Cauliflower Leaf Extract,Aphids; Thrips,Cauliflower fields; vegetables,Cauliflower leaves – 200 g; Water – 2 L,Crush leaves; soak overnight; filter.,Spray every 10 days.,10
-124,Moringa Leaf Extract,Caterpillars; Whiteflies,Moringa orchards; vegetables,Moringa leaves – 200 g; Water – 2 L,Crush; soak overnight.,Spray weekly.,20
-125,Aloe–Garlic–Turmeric Mix,Aphids; Whiteflies; Fungal infections,Vegetables; pulses,Aloe vera gel – 50 g; Garlic – 50 g; Turmeric powder – 20 g; Water – 1 L,Grind garlic; mix all; dilute with water; filter.,Spray directly.,30
-126,Tomato Leaf Extract,Whiteflies; Aphids,Tomato fields; vegetables,Tomato leaves – 200 g; Water – 2 L,Crush; soak overnight.,Spray weekly.,15
-127,Aloe–Lemon Spray,Aphids; Thrips,Vegetables; fruits,Aloe vera gel – 50 g; Lemon juice – 20 ml; Water – 1 L,Mix aloe and lemon juice in water; stir well.,Spray every 7 days.,20
-128,Sesame Oil Spray,Mites; Aphids,Sesame; vegetables,Sesame oil – 20 ml; Soap solution – 1 L,Mix well; stir until emulsified.,Spray directly.,30
-129,Aloe–Neem Mix,Whiteflies; Caterpillars,Vegetables; orchards,Aloe vera gel – 50 g; Neem seed powder – 50 g; Water – 1 L,Soak neem powder overnight; add aloe; filter.,Spray weekly.,25
-130,Bottle Gourd Leaf Extract,Caterpillars; Aphids,Vegetables; gourds,Bottle gourd leaves – 200 g; Water – 2 L,Crush leaves; soak overnight.,Spray directly.,15
-131,Custard Apple Leaf Extract,Whiteflies; Thrips,Custard apple orchards; vegetables,Custard apple leaves – 200 g; Water – 2 L,Crush; soak overnight.,Spray every 7 days.,20
-132,Aloe–Soap Mix,Aphids; Whiteflies,Vegetables; spices,Aloe vera gel – 50 g; Soap solution – 1 L,Mix aloe with soap solution.,Spray weekly.,15
-133,Pumpkin Seed Extract,Caterpillars; Aphids,Pumpkin fields; vegetables,Pumpkin seeds – 100 g; Water – 1 L,Crush seeds; soak overnight; filter.,Spray directly.,25
-134,Aloe–Coriander Mix,Thrips; Aphids,Vegetables; fruits,Aloe vera gel – 50 g; Coriander leaves – 100 g; Water – 1 L,Crush coriander; mix with aloe; filter.,Spray every 10 days.,25
-135,Orange Peel Extract,Aphids; Whiteflies,Vegetables; citrus orchards,Orange peels – 200 g; Water – 2 L,Chop peels; soak overnight; filter.,Spray weekly.,20
-136,Aloe–Mint Mix,Whiteflies; Thrips,Vegetables; spices,Aloe vera gel – 50 g; Mint leaves – 100 g; Water – 1 L,Crush mint; mix with aloe; filter.,Spray every 7 days.,25
-137,Pineapple Peel Extract,Aphids; Caterpillars,Vegetables; fruits,Pineapple peels – 200 g; Water – 2 L,Chop; soak overnight; filter.,Spray weekly.,20
-138,Aloe–Fenugreek–Garlic Mix,Whiteflies; Thrips; Mites,Vegetables; pulses,Aloe vera gel – 50 g; Fenugreek seeds – 30 g; Garlic – 50 g; Water – 1 L,Soak fenugreek overnight; grind with garlic; mix with aloe; filter.,Spray every 10 days.,30
-139,Aloe–Papaya Mix,Aphids; Caterpillars,Vegetables; fruits,Aloe vera gel – 50 g; Papaya leaves – 100 g; Water – 1 L,Crush papaya leaves; mix with aloe; filter.,Spray weekly.,20
-140,Aloe–Banana Peel Mix,Thrips; Whiteflies,Vegetables; orchards,Aloe vera gel – 50 g; Banana peels – 100 g; Water – 1 L,Chop peels; soak overnight; add aloe; filter.,Spray every 7–10 days.,15
-141,Aloe–Turmeric–Soap Mix,Fungal infections; Aphids,Vegetables; pulses,Aloe vera gel – 50 g; Turmeric powder – 20 g; Soap solution – 1 L,Mix turmeric and aloe with soap solution.,Spray directly.,20
-142,Pomegranate Peel Extract,Aphids; Thrips,Vegetables; pomegranate orchards,Pomegranate peels – 200 g; Water – 2 L,Chop peels; soak overnight; filter.,Spray weekly.,20
-143,Aloe–Spinach Mix,Whiteflies; Aphids,Vegetables; leafy crops,Aloe vera gel – 50 g; Spinach leaves – 100 g; Water – 1 L,Crush spinach; mix with aloe; filter.,Spray every 7 days.,15
-144,Drumstick Seed Extract,Caterpillars; Aphids,Vegetables; orchards,Drumstick seeds – 50 g; Water – 1 L,Crush seeds; soak overnight; filter.,Spray weekly.,20
-145,Aloe–Basil Mix,Aphids; Thrips,Vegetables; herbs,Aloe vera gel – 50 g; Basil leaves – 100 g; Water – 1 L,Crush basil; mix with aloe; filter.,Spray every 7 days.,20
-146,Aloe–Clove Spray,Mites; Aphids,Vegetables; spices,Aloe vera gel – 50 g; Cloves – 10 g; Water – 1 L,Crush cloves; boil; cool; add aloe; filter.,Spray weekly.,30
-147,Aloe–Onion Peel Mix,Whiteflies; Thrips,Vegetables; spices,Aloe vera gel – 50 g; Onion peels – 50 g; Water – 1 L,Soak peels overnight; add aloe; filter.,Spray every 7–10 days.,15
-148,Aloe–Guava Leaf Mix,Aphids; Caterpillars,Vegetables; orchards,Aloe vera gel – 50 g; Guava leaves – 100 g; Water – 1 L,Crush guava leaves; mix with aloe; filter.,Spray weekly.,20
-149,Aloe–Ash Gourd Leaf Mix,Whiteflies; Aphids,Vegetables; gourds,Aloe vera gel – 50 g; Ash gourd leaves – 100 g; Water – 1 L,Crush leaves; mix with aloe; filter.,Spray every 10 days.,15
-150,Aloe–Custard Apple Leaf Mix,Caterpillars; Aphids,Vegetables; orchards,Aloe vera gel – 50 g; Custard apple leaves – 100 g; Water – 1 L,Crush leaves; mix with aloe; filter.,Spray every 7 days.,20
-151,Bamboo Leaf Extract,Aphids; Caterpillars,Paddy; vegetables,Fresh bamboo leaves – 500 g; Water – 5 L,Crush leaves; soak overnight; filter.,Spray on crops once a week.,25
-152,Guava Leaf Extract,Whiteflies; Fruit borers,Vegetables; orchards,Guava leaves – 500 g; Water – 5 L,Boil leaves 20 min; cool; filter.,Spray on crops weekly.,30
-153,Pomegranate Peel Extract,Aphids; Leaf miners,Vegetables; fruits,Dry pomegranate peels – 200 g; Water – 3 L,Soak overnight; boil 10 min; filter.,Spray after diluting 1:2 with water.,20
-154,Bay Leaf Extract,Mites; Thrips,Vegetables; spice crops,Bay leaves – 200 g; Water – 2 L,Crush leaves; boil 10 min; filter.,Spray on infested leaves.,25
-155,Soursop (Graviola) Leaf Extract,Caterpillars; Borers,Fruit crops; vegetables,Soursop leaves – 300 g; Water – 3 L,Crush and soak 24 hrs; filter.,Spray once in 7 days.,40
-156,Betel Leaf Extract,Aphids; Mealybugs,Vegetables; flowers,Betel leaves – 100 g; Water – 1 L,Grind into paste; dilute in water.,Spray directly on pests.,35
-157,Pine Needle Extract,Caterpillars; Beetles,Potato; maize,Pine needles – 300 g; Water – 3 L,Boil needles 30 min; cool; filter.,Spray on crops weekly.,40
-158,Bael Leaf Extract,Leafhoppers; Aphids,Vegetables; pulses,Bael leaves – 200 g; Water – 2 L,Crush leaves; soak overnight; filter.,Spray directly on plants.,20
-159,Bottle Gourd Leaf Extract,Caterpillars; Mites,Cucurbits; gourds,Bottle gourd leaves – 300 g; Water – 3 L,Crush leaves; boil 15 min; filter.,Spray fortnightly.,20
-160,Pumpkin Seed Oil Extract,Whiteflies; Mites,Vegetables; cucurbits,Pumpkin seeds – 200 g; Water – 3 L,Grind seeds; soak overnight; filter.,Spray on leaves.,35
-161,Cashew Nut Shell Extract,Borers; Beetles,Cashew; vegetables,Cashew nut shells – 100 g; Water – 1 L,Boil shells 15 min; filter.,Apply diluted extract 1:5 with water.,40
-162,Mango Seed Kernel Extract,Weevils; Caterpillars,Mango; cereals,Mango seed kernels – 200 g; Water – 3 L,Grind kernels; soak 24 hrs; filter.,Spray every 15 days.,25
-163,Tamarind Seed Extract,Whiteflies; Thrips,Vegetables; pulses,Tamarind seeds – 200 g; Water – 2 L,Roast seeds; grind; soak overnight; filter.,Spray on crops.,30
-164,Onion Peel Extract,Aphids; Caterpillars,Vegetables; oilseeds,Onion peels – 100 g; Water – 1 L,Boil peels 10 min; cool; filter.,Spray as foliar application.,10
-165,Coffee Decoction,Snails; Slugs,Leafy vegetables,Coffee powder – 50 g; Water – 1 L,Boil coffee in water; cool; filter.,Spray around plant base.,25
-166,Tea Leaf Extract,Aphids; Caterpillars,Vegetables; tea plantations,Used tea leaves – 200 g; Water – 2 L,Boil tea leaves 15 min; filter.,Spray once a week.,15
-167,Lemon Peel Oil Extract,Whiteflies; Mites,Citrus; vegetables,Lemon peels – 200 g; Water – 2 L,Crush peels; soak overnight; filter.,Spray diluted 1:5 with water.,30
-168,Pineapple Peel Extract,Fruit flies; Caterpillars,Orchards; vegetables,Pineapple peels – 300 g; Water – 3 L,Ferment peels in water 2 days; filter.,Spray on fruit crops.,20
-169,Sugarcane Juice Spray,Fruit flies (as bait); Thrips,Sugarcane; vegetables,Sugarcane juice – 500 ml; Jaggery – 50 g; Water – 2 L,Mix all; ferment 1 day.,Use as bait spray.,30
-170,Rice Husk Ash Spray,Caterpillars; Beetles,Paddy; maize,Rice husk ash – 500 g; Water – 5 L,Mix well; allow to settle; use supernatant.,Spray on foliage.,15
-171,Citrus Leaf Extract,Aphids; Whiteflies,Citrus orchards; vegetables,Citrus leaves – 300 g; Water – 3 L,Crush and soak overnight; filter.,Spray every 10 days.,20
-172,Ginger–Onion Mix,Caterpillars; Aphids,Vegetables; pulses,Fresh ginger – 100 g; Onion – 100 g; Water – 2 L,Grind both; soak overnight; filter.,Spray on crops.,25
-173,Mustard Oil Cake Extract,Soil pests; Aphids,Oilseeds; vegetables,Mustard oil cake – 200 g; Water – 3 L,Soak cake 2 days; filter.,Spray diluted 1:5 or apply as soil drench.,30
-174,Cabbage Leaf Extract,Caterpillars; Leaf miners,Cruciferous crops,Cabbage leaves – 300 g; Water – 3 L,Crush and soak overnight; filter.,Spray once in 7 days.,15
-175,Radish Leaf Extract,Aphids; Beetles,Radish; crucifers,Radish leaves – 200 g; Water – 2 L,Crush leaves; boil 15 min; filter.,Spray on affected leaves.,20
-176,Carrot Leaf Extract,Leaf miners; Caterpillars,Carrot; vegetables,Carrot leaves – 200 g; Water – 2 L,Soak crushed leaves overnight; filter.,Spray directly.,20
-177,Radish Seed Extract,Aphids; Thrips,Cruciferous crops,Radish seeds – 100 g; Water – 2 L,Grind seeds; soak overnight; filter.,Spray weekly.,25
-178,Beetroot Peel Extract,Caterpillars; Leaf miners,Vegetables,Beetroot peels – 200 g; Water – 2 L,Boil peels 15 min; cool; filter.,Spray directly.,15
-179,Spinach Leaf Extract,Aphids; Leaf miners,Vegetables,Spinach leaves – 300 g; Water – 3 L,Crush leaves; soak overnight; filter.,Spray every 7 days.,20
-180,Turnip Leaf Extract,Caterpillars; Beetles,Root vegetables,Turnip leaves – 300 g; Water – 3 L,Boil leaves 20 min; filter.,Spray on crops weekly.,20
-181,Sweet Potato Leaf Extract,Leaf miners; Caterpillars,Sweet potato; vegetables,Sweet potato leaves – 300 g; Water – 3 L,Crush leaves; soak overnight; filter.,Spray once a week.,20
-182,Colocasia (Arbi) Leaf Extract,Aphids; Beetles,Taro; vegetables,Colocasia leaves – 300 g; Water – 3 L,Grind leaves; soak for 24 hrs; filter.,Spray weekly.,25
-183,Amaranthus Leaf Extract,Caterpillars; Thrips,Leafy greens; pulses,Amaranthus leaves – 200 g; Water – 2 L,Crush; boil 15 min; cool; filter.,Spray directly.,15
-184,Sorghum Leaf Extract,Stem borers; Leafhoppers,Sorghum; maize,Sorghum leaves – 300 g; Water – 3 L,Chop; soak 24 hrs; filter.,Spray on crops.,20
-185,Pearl Millet Leaf Extract,Caterpillars; Aphids,Pearl millet; vegetables,Pearl millet leaves – 300 g; Water – 3 L,Grind; soak overnight; filter.,Spray every 10 days.,20
-186,Finger Millet Leaf Extract,Mites; Leaf miners,Ragi; small millets,Finger millet leaves – 200 g; Water – 2 L,Crush and boil 20 min; cool; filter.,Spray directly.,20
-187,Barley Leaf Extract,Leaf miners; Aphids,Barley; wheat,Barley leaves – 300 g; Water – 3 L,Grind; soak 12 hrs; filter.,Spray once in 7 days.,20
-188,Wheat Husk Ash Spray,Caterpillars; Beetles,Wheat; maize,Wheat husk ash – 500 g; Water – 5 L,Mix; allow to settle; use clear solution.,Spray as foliar spray.,10
-189,Oat Straw Extract,Aphids; Whiteflies,Oat; vegetables,Oat straw – 300 g; Water – 3 L,Soak overnight; filter.,Spray weekly.,15
-190,Sesame Leaf Extract,Leafhoppers; Thrips,Sesame; pulses,Sesame leaves – 200 g; Water – 2 L,Crush and boil 15 min; filter.,Spray directly.,20
-191,Linseed (Alsi) Oil Spray,Mites; Aphids,Vegetables; oilseeds,Linseed oil – 50 ml; Water – 1 L; Soap solution – 10 ml,Mix thoroughly.,Spray as contact pesticide.,35
-192,Castor Leaf Extract,Whiteflies; Caterpillars,Vegetables; pulses,Castor leaves – 300 g; Water – 3 L,Grind; soak 24 hrs; filter.,Spray every 10 days.,25
-193,Aloe Vera Leaf Extract,Thrips; Mites,Vegetables; flowers,Aloe vera leaves – 200 g; Water – 2 L,Peel; grind pulp; dilute with water.,Spray directly.,30
-194,Agave Leaf Extract,Caterpillars; Beetles,Millets; vegetables,Agave leaves – 300 g; Water – 3 L,Crush and ferment 48 hrs; filter.,Spray weekly.,25
-195,Snake Gourd Leaf Extract,Aphids; Caterpillars,Cucurbits; gourds,Snake gourd leaves – 200 g; Water – 2 L,Grind and soak overnight; filter.,Spray every 7–10 days.,15
-196,Ridge Gourd Leaf Extract,Leaf miners; Beetles,Cucurbits,Ridge gourd leaves – 200 g; Water – 2 L,Boil 20 min; filter.,Spray on affected plants.,20
-197,Sponge Gourd Leaf Extract,Thrips; Whiteflies,Vegetables; gourds,Sponge gourd leaves – 300 g; Water – 3 L,Crush and soak overnight; filter.,Spray on crops weekly.,20
-198,Bitter Gourd Leaf Extract,Caterpillars; Fruit flies,Cucurbits; vegetables,Bitter gourd leaves – 200 g; Water – 2 L,Grind and soak overnight; filter.,Spray every 7 days.,20
-199,Ivy Gourd Leaf Extract,Aphids; Thrips,Cucurbits,Ivy gourd leaves – 200 g; Water – 2 L,Crush and soak overnight; filter.,Spray weekly.,20
-200,Ash Gourd Leaf Extract,Leaf miners; Caterpillars,Cucurbits,Ash gourd leaves – 300 g; Water – 3 L,Grind and boil 15 min; cool; filter.,Spray directly.,20
-201,Drumstick (Moringa) Seed Extract,Thrips; Whiteflies,Vegetables; fruit crops,Moringa seeds – 100 g; Water – 1 L,Grind seeds; soak overnight; filter.,Spray weekly.,35
-202,Banana Peel Extract,Caterpillars; Aphids,Vegetables; bananas,Banana peels – 200 g; Water – 2 L,Ferment peels in water 2 days; filter.,Spray on crops.,15
-203,Plantain Leaf Extract,Caterpillars; Borers,Banana plantations; vegetables,Plantain leaves – 300 g; Water – 3 L,Crush and soak overnight; filter.,Spray every 10 days.,20
-204,Papaya Seed Extract,Nematodes; Aphids,Vegetables; papaya,Papaya seeds – 100 g; Water – 2 L,Grind seeds; soak overnight; filter.,Apply as soil drench or foliar spray.,25
-205,Papaya Leaf Extract,Whiteflies; Thrips,Vegetables; papaya,Papaya leaves – 300 g; Water – 3 L,Crush and boil 20 min; filter.,Spray directly.,20
-206,Custard Apple Leaf Extract,Caterpillars; Borers,Fruit crops; vegetables,Custard apple leaves – 200 g; Water – 2 L,Grind and soak overnight; filter.,Spray on crops every 7 days.,25
-207,Custard Apple Seed Extract,Aphids; Whiteflies,Vegetables; fruits,Custard apple seeds – 100 g; Water – 2 L,Grind seeds; soak overnight; filter.,Spray diluted (1:5).,30
-208,Sapota (Chikoo) Leaf Extract,Leaf miners; Caterpillars,Sapota orchards; vegetables,Sapota leaves – 300 g; Water – 3 L,Grind and soak 24 hrs; filter.,Spray every 10 days.,20
-209,Jamun Leaf Extract,Thrips; Aphids,Jamun; vegetables,Jamun leaves – 200 g; Water – 2 L,Boil 15 min; cool; filter.,Spray on foliage.,20
-210,Jackfruit Leaf Extract,Caterpillars; Beetles,Jackfruit; vegetables,Jackfruit leaves – 300 g; Water – 3 L,Crush and soak overnight; filter.,Spray every 7–10 days.,20
-211,Jackfruit Seed Extract,Aphids; Borers,Jackfruit; vegetables,Jackfruit seeds – 200 g; Water – 2 L,Grind seeds; soak overnight; filter.,Spray every 10 days.,25
-212,Mango Leaf Extract,Thrips; Whiteflies,Mango orchards; vegetables,Mango leaves – 300 g; Water – 3 L,Crush leaves; boil 20 min; filter.,Spray on crops weekly.,20
-213,Mango Seed Kernel Extract,Fruit flies; Borers,Mango; guava; papaya,Mango seed kernels – 200 g; Water – 2 L,Grind kernels; soak 24 hrs; filter.,Spray on affected areas.,25
-214,Guava Leaf Extract,Leaf miners; Caterpillars,Guava; vegetables,Guava leaves – 300 g; Water – 3 L,Crush and soak overnight; filter.,Spray once in 10 days.,20
-215,Amla (Indian Gooseberry) Leaf Extract,Thrips; Aphids,Amla; vegetables,Amla leaves – 300 g; Water – 3 L,Grind; boil 20 min; filter.,Spray directly.,20
-216,Amla Fruit Extract,Whiteflies; Fruit flies,Vegetables; fruit crops,Amla fruits – 200 g; Water – 2 L,Crush fruits; ferment 2 days; filter.,Spray weekly.,30
-217,Tamarind Leaf Extract,Leaf miners; Thrips,Tamarind; vegetables,Tamarind leaves – 200 g; Water – 2 L,Grind; soak overnight; filter.,Spray once in 7 days.,20
-218,Tamarind Seed Extract,Caterpillars; Borers,Tamarind; vegetables,Tamarind seeds – 100 g; Water – 2 L,Grind; soak 24 hrs; filter.,Spray diluted.,25
-219,Pomegranate Leaf Extract,Thrips; Whiteflies,Pomegranate; vegetables,Pomegranate leaves – 300 g; Water – 3 L,Grind; boil 15 min; filter.,Spray every 10 days.,20
-220,Pomegranate Peel Extract,Aphids; Fruit flies,Fruits; vegetables,Pomegranate peels – 200 g; Water – 2 L,Ferment peels 48 hrs; filter.,Spray on foliage.,25
-221,Lemon Peel Extract,Whiteflies; Thrips,Citrus crops; vegetables,Lemon peels – 200 g; Water – 2 L,Soak in hot water overnight; filter.,Spray every 7 days.,15
-222,Lemon Leaf Extract,Aphids; Mites,Citrus orchards; vegetables,Lemon leaves – 200 g; Water – 2 L,Crush leaves; soak overnight; filter.,Spray directly.,20
-223,Orange Peel Extract,Fruit flies; Aphids,Citrus fruits; vegetables,Orange peels – 200 g; Water – 2 L,Ferment 2 days; filter.,Spray every 10 days.,20
-224,Orange Leaf Extract,Thrips; Caterpillars,Citrus; vegetables,Orange leaves – 200 g; Water – 2 L,Boil 15 min; cool; filter.,Spray on crops.,20
-225,Sweet Lime (Mosambi) Peel Extract,Whiteflies; Leaf miners,Citrus fruits; vegetables,Sweet lime peels – 200 g; Water – 2 L,Ferment 24 hrs; filter.,Spray once a week.,15
-226,Sweet Lime Leaf Extract,Thrips; Aphids,Citrus orchards,Sweet lime leaves – 200 g; Water – 2 L,Crush and soak overnight; filter.,Spray directly.,20
-227,Grapefruit Peel Extract,Caterpillars; Fruit flies,Citrus; vegetables,Grapefruit peels – 200 g; Water – 2 L,Ferment 48 hrs; filter.,Spray weekly.,20
-228,Grapefruit Leaf Extract,Aphids; Thrips,Citrus crops,Grapefruit leaves – 200 g; Water – 2 L,Crush and soak overnight; filter.,Spray every 7–10 days.,20
-229,Curry Leaf Extract,Aphids; Whiteflies,Vegetables; spices,Curry leaves – 200 g; Water – 2 L,Crush and boil 20 min; filter.,Spray once in 10 days.,15
-230,Coriander Seed Extract,Thrips; Mites,Vegetables; coriander fields,Coriander seeds – 100 g; Water – 1 L,Grind seeds; soak 12 hrs; filter.,Spray diluted.,20
-231,Coriander Leaf Extract,Caterpillars; Aphids,Vegetables; spices,Coriander leaves – 200 g; Water – 2 L,Crush; boil 10 min; filter.,Spray weekly.,20
-232,Fennel Seed Extract,Mites; Whiteflies,Vegetables; fennel,Fennel seeds – 100 g; Water – 1 L,Grind; soak overnight; filter.,Spray directly.,25
-233,Fennel Leaf Extract,Caterpillars; Beetles,Fennel; vegetables,Fennel leaves – 200 g; Water – 2 L,Crush; boil 15 min; filter.,Spray every 10 days.,20
-234,Dill Seed Extract,Whiteflies; Aphids,Vegetables; spices,Dill seeds – 100 g; Water – 1 L,Grind and soak overnight; filter.,Spray directly.,20
-235,Dill Leaf Extract,Thrips; Leaf miners,Vegetables; spices,Dill leaves – 200 g; Water – 2 L,Crush; boil 10 min; filter.,Spray every 7 days.,15
-236,Ajwain (Carom) Seed Extract,Aphids; Mites,Vegetables; spices,Ajwain seeds – 100 g; Water – 1 L,Grind; soak overnight; filter.,Spray diluted.,25
-237,Ajwain Leaf Extract,Thrips; Caterpillars,Vegetables; medicinal plants,Ajwain leaves – 200 g; Water – 2 L,Crush and boil 15 min; filter.,Spray directly.,20
-238,Fenugreek Seed Extract,Whiteflies; Borers,Vegetables; pulses,Fenugreek seeds – 100 g; Water – 1 L,Soak seeds overnight; grind; filter.,Spray weekly.,20
-239,Fenugreek Leaf Extract,Aphids; Thrips,Leafy greens; vegetables,Fenugreek leaves – 200 g; Water – 2 L,Grind leaves; boil 15 min; filter.,Spray once in 7 days.,20
-240,Mint Oil Spray,Mosquitoes; Whiteflies; Aphids,Vegetables; gardens,Mint oil – 20 ml; Soap solution – 5 ml; Water – 1 L,Mix oil and soap in water.,Spray directly on foliage.,30
-241,Basil Leaf Extract,Aphids; Whiteflies,Vegetables; herbs,Basil leaves – 200 g; Water – 2 L,Crush and boil 15 min; filter.,Spray once a week.,20
-242,Basil Oil Spray,Mites; Caterpillars,Herbs; vegetables,Basil essential oil – 20 ml; Soap solution – 5 ml; Water – 1 L,Mix oil with soap water.,Spray directly on plants.,35
-243,Tulsi (Holy Basil) Leaf Extract,Thrips; Aphids,Vegetables; medicinal crops,Tulsi leaves – 200 g; Water – 2 L,Crush leaves; soak overnight; filter.,Spray once in 7 days.,20
-244,Lemongrass Leaf Extract,Mosquitoes; Thrips,Vegetables; gardens,Lemongrass leaves – 200 g; Water – 2 L,Crush and boil 20 min; filter.,Spray every 10 days.,25
-245,Lemongrass Oil Spray,Aphids; Whiteflies,Fruits; vegetables,Lemongrass oil – 15 ml; Soap solution – 5 ml; Water – 1 L,Mix oil and soap in water.,Spray directly.,40
-246,Citronella Leaf Extract,Mosquitoes; Caterpillars,Paddy; vegetables; gardens,Citronella leaves – 200 g; Water – 2 L,Boil 15 min; filter.,Spray once in 10 days.,25
-247,Citronella Oil Spray,Mites; Thrips,Vegetables; spices,Citronella oil – 20 ml; Soap solution – 5 ml; Water – 1 L,Mix and dilute in water.,Spray weekly.,40
-248,Eucalyptus Leaf Extract,Whiteflies; Beetles,Eucalyptus; vegetables,Eucalyptus leaves – 300 g; Water – 3 L,Crush and boil 30 min; filter.,Spray on crops.,25
-249,Eucalyptus Oil Spray,Aphids; Mites,Vegetables; orchards,Eucalyptus oil – 15 ml; Soap solution – 5 ml; Water – 1 L,Mix and dilute in water.,Spray every 7 days.,35
-250,Camphor Oil Spray,Mites; Caterpillars,Vegetables; gardens,Camphor oil – 10 ml; Soap solution – 5 ml; Water – 1 L,Mix oil with soap water.,Spray weekly.,40
-251,Camphor Water Solution,Mosquitoes; Whiteflies,Vegetables; fruit crops,Camphor – 10 g; Water – 1 L,Dissolve camphor in water.,Spray once in 7 days.,20
-252,Clove Oil Spray,Aphids; Whiteflies,Vegetables; fruits,Clove oil – 10 ml; Soap solution – 5 ml; Water – 1 L,Mix and shake well.,Spray directly.,50
-253,Clove Seed Extract,Thrips; Caterpillars,Vegetables; spices,Clove buds – 50 g; Water – 1 L,Crush; soak overnight; filter.,Spray weekly.,30
-254,Cinnamon Bark Extract,Whiteflies; Aphids,Vegetables; fruits,Cinnamon bark – 50 g; Water – 1 L,Boil bark 20 min; cool; filter.,Spray directly.,35
-255,Cinnamon Oil Spray,Mites; Thrips,Fruits; vegetables,Cinnamon oil – 10 ml; Soap solution – 5 ml; Water – 1 L,Mix oil with soap in water.,Spray once a week.,45
-256,Bay Leaf Extract,Thrips; Caterpillars,Vegetables; spices,Bay leaves – 200 g; Water – 2 L,Crush and soak overnight; filter.,Spray directly.,25
-257,Bay Oil Spray,Aphids; Whiteflies,Vegetables; orchards,Bay oil – 15 ml; Soap solution – 5 ml; Water – 1 L,Mix with soap water.,Spray once in 10 days.,40
-258,Nutmeg Seed Extract,Caterpillars; Borers,Spices; vegetables,Nutmeg seeds – 50 g; Water – 1 L,Crush; soak overnight; filter.,Spray weekly.,30
-259,Nutmeg Oil Spray,Thrips; Mites,Vegetables; orchards,Nutmeg oil – 10 ml; Soap solution – 5 ml; Water – 1 L,Mix in water with soap.,Spray every 7–10 days.,45
-260,Cardamom Seed Extract,Whiteflies; Thrips,Spices; vegetables,Cardamom seeds – 50 g; Water – 1 L,Grind; soak overnight; filter.,Spray directly.,40
-261,Cardamom Oil Spray,Aphids; Borers,Vegetables; fruits,Cardamom oil – 10 ml; Soap solution – 5 ml; Water – 1 L,Mix and dilute in water.,Spray weekly.,50
-262,Black Pepper Seed Extract,Caterpillars; Borers,Vegetables; spices,Black pepper seeds – 50 g; Water – 1 L,Crush and soak overnight; filter.,Spray once in 7 days.,35
-263,Black Pepper Oil Spray,Mites; Thrips,Vegetables; fruits,Black pepper oil – 10 ml; Soap solution – 5 ml; Water – 1 L,Mix with soap water.,Spray weekly.,55
-264,Long Pepper (Pippali) Extract,Borers; Caterpillars,Vegetables; spices,Long pepper – 50 g; Water – 1 L,Crush and soak 12 hrs; filter.,Spray directly.,40
-265,Turmeric Rhizome Extract,Fungal pests; Aphids,Turmeric; vegetables,Turmeric rhizome – 200 g; Water – 2 L,Grind; boil 20 min; filter.,Spray once in 10 days.,30
-266,Turmeric Leaf Extract,Leaf miners; Thrips,Vegetables; turmeric fields,Turmeric leaves – 200 g; Water – 2 L,Crush and soak overnight; filter.,Spray weekly.,20
-267,Ginger Rhizome Extract,Whiteflies; Mites,Ginger; vegetables,Ginger rhizome – 200 g; Water – 2 L,Grind and boil 20 min; filter.,Spray every 10 days.,30
-268,Ginger Leaf Extract,Thrips; Caterpillars,Vegetables; spices,Ginger leaves – 200 g; Water – 2 L,Crush; soak overnight; filter.,Spray weekly.,20
-269,Garlic Oil Spray,Aphids; Thrips; Whiteflies,Vegetables; orchards,Garlic oil – 15 ml; Soap solution – 5 ml; Water – 1 L,Mix and dilute.,Spray weekly.,35
-270,Onion Oil Spray,Whiteflies; Mites,Vegetables; onion fields,Onion oil – 15 ml; Soap solution – 5 ml; Water – 1 L,Mix with soap water.,Spray directly.,35
-271,Onion Peel Extract,Aphids; Thrips,Vegetables; onion fields,Onion peels – 200 g; Water – 2 L,Boil peels for 20 min; cool; filter.,Spray once in 7–10 days.,10
-272,Onion-Garlic Mixture,Whiteflies; Borers,Vegetables; pulses,Garlic cloves – 50 g; Onion – 50 g; Water – 1 L,Grind together; soak overnight; filter.,Spray weekly.,20
-273,Garlic-Chilli Extract,Caterpillars; Leaf miners,Vegetables; orchards,Garlic – 50 g; Green chilli – 50 g; Water – 1 L,Crush; soak overnight; filter.,Spray every 7 days.,25
-274,Garlic-Turmeric Mix,Fungal pests; Thrips,Vegetables; turmeric fields,Garlic – 50 g; Turmeric powder – 20 g; Water – 1 L,Grind garlic; mix with turmeric powder in water.,Spray once in 10 days.,20
-275,Onion-Chilli Extract,Aphids; Caterpillars,Vegetables; pulses,Onion – 50 g; Green chilli – 50 g; Water – 1 L,Grind; soak overnight; filter.,Spray weekly.,20
-276,Ginger-Garlic Mix,Whiteflies; Thrips,Vegetables; orchards,Ginger – 50 g; Garlic – 50 g; Water – 1 L,Grind together; soak 12 hrs; filter.,Spray weekly.,25
-277,Neem-Garlic-Chilli Mix,Caterpillars; Whiteflies,Vegetables; pulses,Neem leaves – 200 g; Garlic – 50 g; Chilli – 50 g; Water – 2 L,Grind all; soak overnight; filter.,Spray every 7–10 days.,30
-278,Neem-Turmeric Extract,Fungal pests; Aphids,Vegetables; spices,Neem leaves – 200 g; Turmeric – 20 g; Water – 2 L,Crush and boil 15 min; filter.,Spray once in 10 days.,25
-279,Neem-Cow Urine Solution,Thrips; Borers,Vegetables; cotton,Neem leaves – 200 g; Cow urine – 500 ml; Water – 2 L,Ferment 3 days; filter.,Spray weekly.,15
-280,Tulsi-Ginger Mix,Aphids; Mites,Vegetables; medicinal crops,Tulsi leaves – 100 g; Ginger – 50 g; Water – 1 L,Grind and soak overnight; filter.,Spray directly.,20
-281,Lemon-Pepper Extract,Thrips; Caterpillars,Vegetables; gardens,Lemon juice – 20 ml; Black pepper – 20 g; Water – 1 L,Mix lemon juice and pepper powder in water.,Spray every 10 days.,25
-282,Tamarind Leaf Extract,Whiteflies; Beetles,Vegetables; pulses,Tamarind leaves – 200 g; Water – 2 L,Crush and soak overnight; filter.,Spray weekly.,20
-283,Tamarind Seed Extract,Thrips; Caterpillars,Vegetables; orchards,Tamarind seeds – 50 g; Water – 1 L,Grind seeds; boil 20 min; cool; filter.,Spray directly.,25
-284,Bael Leaf Extract,Mites; Whiteflies,Vegetables; fruits,Bael leaves – 200 g; Water – 2 L,Crush and soak overnight; filter.,Spray every 7–10 days.,20
-285,Guava Leaf Extract,Aphids; Caterpillars,Guava orchards; vegetables,Guava leaves – 200 g; Water – 2 L,Crush leaves; boil 15 min; filter.,Spray weekly.,20
-286,Mango Leaf Extract,Thrips; Leaf miners,Mango orchards; vegetables,Mango leaves – 200 g; Water – 2 L,Boil 20 min; cool; filter.,Spray directly.,25
-287,Mango Seed Kernel Extract,Weevils; Caterpillars,Mango; vegetables,Mango seed kernels – 200 g; Water – 2 L,Grind; soak overnight; filter.,Spray every 10 days.,25
-288,Papaya Leaf Extract,Whiteflies; Caterpillars,Papaya orchards; vegetables,Papaya leaves – 200 g; Water – 2 L,Crush and boil 15 min; filter.,Spray weekly.,20
-289,Banana Peel Extract,Aphids; Mites,Vegetables; banana fields,Banana peel – 200 g; Water – 2 L,Chop peels; soak overnight; filter.,Spray once in 10 days.,10
-290,Banana Stem Juice,Borers; Whiteflies,Banana fields; vegetables,Banana stem juice – 1 L; Water – 2 L,Extract juice; dilute with water.,Spray every 7–10 days.,15
-291,Banana Flower Extract,Thrips; Caterpillars,Banana; vegetables,Banana flowers – 200 g; Water – 2 L,Crush and soak overnight; filter.,Spray directly.,20
-292,Pomegranate Peel Extract,Aphids; Whiteflies,Pomegranate; vegetables,Pomegranate peels – 200 g; Water – 2 L,Boil 15 min; cool; filter.,Spray weekly.,25
-293,Pomegranate Leaf Extract,Caterpillars; Thrips,Fruits; vegetables,Pomegranate leaves – 200 g; Water – 2 L,Crush and soak 12 hrs; filter.,Spray directly.,20
-294,Drumstick (Moringa) Leaf Extract,Aphids; Borers,Drumstick trees; vegetables,Moringa leaves – 200 g; Water – 2 L,Crush and boil 15 min; filter.,Spray every 10 days.,20
-295,Drumstick Pod Extract,Thrips; Caterpillars,Vegetables; gardens,Moringa pods – 200 g; Water – 2 L,Chop pods; soak overnight; filter.,Spray weekly.,25
-296,Drumstick Seed Extract,Mites; Whiteflies,Vegetables; pulses,Moringa seeds – 100 g; Water – 1 L,Grind seeds; soak overnight; filter.,Spray directly.,30
-297,Jackfruit Leaf Extract,Caterpillars; Borers,Jackfruit orchards; vegetables,Jackfruit leaves – 200 g; Water – 2 L,Crush; boil 15 min; filter.,Spray every 7 days.,20
-298,Jackfruit Seed Extract,Thrips; Aphids,Vegetables; orchards,Jackfruit seeds – 100 g; Water – 1 L,Crush; soak overnight; filter.,Spray weekly.,25
-299,Custard Apple Leaf Extract,Whiteflies; Mites,Custard apple orchards; vegetables,Custard apple leaves – 200 g; Water – 2 L,Crush and boil 20 min; filter.,Spray directly.,20
-300,Custard Apple Seed Extract,Caterpillars; Borers,Fruits; vegetables,Custard apple seeds – 100 g; Water – 1 L,Grind seeds; soak overnight; filter.,Spray weekly.,25
+1,Neem Seed Kernel Extract âœ…(NSKE),Caterpillars; Aphids; Whiteflies,Vegetables; pulses; cotton,Neem seeds â€“ 500 g; Water â€“ 10 L,Collect dried neem seeds and grind them into powder. Soak the powder in 10 liters of water overnight. Filter before use.,Spray directly on affected crops in the evening.,80
+2,Garlicâ€“Chili Extract,Aphids; Thrips; Mites,Vegetables; fruits,Garlic cloves â€“ 100 g; Green chili â€“ 50 g; Water â€“ 2 L,Crush garlic and chili into a paste. Mix in 2 liters of water; ferment overnight. Filter before use.,Spray on leaf undersides weekly.,40
+3,Tobacco Leaf Extract,Caterpillars; Leaf miners,Cotton; okra; brinjal,Dried tobacco leaves â€“ 250 g; Water â€“ 5 L,Soak leaves in water overnight. Boil for 20 minutes; cool; and filter.,Dilute 1:10 with water; spray in evening.,100
+4,Buttermilkâ€“Turmeric Spray,Fungal spots; Mildew,Leafy vegetables; gourds,Buttermilk â€“ 1 L; Turmeric powder â€“ 50 g; Water â€“ 5 L,Mix buttermilk; turmeric; and water well.,Spray on infected leaves every 7 days.,30
+5,Onionâ€“Garlicâ€“Chili Mix,Aphids; Mites; Thrips,Tomato; brinjal; okra,Onion â€“ 100 g; Garlic â€“ 100 g; Chili â€“ 50 g; Water â€“ 2 L,Crush into paste; soak overnight in water; filter.,Spray on affected plants.,50
+6,Neem Oilâ€“Soap Spray,Aphids; Mealybugs; Whiteflies,Vegetables; cotton; fruits,Neem oil â€“ 50 ml; Soap solution â€“ 10 g; Water â€“ 1 L,Mix neem oil with soap; dilute in water.,Spray evenly on plant leaves.,60
+7,Asafoetida Solution,Aphids; Caterpillars,Legumes; cucurbits,Asafoetida â€“ 10 g; Water â€“ 1 L,Dissolve asafoetida in water.,Spray on crops weekly.,25
+8,Lemon Peel Extract,Ants; Aphids; Whiteflies,Fruits; vegetables,Lemon peel â€“ 200 g; Water â€“ 2 L,Boil peel in water for 20 mins; cool and filter.,Spray directly on affected crops.,30
+9,Aloe Vera Gel Spray,Mites; Thrips; Whiteflies,Vegetables; floriculture,Aloe vera gel â€“ 200 g; Water â€“ 5 L,Blend gel into water.,Spray on leaves in evening.,40
+10,Cow Urine Solution,Caterpillars; Aphids; Fungal spots,All field crops,Fresh cow urine â€“ 5 L; Water â€“ 10 L,Dilute cow urine with water.,Spray every 10 days.,10
+12,Curry Leaf Extract,Aphids; Caterpillars,Vegetables; fruits,Fresh curry leaves â€“ 250 g; Water â€“ 2 L,Crush leaves; boil in water; cool; filter.,Spray directly on crops.,30
+13,Tobaccoâ€“Neem Mix,Leaf miners; Caterpillars,Cotton; vegetables,Tobacco leaves â€“ 100 g; Neem leaves â€“ 250 g; Water â€“ 5 L,Soak leaves overnight; boil for 20 mins; filter.,Spray after diluting 1:5 with water.,90
+14,Drumstick Leaf Extract,Caterpillars; Beetles,Pulses; brinjal; okra,Drumstick leaves â€“ 500 g; Water â€“ 5 L,Crush leaves; soak in water; filter.,Spray on foliage.,50
+15,Aloe Veraâ€“Neem Blend,Whiteflies; Mites,Tomato; okra; gourds,Aloe vera gel â€“ 200 g; Neem leaves â€“ 250 g; Water â€“ 5 L,Blend aloe and neem in water; ferment overnight.,Spray once a week.,60
+16,Clove Oil Spray,Aphids; Whiteflies; Thrips,Vegetables; spices,Clove oil â€“ 20 ml; Soap solution â€“ 5 g; Water â€“ 1 L,Mix oil with soap solution; dilute with water.,Spray on infested plants.,70
+17,Ashâ€“Buttermilk Spray,Fungal diseases; Mildew,Vegetables; leafy crops,Wood ash â€“ 500 g; Buttermilk â€“ 1 L; Water â€“ 5 L,Mix ash and buttermilk into water; ferment 1 day.,Spray on leaves every 10 days.,20
+18,Tamarind Leaf Extract,Aphids; Caterpillars,Vegetables; pulses,Tamarind leaves â€“ 250 g; Water â€“ 2 L,Crush leaves; soak in water overnight; filter.,Spray on affected plants.,25
+19,Aloeâ€“Garlic Mix,Mites; Thrips; Whiteflies,Tomato; brinjal; gourds,Aloe vera gel â€“ 150 g; Garlic â€“ 100 g; Water â€“ 3 L,Blend garlic and aloe in water; filter.,Spray every 7â€“10 days.,40
+20,Gingerâ€“Turmeric Extract,Fungal infections; Aphids,Vegetables; fruits,Fresh ginger â€“ 100 g; Turmeric powder â€“ 50 g; Water â€“ 2 L,Grind ginger; mix with turmeric; soak overnight.,Spray on affected leaves.,35
+21,Papaya Leaf Extract,Whiteflies; Caterpillars,Vegetables; papaya orchards,Papaya leaves â€“ 500 g; Water â€“ 5 L,Crush leaves; soak overnight; filter.,Spray on crops weekly.,40
+22,Eucalyptus Leaf Extract,Aphids; Thrips; Mites,Vegetables; cotton,Eucalyptus leaves â€“ 200 g; Water â€“ 2 L,Crush and boil leaves; filter after cooling.,Spray directly on crops.,30
+23,Turmericâ€“Lime Solution,Fungal spots; Bacterial blight,Vegetables; fruits,Turmeric powder â€“ 50 g; Lime (chuna) â€“ 20 g; Water â€“ 2 L,Mix turmeric and lime in water thoroughly.,Spray weekly as preventive.,20
+24,Mint Leaf Extract,Aphids; Whiteflies; Caterpillars,Vegetables; flowers,Fresh mint leaves â€“ 200 g; Water â€“ 2 L,Crush leaves; soak overnight; filter.,Spray on infested crops.,25
+25,Pepperâ€“Garlic Extract,Caterpillars; Aphids,Tomato; okra; brinjal,Black pepper â€“ 20 g; Garlic â€“ 100 g; Water â€“ 2 L,Grind into paste; soak overnight; filter.,Spray on affected crops.,40
+26,Lemonâ€“Garlic Spray,Aphids; Thrips,Vegetables; fruits,Lemon juice â€“ 50 ml; Garlic â€“ 100 g; Water â€“ 2 L,Blend garlic with lemon juice and water.,Spray every 7 days.,30
+27,Jaggeryâ€“Asafoetida Mix,Fruit flies; Leaf borers,Vegetables; fruits,Jaggery â€“ 200 g; Asafoetida â€“ 5 g; Water â€“ 2 L,Dissolve jaggery and asafoetida in water.,Use as trap spray or foliar spray.,35
+28,Custard Apple Leaf Extract,Caterpillars; Beetles,Vegetables; pulses,Custard apple leaves â€“ 200 g; Water â€“ 2 L,Crush leaves; soak overnight; filter.,Spray directly on affected crops.,25
+29,Fenugreek Seed Extract,Aphids; Mites,Vegetables; oilseeds,Fenugreek seeds â€“ 100 g; Water â€“ 2 L,Soak seeds overnight; grind; filter.,Spray once in 7â€“10 days.,30
+30,Tulsi Leaf Extract,Whiteflies; Caterpillars,Vegetables; fruits,Fresh tulsi leaves â€“ 250 g; Water â€“ 3 L,Crush leaves; soak overnight; filter.,Spray on foliage weekly.,20
+31,Basil Leaf Extract,Aphids; Caterpillars,Vegetables; flowers,Fresh basil leaves â€“ 200 g; Water â€“ 2 L,Crush leaves; soak overnight; filter.,Spray weekly as preventive.,25
+32,Onionâ€“Chili Spray,Thrips; Aphids,Tomato; onion; okra,Onion â€“ 100 g; Green chili â€“ 50 g; Water â€“ 2 L,Grind onion and chili; soak overnight; filter.,Spray directly on crops.,30
+33,Bitter Gourd Leaf Extract,Whiteflies; Caterpillars,Cucurbits; gourds,Bitter gourd leaves â€“ 200 g; Water â€“ 2 L,Crush leaves; soak overnight; filter.,Spray every 7 days.,20
+34,Black Pepperâ€“Neem Spray,Caterpillars; Mites,Vegetables; fruits,Black pepper â€“ 25 g; Neem leaves â€“ 250 g; Water â€“ 2 L,Grind pepper; soak with neem leaves; filter.,Spray on foliage.,50
+35,Garlicâ€“Mustard Mix,Aphids; Caterpillars,Mustard; pulses; vegetables,Garlic â€“ 100 g; Mustard seeds â€“ 50 g; Water â€“ 2 L,Grind into paste; soak in water overnight; filter.,Spray on affected areas.,40
+36,Banana Peel Extract,Aphids; Whiteflies,Vegetables; fruits,Banana peels â€“ 5 pieces; Water â€“ 2 L,Chop peels; ferment in water 3 days; filter.,Spray weekly.,15
+37,Curry Powder Spray,Caterpillars; Aphids,Vegetables; spices,Curry powder â€“ 20 g; Soap water â€“ 1 L,Mix curry powder with soap water; stir well.,Spray on crops.,20
+38,Mustard Cake Extract,Aphids; Root grubs,Vegetables; oilseeds,Mustard cake â€“ 200 g; Water â€“ 5 L,Soak cake in water for 48 hours; filter.,Spray or drench soil.,35
+39,Green Tea Extract,Mites; Aphids,Vegetables; flowers,Green tea leaves â€“ 20 g; Water â€“ 1 L,Boil tea in water; cool; filter.,Spray on foliage.,15
+40,Rice Wash Water,Whiteflies; Aphids,Vegetables; rice fields,Rice wash water â€“ 2 L,Collect rice wash; ferment for 24 hours.,Spray directly.,0
+41,Lemon Leaf Extract,Whiteflies; Caterpillars,Vegetables; lemon orchards,Lemon leaves â€“ 200 g; Water â€“ 2 L,Crush leaves; soak overnight; filter.,Spray on foliage.,20
+42,Radish Leaf Extract,Aphids; Thrips,Vegetables; pulses,Radish leaves â€“ 200 g; Water â€“ 2 L,Crush leaves; soak in water; filter.,Spray directly.,15
+43,Cabbage Leaf Extract,Caterpillars; Aphids,Cabbage; cauliflower; vegetables,Cabbage leaves â€“ 200 g; Water â€“ 2 L,Crush leaves; soak; filter.,Spray on crops.,20
+44,Guava Leaf Extract,Whiteflies; Caterpillars,Vegetables; guava orchards,Guava leaves â€“ 250 g; Water â€“ 2 L,Crush leaves; soak overnight; filter.,Spray once in 7 days.,25
+45,Mintâ€“Chili Mix,Aphids; Thrips,Vegetables; flowers,Fresh mint leaves â€“ 100 g; Green chili â€“ 50 g; Water â€“ 2 L,Grind mint and chili; soak overnight; filter.,Spray weekly.,30
+46,Spinach Leaf Extract,Caterpillars; Aphids,Vegetables; leafy greens,Spinach leaves â€“ 200 g; Water â€“ 2 L,Crush; soak in water; filter.,Spray directly.,15
+47,Cumin Seed Extract,Mites; Aphids,Vegetables; spices,Cumin seeds â€“ 50 g; Water â€“ 2 L,Soak seeds overnight; grind; filter.,Spray every 7 days.,40
+48,Rose Leaf Extract,Aphids; Whiteflies,Vegetables; rose gardens,Rose leaves â€“ 100 g; Water â€“ 1 L,Crush; soak; filter.,Spray directly on leaves.,20
+49,Chickpea Flour Spray,Caterpillars; Thrips,Pulses; vegetables,Chickpea flour â€“ 50 g; Water â€“ 2 L,Mix flour with water; stir well.,Spray on foliage as sticky coating.,20
+50,Carrot Leaf Extract,Aphids; Caterpillars,Vegetables; carrot fields,Carrot leaves â€“ 200 g; Water â€“ 2 L,Crush; soak in water; filter.,Spray on crops.,15
+51,Groundnut Leaf Extract,Aphids; Caterpillars,Groundnut; vegetables,Groundnut leaves â€“ 250 g; Water â€“ 2 L,Crush leaves; soak overnight; filter.,Spray directly.,20
+52,Pepperâ€“Turmeric Mix,Fungal diseases; Aphids,Vegetables; fruits,Black pepper â€“ 20 g; Turmeric powder â€“ 50 g; Water â€“ 2 L,Mix well; soak overnight.,Spray weekly.,30
+53,Okra Leaf Extract,Whiteflies; Caterpillars,Okra; vegetables,Okra leaves â€“ 200 g; Water â€“ 2 L,Crush; soak; filter.,Spray directly.,15
+54,Coriander Seed Extract,Mites; Aphids,Vegetables; spices,Coriander seeds â€“ 50 g; Water â€“ 2 L,Soak overnight; grind; filter.,Spray weekly.,30
+55,Pomegranate Peel Extract,Caterpillars; Whiteflies,Vegetables; fruits,Pomegranate peels â€“ 200 g; Water â€“ 2 L,Dry peels; grind; soak overnight; filter.,Spray on foliage.,25
+56,Bay Leaf Extract,Aphids; Caterpillars,Vegetables; spices,Bay leaves â€“ 50 g; Water â€“ 1 L,Crush; boil in water; cool; filter.,Spray on crops.,20
+57,Lemon Grass Extract,Whiteflies; Mites,Vegetables; fruits,Lemongrass â€“ 100 g; Water â€“ 2 L,Crush; boil; cool; filter.,Spray every 7 days.,25
+58,Mustard Seed Oil Spray,Aphids; Whiteflies,Vegetables; oilseeds,Mustard oil â€“ 20 ml; Soap water â€“ 1 L,Mix oil with soap water.,Spray on foliage.,25
+59,Castor Leaf Extract,Caterpillars; Beetles,Castor; vegetables,Castor leaves â€“ 200 g; Water â€“ 2 L,Crush; soak overnight; filter.,Spray weekly.,20
+60,Orange Peel Extract,Aphids; Thrips; Whiteflies,Vegetables; fruits,Orange peels â€“ 200 g; Water â€“ 2 L,Dry peels; boil in water; filter.,Spray every 10 days.,25
+61,Tamarind Leaf Extract,Aphids; Caterpillars,Tamarind orchards; vegetables,Tamarind leaves â€“ 200 g; Water â€“ 2 L,Crush leaves; soak overnight; filter.,Spray weekly on foliage.,20
+62,Aloe Vera Gel Spray,Whiteflies; Thrips,Vegetables; fruits,Aloe vera gel â€“ 100 g; Water â€“ 1 L,Blend gel with water; stir well.,Spray on affected leaves.,30
+63,Wheat Flour Dust,Caterpillars; Beetles,Wheat; maize; vegetables,Wheat flour â€“ 100 g,Sprinkle directly on infested crops.,Apply in the morning when leaves are wet.,10
+64,Neem Oilâ€“Soap Spray,Aphids; Whiteflies; Mites,Vegetables; fruits; pulses,Neem oil â€“ 30 ml; Soap solution â€“ 1 L,Mix oil with soap water.,Spray every 10 days.,40
+65,Garlicâ€“Turmeric Extract,Caterpillars; Aphids; Fungal diseases,Vegetables; pulses,Garlic â€“ 100 g; Turmeric â€“ 50 g; Water â€“ 2 L,Grind garlic and turmeric; soak overnight; filter.,Spray on foliage.,35
+66,Eucalyptus Leaf Extract,Whiteflies; Caterpillars,Vegetables; fruits; eucalyptus areas,Eucalyptus leaves â€“ 200 g; Water â€“ 2 L,Crush; boil in water; cool; filter.,Spray weekly.,25
+67,Coffee Powder Spray,Ants; Aphids; Beetles,Vegetables; flowers,Coffee powder â€“ 20 g; Water â€“ 1 L,Mix coffee with water; stir well.,Spray on infested areas.,20
+68,Coconut Husk Extract,Aphids; Whiteflies,Coconut; vegetables,Coconut husk â€“ 200 g; Water â€“ 2 L,Chop husk; soak for 2 days; filter.,Spray weekly.,15
+69,Fenugreek Seed Extract,Aphids; Mites,Vegetables; spices,Fenugreek seeds â€“ 50 g; Water â€“ 1 L,Soak seeds overnight; grind; filter.,Spray on crops.,25
+70,Sesame Seed Extract,Caterpillars; Thrips,Vegetables; oilseeds,Sesame seeds â€“ 50 g; Water â€“ 1 L,Soak seeds overnight; grind; filter.,Spray weekly.,30
+71,Papaya Leaf Extract,Aphids; Caterpillars; Whiteflies,Vegetables; papaya orchards,Papaya leaves â€“ 200 g; Water â€“ 2 L,Crush leaves; soak overnight; filter.,Spray every 7 days.,15
+72,Pineapple Peel Extract,Aphids; Thrips,Vegetables; fruits,Pineapple peel â€“ 200 g; Water â€“ 2 L,Chop peels; soak overnight; filter.,Spray weekly.,25
+73,Gingerâ€“Garlic Spray,Caterpillars; Aphids,Vegetables; pulses,Ginger â€“ 50 g; Garlic â€“ 100 g; Water â€“ 2 L,Grind ginger and garlic; soak overnight; filter.,Spray on leaves.,35
+74,Tea Waste Extract,Aphids; Thrips,Vegetables; flowers,Used tea leaves â€“ 100 g; Water â€“ 2 L,Ferment tea waste for 24 hours; filter.,Spray weekly.,10
+75,Aloeâ€“Turmeric Mix,Fungal diseases; Aphids,Vegetables; fruits,Aloe vera gel â€“ 50 g; Turmeric powder â€“ 20 g; Water â€“ 1 L,Blend gel and turmeric with water.,Spray directly.,20
+76,Jaggeryâ€“Soap Mix,Whiteflies; Aphids,Vegetables; pulses,Jaggery â€“ 50 g; Soap solution â€“ 1 L,Dissolve jaggery in soap solution.,Spray every 7 days.,15
+77,Coconut Oil Spray,Mites; Aphids,Vegetables; fruits; coconut,Coconut oil â€“ 30 ml; Soap water â€“ 1 L,Mix oil with soap solution.,Spray on affected crops.,35
+78,Ginger Extract,Caterpillars; Aphids,Vegetables; pulses,Fresh ginger â€“ 100 g; Water â€“ 2 L,Crush ginger; soak overnight; filter.,Spray weekly.,30
+79,Hibiscus Leaf Extract,Whiteflies; Aphids,Vegetables; hibiscus gardens,Hibiscus leaves â€“ 200 g; Water â€“ 2 L,Crush; soak overnight; filter.,Spray on leaves.,20
+80,Apple Peel Extract,Aphids; Caterpillars,Vegetables; fruits,Apple peels â€“ 200 g; Water â€“ 2 L,Chop peels; ferment for 2 days; filter.,Spray weekly.,30
+81,Pigeon Pea Leaf Extract,Aphids; Caterpillars,Pulses; vegetables,Pigeon pea leaves â€“ 200 g; Water â€“ 2 L,Crush; soak overnight; filter.,Spray on crops.,15
+82,Tamarind Seed Extract,Whiteflies; Caterpillars,Vegetables; tamarind orchards,Tamarind seeds â€“ 50 g; Water â€“ 1 L,Soak seeds overnight; grind; filter.,Spray weekly.,20
+83,Green Chiliâ€“Soap Spray,Aphids; Thrips,Vegetables; spices,Green chili â€“ 50 g; Soap solution â€“ 1 L,Grind chili; mix with soap water; filter.,Spray on affected areas.,20
+84,Mango Leaf Extract,Caterpillars; Whiteflies,Vegetables; mango orchards,Mango leaves â€“ 200 g; Water â€“ 2 L,Crush leaves; soak overnight; filter.,Spray every 10 days.,20
+85,Fig Leaf Extract,Aphids; Caterpillars,Vegetables; fig orchards,Fig leaves â€“ 200 g; Water â€“ 2 L,Crush; soak overnight; filter.,Spray on crops.,25
+86,Cucumber Peel Extract,Whiteflies; Thrips,Vegetables; gourds,Cucumber peels â€“ 200 g; Water â€“ 2 L,Chop peels; ferment for 24 hours; filter.,Spray weekly.,15
+87,Aloeâ€“Neem Mix,Aphids; Whiteflies; Mites,Vegetables; fruits,Aloe vera gel â€“ 50 g; Neem leaves â€“ 200 g; Water â€“ 2 L,Crush neem; mix with aloe; soak overnight; filter.,Spray on foliage.,30
+88,Drumstick Leaf Extract,Caterpillars; Aphids,Vegetables; drumstick trees,Drumstick leaves â€“ 200 g; Water â€“ 2 L,Crush leaves; soak overnight; filter.,Spray weekly.,20
+89,Tulsiâ€“Garlic Mix,Aphids; Thrips; Caterpillars,Vegetables; flowers,Tulsi leaves â€“ 100 g; Garlic â€“ 50 g; Water â€“ 1 L,Grind tulsi and garlic; soak overnight; filter.,Spray directly.,25
+90,Bottle Gourd Leaf Extract,Whiteflies; Caterpillars,Gourds; vegetables,Bottle gourd leaves â€“ 200 g; Water â€“ 2 L,Crush leaves; soak overnight; filter.,Spray weekly.,15
+91,Ash Gourd Leaf Extract,Aphids; Whiteflies,Vegetables; gourds,Ash gourd leaves â€“ 200 g; Water â€“ 2 L,Crush leaves; soak overnight; filter.,Spray weekly.,20
+92,Mustard Oil Spray,Aphids; Thrips; Whiteflies,Mustard fields; vegetables,Mustard oil â€“ 20 ml; Soap water â€“ 1 L,Mix oil with soap solution.,Spray on affected crops.,30
+93,Lemon Peel Extract,Aphids; Mites; Thrips,Vegetables; fruits,Lemon peels â€“ 200 g; Water â€“ 2 L,Chop peels; soak overnight; filter.,Spray weekly.,25
+94,Bitter Gourd Leaf Extract,Caterpillars; Aphids,Vegetables; gourds,Bitter gourd leaves â€“ 200 g; Water â€“ 2 L,Crush; soak overnight; filter.,Spray every 7 days.,20
+95,Guava Leaf Extract,Whiteflies; Caterpillars,Guava orchards; vegetables,Guava leaves â€“ 200 g; Water â€“ 2 L,Crush leaves; soak overnight; filter.,Spray weekly.,15
+96,Turmericâ€“Soap Spray,Aphids; Fungal diseases,Vegetables; pulses,Turmeric powder â€“ 30 g; Soap solution â€“ 1 L,Mix turmeric with soap water; stir well.,Spray directly.,20
+97,Aloeâ€“Garlic Mix,Caterpillars; Whiteflies; Aphids,Vegetables; fruits,Aloe vera gel â€“ 50 g; Garlic â€“ 100 g; Water â€“ 2 L,Grind garlic; mix with aloe gel; dilute in water; filter.,Spray weekly.,30
+98,Onion Peel Extract,Mites; Thrips,Vegetables; spices,Onion peels â€“ 100 g; Water â€“ 1 L,Soak peels in water overnight; filter.,Spray on leaves.,10
+99,Neem Seed Powder Spray,Whiteflies; Aphids; Caterpillars,Vegetables; pulses; orchards,Neem seed powder â€“ 100 g; Water â€“ 1 L,Soak powder overnight; stir; filter.,Spray every 7â€“10 days.,25
+100,Spinach Leaf Extract,Caterpillars; Aphids,Spinach; leafy greens,Spinach leaves â€“ 200 g; Water â€“ 2 L,Crush; soak; filter.,Spray directly.,15
+101,Brinjal Leaf Extract,Whiteflies; Caterpillars,Brinjal fields; vegetables,Brinjal leaves â€“ 200 g; Water â€“ 2 L,Crush leaves; soak overnight.,Spray weekly.,15
+102,Aloeâ€“Pepper Spray,Thrips; Aphids,Vegetables; fruits,Aloe vera gel â€“ 50 g; Red chili powder â€“ 20 g; Water â€“ 1 L,Mix ingredients; stir well; filter.,Spray every 7 days.,25
+103,Carrot Leaf Extract,Caterpillars; Aphids,Carrot farms; vegetables,Carrot leaves â€“ 200 g; Water â€“ 2 L,Crush; soak; filter.,Spray on crops.,15
+104,Radish Leaf Extract,Whiteflies; Aphids,Radish farms; vegetables,Radish leaves â€“ 200 g; Water â€“ 2 L,Crush and soak overnight; filter.,Spray weekly.,15
+105,Curry Leaf Extract,Caterpillars; Whiteflies,Vegetables; spices,Curry leaves â€“ 200 g; Water â€“ 2 L,Crush leaves; soak overnight.,Spray weekly.,20
+106,Banana Leaf Extract,Aphids; Whiteflies,Banana orchards; vegetables,Banana leaves â€“ 200 g; Water â€“ 2 L,Chop; soak overnight; filter.,Spray on crops.,10
+107,Aloeâ€“Curry Leaf Mix,Aphids; Thrips,Vegetables; fruits,Aloe vera gel â€“ 50 g; Curry leaves â€“ 100 g; Water â€“ 1 L,Grind curry leaves; mix with aloe; filter.,Spray weekly.,25
+108,Mintâ€“Turmeric Spray,Whiteflies; Fungal diseases,Vegetables; spices,Mint leaves â€“ 100 g; Turmeric powder â€“ 20 g; Water â€“ 1 L,Crush mint; mix with turmeric water; filter.,Spray directly.,20
+109,Jackfruit Leaf Extract,Caterpillars; Aphids,Vegetables; jackfruit orchards,Jackfruit leaves â€“ 200 g; Water â€“ 2 L,Crush leaves; soak overnight.,Spray weekly.,20
+110,Aloeâ€“Fenugreek Mix,Mites; Aphids,Vegetables; spices,Aloe vera gel â€“ 50 g; Fenugreek seeds â€“ 50 g; Water â€“ 1 L,Soak seeds overnight; grind; mix with aloe and water.,Spray every 10 days.,25
+111,Sweet Potato Leaf Extract,Aphids; Whiteflies,Sweet potato farms; vegetables,Sweet potato leaves â€“ 200 g; Water â€“ 2 L,Crush leaves; soak; filter.,Spray on crops.,15
+112,Groundnut Shell Extract,Caterpillars; Whiteflies,Groundnut fields; vegetables,Groundnut shells â€“ 200 g; Water â€“ 2 L,Boil shells; cool; filter.,Spray weekly.,15
+113,Tamarind Peel Extract,Thrips; Aphids,Tamarind orchards; vegetables,Tamarind peels â€“ 200 g; Water â€“ 2 L,Chop peels; soak overnight.,Spray weekly.,20
+114,Aloeâ€“Jaggery Mix,Aphids; Whiteflies,Vegetables; pulses,Aloe vera gel â€“ 50 g; Jaggery â€“ 20 g; Water â€“ 1 L,Mix aloe and jaggery in water.,Spray every 7 days.,15
+115,Pumpkin Leaf Extract,Caterpillars; Aphids,Pumpkin fields; vegetables,Pumpkin leaves â€“ 200 g; Water â€“ 2 L,Crush leaves; soak overnight.,Spray weekly.,15
+116,Watermelon Peel Extract,Whiteflies; Thrips,Vegetables; melons,Watermelon peel â€“ 200 g; Water â€“ 2 L,Chop; ferment 24 hrs; filter.,Spray weekly.,15
+117,Aloeâ€“Chili Mix,Aphids; Caterpillars,Vegetables; spices,Aloe vera gel â€“ 50 g; Green chili â€“ 50 g; Water â€“ 1 L,Grind chili; mix with aloe; dilute with water; filter.,Spray every 7 days.,25
+118,Gooseberry Leaf Extract,Aphids; Caterpillars,Vegetables; gooseberry orchards,Gooseberry leaves â€“ 200 g; Water â€“ 2 L,Crush; soak overnight; filter.,Spray weekly.,20
+119,Sapota Leaf Extract,Whiteflies; Caterpillars,Vegetables; sapota orchards,Sapota leaves â€“ 200 g; Water â€“ 2 L,Crush leaves; soak; filter.,Spray every 10 days.,20
+120,Beetroot Peel Extract,Aphids; Whiteflies,Vegetables; beetroot farms,Beetroot peels â€“ 200 g; Water â€“ 2 L,Chop peels; soak overnight; filter.,Spray on crops.,15
+121,Papaya Leaf Extract,Whiteflies; Aphids,Papaya orchards; vegetables,Papaya leaves â€“ 200 g; Water â€“ 2 L,Crush leaves; soak overnight; filter.,Spray every 7â€“10 days.,15
+122,Cabbage Leaf Extract,Caterpillars; Aphids,Cabbage fields; leafy vegetables,Cabbage leaves â€“ 200 g; Water â€“ 2 L,Crush leaves; soak overnight; filter.,Spray weekly.,10
+123,Cauliflower Leaf Extract,Aphids; Thrips,Cauliflower fields; vegetables,Cauliflower leaves â€“ 200 g; Water â€“ 2 L,Crush leaves; soak overnight; filter.,Spray every 10 days.,10
+124,Moringa Leaf Extract,Caterpillars; Whiteflies,Moringa orchards; vegetables,Moringa leaves â€“ 200 g; Water â€“ 2 L,Crush; soak overnight.,Spray weekly.,20
+125,Aloeâ€“Garlicâ€“Turmeric Mix,Aphids; Whiteflies; Fungal infections,Vegetables; pulses,Aloe vera gel â€“ 50 g; Garlic â€“ 50 g; Turmeric powder â€“ 20 g; Water â€“ 1 L,Grind garlic; mix all; dilute with water; filter.,Spray directly.,30
+126,Tomato Leaf Extract,Whiteflies; Aphids,Tomato fields; vegetables,Tomato leaves â€“ 200 g; Water â€“ 2 L,Crush; soak overnight.,Spray weekly.,15
+127,Aloeâ€“Lemon Spray,Aphids; Thrips,Vegetables; fruits,Aloe vera gel â€“ 50 g; Lemon juice â€“ 20 ml; Water â€“ 1 L,Mix aloe and lemon juice in water; stir well.,Spray every 7 days.,20
+128,Sesame Oil Spray,Mites; Aphids,Sesame; vegetables,Sesame oil â€“ 20 ml; Soap solution â€“ 1 L,Mix well; stir until emulsified.,Spray directly.,30
+129,Aloeâ€“Neem Mix,Whiteflies; Caterpillars,Vegetables; orchards,Aloe vera gel â€“ 50 g; Neem seed powder â€“ 50 g; Water â€“ 1 L,Soak neem powder overnight; add aloe; filter.,Spray weekly.,25
+130,Bottle Gourd Leaf Extract,Caterpillars; Aphids,Vegetables; gourds,Bottle gourd leaves â€“ 200 g; Water â€“ 2 L,Crush leaves; soak overnight.,Spray directly.,15
+131,Custard Apple Leaf Extract,Whiteflies; Thrips,Custard apple orchards; vegetables,Custard apple leaves â€“ 200 g; Water â€“ 2 L,Crush; soak overnight.,Spray every 7 days.,20
+132,Aloeâ€“Soap Mix,Aphids; Whiteflies,Vegetables; spices,Aloe vera gel â€“ 50 g; Soap solution â€“ 1 L,Mix aloe with soap solution.,Spray weekly.,15
+133,Pumpkin Seed Extract,Caterpillars; Aphids,Pumpkin fields; vegetables,Pumpkin seeds â€“ 100 g; Water â€“ 1 L,Crush seeds; soak overnight; filter.,Spray directly.,25
+134,Aloeâ€“Coriander Mix,Thrips; Aphids,Vegetables; fruits,Aloe vera gel â€“ 50 g; Coriander leaves â€“ 100 g; Water â€“ 1 L,Crush coriander; mix with aloe; filter.,Spray every 10 days.,25
+135,Orange Peel Extract,Aphids; Whiteflies,Vegetables; citrus orchards,Orange peels â€“ 200 g; Water â€“ 2 L,Chop peels; soak overnight; filter.,Spray weekly.,20
+136,Aloeâ€“Mint Mix,Whiteflies; Thrips,Vegetables; spices,Aloe vera gel â€“ 50 g; Mint leaves â€“ 100 g; Water â€“ 1 L,Crush mint; mix with aloe; filter.,Spray every 7 days.,25
+137,Pineapple Peel Extract,Aphids; Caterpillars,Vegetables; fruits,Pineapple peels â€“ 200 g; Water â€“ 2 L,Chop; soak overnight; filter.,Spray weekly.,20
+138,Aloeâ€“Fenugreekâ€“Garlic Mix,Whiteflies; Thrips; Mites,Vegetables; pulses,Aloe vera gel â€“ 50 g; Fenugreek seeds â€“ 30 g; Garlic â€“ 50 g; Water â€“ 1 L,Soak fenugreek overnight; grind with garlic; mix with aloe; filter.,Spray every 10 days.,30
+139,Aloeâ€“Papaya Mix,Aphids; Caterpillars,Vegetables; fruits,Aloe vera gel â€“ 50 g; Papaya leaves â€“ 100 g; Water â€“ 1 L,Crush papaya leaves; mix with aloe; filter.,Spray weekly.,20
+140,Aloeâ€“Banana Peel Mix,Thrips; Whiteflies,Vegetables; orchards,Aloe vera gel â€“ 50 g; Banana peels â€“ 100 g; Water â€“ 1 L,Chop peels; soak overnight; add aloe; filter.,Spray every 7â€“10 days.,15
+141,Aloeâ€“Turmericâ€“Soap Mix,Fungal infections; Aphids,Vegetables; pulses,Aloe vera gel â€“ 50 g; Turmeric powder â€“ 20 g; Soap solution â€“ 1 L,Mix turmeric and aloe with soap solution.,Spray directly.,20
+142,Pomegranate Peel Extract,Aphids; Thrips,Vegetables; pomegranate orchards,Pomegranate peels â€“ 200 g; Water â€“ 2 L,Chop peels; soak overnight; filter.,Spray weekly.,20
+143,Aloeâ€“Spinach Mix,Whiteflies; Aphids,Vegetables; leafy crops,Aloe vera gel â€“ 50 g; Spinach leaves â€“ 100 g; Water â€“ 1 L,Crush spinach; mix with aloe; filter.,Spray every 7 days.,15
+144,Drumstick Seed Extract,Caterpillars; Aphids,Vegetables; orchards,Drumstick seeds â€“ 50 g; Water â€“ 1 L,Crush seeds; soak overnight; filter.,Spray weekly.,20
+145,Aloeâ€“Basil Mix,Aphids; Thrips,Vegetables; herbs,Aloe vera gel â€“ 50 g; Basil leaves â€“ 100 g; Water â€“ 1 L,Crush basil; mix with aloe; filter.,Spray every 7 days.,20
+146,Aloeâ€“Clove Spray,Mites; Aphids,Vegetables; spices,Aloe vera gel â€“ 50 g; Cloves â€“ 10 g; Water â€“ 1 L,Crush cloves; boil; cool; add aloe; filter.,Spray weekly.,30
+147,Aloeâ€“Onion Peel Mix,Whiteflies; Thrips,Vegetables; spices,Aloe vera gel â€“ 50 g; Onion peels â€“ 50 g; Water â€“ 1 L,Soak peels overnight; add aloe; filter.,Spray every 7â€“10 days.,15
+148,Aloeâ€“Guava Leaf Mix,Aphids; Caterpillars,Vegetables; orchards,Aloe vera gel â€“ 50 g; Guava leaves â€“ 100 g; Water â€“ 1 L,Crush guava leaves; mix with aloe; filter.,Spray weekly.,20
+149,Aloeâ€“Ash Gourd Leaf Mix,Whiteflies; Aphids,Vegetables; gourds,Aloe vera gel â€“ 50 g; Ash gourd leaves â€“ 100 g; Water â€“ 1 L,Crush leaves; mix with aloe; filter.,Spray every 10 days.,15
+150,Aloeâ€“Custard Apple Leaf Mix,Caterpillars; Aphids,Vegetables; orchards,Aloe vera gel â€“ 50 g; Custard apple leaves â€“ 100 g; Water â€“ 1 L,Crush leaves; mix with aloe; filter.,Spray every 7 days.,20
+151,Bamboo Leaf Extract,Aphids; Caterpillars,Paddy; vegetables,Fresh bamboo leaves â€“ 500 g; Water â€“ 5 L,Crush leaves; soak overnight; filter.,Spray on crops once a week.,25
+152,Guava Leaf Extract,Whiteflies; Fruit borers,Vegetables; orchards,Guava leaves â€“ 500 g; Water â€“ 5 L,Boil leaves 20 min; cool; filter.,Spray on crops weekly.,30
+153,Pomegranate Peel Extract,Aphids; Leaf miners,Vegetables; fruits,Dry pomegranate peels â€“ 200 g; Water â€“ 3 L,Soak overnight; boil 10 min; filter.,Spray after diluting 1:2 with water.,20
+154,Bay Leaf Extract,Mites; Thrips,Vegetables; spice crops,Bay leaves â€“ 200 g; Water â€“ 2 L,Crush leaves; boil 10 min; filter.,Spray on infested leaves.,25
+155,Soursop (Graviola) Leaf Extract,Caterpillars; Borers,Fruit crops; vegetables,Soursop leaves â€“ 300 g; Water â€“ 3 L,Crush and soak 24 hrs; filter.,Spray once in 7 days.,40
+156,Betel Leaf Extract,Aphids; Mealybugs,Vegetables; flowers,Betel leaves â€“ 100 g; Water â€“ 1 L,Grind into paste; dilute in water.,Spray directly on pests.,35
+157,Pine Needle Extract,Caterpillars; Beetles,Potato; maize,Pine needles â€“ 300 g; Water â€“ 3 L,Boil needles 30 min; cool; filter.,Spray on crops weekly.,40
+158,Bael Leaf Extract,Leafhoppers; Aphids,Vegetables; pulses,Bael leaves â€“ 200 g; Water â€“ 2 L,Crush leaves; soak overnight; filter.,Spray directly on plants.,20
+159,Bottle Gourd Leaf Extract,Caterpillars; Mites,Cucurbits; gourds,Bottle gourd leaves â€“ 300 g; Water â€“ 3 L,Crush leaves; boil 15 min; filter.,Spray fortnightly.,20
+160,Pumpkin Seed Oil Extract,Whiteflies; Mites,Vegetables; cucurbits,Pumpkin seeds â€“ 200 g; Water â€“ 3 L,Grind seeds; soak overnight; filter.,Spray on leaves.,35
+161,Cashew Nut Shell Extract,Borers; Beetles,Cashew; vegetables,Cashew nut shells â€“ 100 g; Water â€“ 1 L,Boil shells 15 min; filter.,Apply diluted extract 1:5 with water.,40
+162,Mango Seed Kernel Extract,Weevils; Caterpillars,Mango; cereals,Mango seed kernels â€“ 200 g; Water â€“ 3 L,Grind kernels; soak 24 hrs; filter.,Spray every 15 days.,25
+163,Tamarind Seed Extract,Whiteflies; Thrips,Vegetables; pulses,Tamarind seeds â€“ 200 g; Water â€“ 2 L,Roast seeds; grind; soak overnight; filter.,Spray on crops.,30
+164,Onion Peel Extract,Aphids; Caterpillars,Vegetables; oilseeds,Onion peels â€“ 100 g; Water â€“ 1 L,Boil peels 10 min; cool; filter.,Spray as foliar application.,10
+165,Coffee Decoction,Snails; Slugs,Leafy vegetables,Coffee powder â€“ 50 g; Water â€“ 1 L,Boil coffee in water; cool; filter.,Spray around plant base.,25
+166,Tea Leaf Extract,Aphids; Caterpillars,Vegetables; tea plantations,Used tea leaves â€“ 200 g; Water â€“ 2 L,Boil tea leaves 15 min; filter.,Spray once a week.,15
+167,Lemon Peel Oil Extract,Whiteflies; Mites,Citrus; vegetables,Lemon peels â€“ 200 g; Water â€“ 2 L,Crush peels; soak overnight; filter.,Spray diluted 1:5 with water.,30
+168,Pineapple Peel Extract,Fruit flies; Caterpillars,Orchards; vegetables,Pineapple peels â€“ 300 g; Water â€“ 3 L,Ferment peels in water 2 days; filter.,Spray on fruit crops.,20
+169,Sugarcane Juice Spray,Fruit flies (as bait); Thrips,Sugarcane; vegetables,Sugarcane juice â€“ 500 ml; Jaggery â€“ 50 g; Water â€“ 2 L,Mix all; ferment 1 day.,Use as bait spray.,30
+170,Rice Husk Ash Spray,Caterpillars; Beetles,Paddy; maize,Rice husk ash â€“ 500 g; Water â€“ 5 L,Mix well; allow to settle; use supernatant.,Spray on foliage.,15
+171,Citrus Leaf Extract,Aphids; Whiteflies,Citrus orchards; vegetables,Citrus leaves â€“ 300 g; Water â€“ 3 L,Crush and soak overnight; filter.,Spray every 10 days.,20
+172,Gingerâ€“Onion Mix,Caterpillars; Aphids,Vegetables; pulses,Fresh ginger â€“ 100 g; Onion â€“ 100 g; Water â€“ 2 L,Grind both; soak overnight; filter.,Spray on crops.,25
+173,Mustard Oil Cake Extract,Soil pests; Aphids,Oilseeds; vegetables,Mustard oil cake â€“ 200 g; Water â€“ 3 L,Soak cake 2 days; filter.,Spray diluted 1:5 or apply as soil drench.,30
+174,Cabbage Leaf Extract,Caterpillars; Leaf miners,Cruciferous crops,Cabbage leaves â€“ 300 g; Water â€“ 3 L,Crush and soak overnight; filter.,Spray once in 7 days.,15
+175,Radish Leaf Extract,Aphids; Beetles,Radish; crucifers,Radish leaves â€“ 200 g; Water â€“ 2 L,Crush leaves; boil 15 min; filter.,Spray on affected leaves.,20
+176,Carrot Leaf Extract,Leaf miners; Caterpillars,Carrot; vegetables,Carrot leaves â€“ 200 g; Water â€“ 2 L,Soak crushed leaves overnight; filter.,Spray directly.,20
+177,Radish Seed Extract,Aphids; Thrips,Cruciferous crops,Radish seeds â€“ 100 g; Water â€“ 2 L,Grind seeds; soak overnight; filter.,Spray weekly.,25
+178,Beetroot Peel Extract,Caterpillars; Leaf miners,Vegetables,Beetroot peels â€“ 200 g; Water â€“ 2 L,Boil peels 15 min; cool; filter.,Spray directly.,15
+179,Spinach Leaf Extract,Aphids; Leaf miners,Vegetables,Spinach leaves â€“ 300 g; Water â€“ 3 L,Crush leaves; soak overnight; filter.,Spray every 7 days.,20
+180,Turnip Leaf Extract,Caterpillars; Beetles,Root vegetables,Turnip leaves â€“ 300 g; Water â€“ 3 L,Boil leaves 20 min; filter.,Spray on crops weekly.,20
+181,Sweet Potato Leaf Extract,Leaf miners; Caterpillars,Sweet potato; vegetables,Sweet potato leaves â€“ 300 g; Water â€“ 3 L,Crush leaves; soak overnight; filter.,Spray once a week.,20
+182,Colocasia (Arbi) Leaf Extract,Aphids; Beetles,Taro; vegetables,Colocasia leaves â€“ 300 g; Water â€“ 3 L,Grind leaves; soak for 24 hrs; filter.,Spray weekly.,25
+183,Amaranthus Leaf Extract,Caterpillars; Thrips,Leafy greens; pulses,Amaranthus leaves â€“ 200 g; Water â€“ 2 L,Crush; boil 15 min; cool; filter.,Spray directly.,15
+184,Sorghum Leaf Extract,Stem borers; Leafhoppers,Sorghum; maize,Sorghum leaves â€“ 300 g; Water â€“ 3 L,Chop; soak 24 hrs; filter.,Spray on crops.,20
+185,Pearl Millet Leaf Extract,Caterpillars; Aphids,Pearl millet; vegetables,Pearl millet leaves â€“ 300 g; Water â€“ 3 L,Grind; soak overnight; filter.,Spray every 10 days.,20
+186,Finger Millet Leaf Extract,Mites; Leaf miners,Ragi; small millets,Finger millet leaves â€“ 200 g; Water â€“ 2 L,Crush and boil 20 min; cool; filter.,Spray directly.,20
+187,Barley Leaf Extract,Leaf miners; Aphids,Barley; wheat,Barley leaves â€“ 300 g; Water â€“ 3 L,Grind; soak 12 hrs; filter.,Spray once in 7 days.,20
+188,Wheat Husk Ash Spray,Caterpillars; Beetles,Wheat; maize,Wheat husk ash â€“ 500 g; Water â€“ 5 L,Mix; allow to settle; use clear solution.,Spray as foliar spray.,10
+189,Oat Straw Extract,Aphids; Whiteflies,Oat; vegetables,Oat straw â€“ 300 g; Water â€“ 3 L,Soak overnight; filter.,Spray weekly.,15
+190,Sesame Leaf Extract,Leafhoppers; Thrips,Sesame; pulses,Sesame leaves â€“ 200 g; Water â€“ 2 L,Crush and boil 15 min; filter.,Spray directly.,20
+191,Linseed (Alsi) Oil Spray,Mites; Aphids,Vegetables; oilseeds,Linseed oil â€“ 50 ml; Water â€“ 1 L; Soap solution â€“ 10 ml,Mix thoroughly.,Spray as contact pesticide.,35
+192,Castor Leaf Extract,Whiteflies; Caterpillars,Vegetables; pulses,Castor leaves â€“ 300 g; Water â€“ 3 L,Grind; soak 24 hrs; filter.,Spray every 10 days.,25
+193,Aloe Vera Leaf Extract,Thrips; Mites,Vegetables; flowers,Aloe vera leaves â€“ 200 g; Water â€“ 2 L,Peel; grind pulp; dilute with water.,Spray directly.,30
+194,Agave Leaf Extract,Caterpillars; Beetles,Millets; vegetables,Agave leaves â€“ 300 g; Water â€“ 3 L,Crush and ferment 48 hrs; filter.,Spray weekly.,25
+195,Snake Gourd Leaf Extract,Aphids; Caterpillars,Cucurbits; gourds,Snake gourd leaves â€“ 200 g; Water â€“ 2 L,Grind and soak overnight; filter.,Spray every 7â€“10 days.,15
+196,Ridge Gourd Leaf Extract,Leaf miners; Beetles,Cucurbits,Ridge gourd leaves â€“ 200 g; Water â€“ 2 L,Boil 20 min; filter.,Spray on affected plants.,20
+197,Sponge Gourd Leaf Extract,Thrips; Whiteflies,Vegetables; gourds,Sponge gourd leaves â€“ 300 g; Water â€“ 3 L,Crush and soak overnight; filter.,Spray on crops weekly.,20
+198,Bitter Gourd Leaf Extract,Caterpillars; Fruit flies,Cucurbits; vegetables,Bitter gourd leaves â€“ 200 g; Water â€“ 2 L,Grind and soak overnight; filter.,Spray every 7 days.,20
+199,Ivy Gourd Leaf Extract,Aphids; Thrips,Cucurbits,Ivy gourd leaves â€“ 200 g; Water â€“ 2 L,Crush and soak overnight; filter.,Spray weekly.,20
+200,Ash Gourd Leaf Extract,Leaf miners; Caterpillars,Cucurbits,Ash gourd leaves â€“ 300 g; Water â€“ 3 L,Grind and boil 15 min; cool; filter.,Spray directly.,20
+201,Drumstick (Moringa) Seed Extract,Thrips; Whiteflies,Vegetables; fruit crops,Moringa seeds â€“ 100 g; Water â€“ 1 L,Grind seeds; soak overnight; filter.,Spray weekly.,35
+202,Banana Peel Extract,Caterpillars; Aphids,Vegetables; bananas,Banana peels â€“ 200 g; Water â€“ 2 L,Ferment peels in water 2 days; filter.,Spray on crops.,15
+203,Plantain Leaf Extract,Caterpillars; Borers,Banana plantations; vegetables,Plantain leaves â€“ 300 g; Water â€“ 3 L,Crush and soak overnight; filter.,Spray every 10 days.,20
+204,Papaya Seed Extract,Nematodes; Aphids,Vegetables; papaya,Papaya seeds â€“ 100 g; Water â€“ 2 L,Grind seeds; soak overnight; filter.,Apply as soil drench or foliar spray.,25
+205,Papaya Leaf Extract,Whiteflies; Thrips,Vegetables; papaya,Papaya leaves â€“ 300 g; Water â€“ 3 L,Crush and boil 20 min; filter.,Spray directly.,20
+206,Custard Apple Leaf Extract,Caterpillars; Borers,Fruit crops; vegetables,Custard apple leaves â€“ 200 g; Water â€“ 2 L,Grind and soak overnight; filter.,Spray on crops every 7 days.,25
+207,Custard Apple Seed Extract,Aphids; Whiteflies,Vegetables; fruits,Custard apple seeds â€“ 100 g; Water â€“ 2 L,Grind seeds; soak overnight; filter.,Spray diluted (1:5).,30
+208,Sapota (Chikoo) Leaf Extract,Leaf miners; Caterpillars,Sapota orchards; vegetables,Sapota leaves â€“ 300 g; Water â€“ 3 L,Grind and soak 24 hrs; filter.,Spray every 10 days.,20
+209,Jamun Leaf Extract,Thrips; Aphids,Jamun; vegetables,Jamun leaves â€“ 200 g; Water â€“ 2 L,Boil 15 min; cool; filter.,Spray on foliage.,20
+210,Jackfruit Leaf Extract,Caterpillars; Beetles,Jackfruit; vegetables,Jackfruit leaves â€“ 300 g; Water â€“ 3 L,Crush and soak overnight; filter.,Spray every 7â€“10 days.,20
+211,Jackfruit Seed Extract,Aphids; Borers,Jackfruit; vegetables,Jackfruit seeds â€“ 200 g; Water â€“ 2 L,Grind seeds; soak overnight; filter.,Spray every 10 days.,25
+212,Mango Leaf Extract,Thrips; Whiteflies,Mango orchards; vegetables,Mango leaves â€“ 300 g; Water â€“ 3 L,Crush leaves; boil 20 min; filter.,Spray on crops weekly.,20
+213,Mango Seed Kernel Extract,Fruit flies; Borers,Mango; guava; papaya,Mango seed kernels â€“ 200 g; Water â€“ 2 L,Grind kernels; soak 24 hrs; filter.,Spray on affected areas.,25
+214,Guava Leaf Extract,Leaf miners; Caterpillars,Guava; vegetables,Guava leaves â€“ 300 g; Water â€“ 3 L,Crush and soak overnight; filter.,Spray once in 10 days.,20
+215,Amla (Indian Gooseberry) Leaf Extract,Thrips; Aphids,Amla; vegetables,Amla leaves â€“ 300 g; Water â€“ 3 L,Grind; boil 20 min; filter.,Spray directly.,20
+216,Amla Fruit Extract,Whiteflies; Fruit flies,Vegetables; fruit crops,Amla fruits â€“ 200 g; Water â€“ 2 L,Crush fruits; ferment 2 days; filter.,Spray weekly.,30
+217,Tamarind Leaf Extract,Leaf miners; Thrips,Tamarind; vegetables,Tamarind leaves â€“ 200 g; Water â€“ 2 L,Grind; soak overnight; filter.,Spray once in 7 days.,20
+218,Tamarind Seed Extract,Caterpillars; Borers,Tamarind; vegetables,Tamarind seeds â€“ 100 g; Water â€“ 2 L,Grind; soak 24 hrs; filter.,Spray diluted.,25
+219,Pomegranate Leaf Extract,Thrips; Whiteflies,Pomegranate; vegetables,Pomegranate leaves â€“ 300 g; Water â€“ 3 L,Grind; boil 15 min; filter.,Spray every 10 days.,20
+220,Pomegranate Peel Extract,Aphids; Fruit flies,Fruits; vegetables,Pomegranate peels â€“ 200 g; Water â€“ 2 L,Ferment peels 48 hrs; filter.,Spray on foliage.,25
+221,Lemon Peel Extract,Whiteflies; Thrips,Citrus crops; vegetables,Lemon peels â€“ 200 g; Water â€“ 2 L,Soak in hot water overnight; filter.,Spray every 7 days.,15
+222,Lemon Leaf Extract,Aphids; Mites,Citrus orchards; vegetables,Lemon leaves â€“ 200 g; Water â€“ 2 L,Crush leaves; soak overnight; filter.,Spray directly.,20
+223,Orange Peel Extract,Fruit flies; Aphids,Citrus fruits; vegetables,Orange peels â€“ 200 g; Water â€“ 2 L,Ferment 2 days; filter.,Spray every 10 days.,20
+224,Orange Leaf Extract,Thrips; Caterpillars,Citrus; vegetables,Orange leaves â€“ 200 g; Water â€“ 2 L,Boil 15 min; cool; filter.,Spray on crops.,20
+225,Sweet Lime (Mosambi) Peel Extract,Whiteflies; Leaf miners,Citrus fruits; vegetables,Sweet lime peels â€“ 200 g; Water â€“ 2 L,Ferment 24 hrs; filter.,Spray once a week.,15
+226,Sweet Lime Leaf Extract,Thrips; Aphids,Citrus orchards,Sweet lime leaves â€“ 200 g; Water â€“ 2 L,Crush and soak overnight; filter.,Spray directly.,20
+227,Grapefruit Peel Extract,Caterpillars; Fruit flies,Citrus; vegetables,Grapefruit peels â€“ 200 g; Water â€“ 2 L,Ferment 48 hrs; filter.,Spray weekly.,20
+228,Grapefruit Leaf Extract,Aphids; Thrips,Citrus crops,Grapefruit leaves â€“ 200 g; Water â€“ 2 L,Crush and soak overnight; filter.,Spray every 7â€“10 days.,20
+229,Curry Leaf Extract,Aphids; Whiteflies,Vegetables; spices,Curry leaves â€“ 200 g; Water â€“ 2 L,Crush and boil 20 min; filter.,Spray once in 10 days.,15
+230,Coriander Seed Extract,Thrips; Mites,Vegetables; coriander fields,Coriander seeds â€“ 100 g; Water â€“ 1 L,Grind seeds; soak 12 hrs; filter.,Spray diluted.,20
+231,Coriander Leaf Extract,Caterpillars; Aphids,Vegetables; spices,Coriander leaves â€“ 200 g; Water â€“ 2 L,Crush; boil 10 min; filter.,Spray weekly.,20
+232,Fennel Seed Extract,Mites; Whiteflies,Vegetables; fennel,Fennel seeds â€“ 100 g; Water â€“ 1 L,Grind; soak overnight; filter.,Spray directly.,25
+233,Fennel Leaf Extract,Caterpillars; Beetles,Fennel; vegetables,Fennel leaves â€“ 200 g; Water â€“ 2 L,Crush; boil 15 min; filter.,Spray every 10 days.,20
+234,Dill Seed Extract,Whiteflies; Aphids,Vegetables; spices,Dill seeds â€“ 100 g; Water â€“ 1 L,Grind and soak overnight; filter.,Spray directly.,20
+235,Dill Leaf Extract,Thrips; Leaf miners,Vegetables; spices,Dill leaves â€“ 200 g; Water â€“ 2 L,Crush; boil 10 min; filter.,Spray every 7 days.,15
+236,Ajwain (Carom) Seed Extract,Aphids; Mites,Vegetables; spices,Ajwain seeds â€“ 100 g; Water â€“ 1 L,Grind; soak overnight; filter.,Spray diluted.,25
+237,Ajwain Leaf Extract,Thrips; Caterpillars,Vegetables; medicinal plants,Ajwain leaves â€“ 200 g; Water â€“ 2 L,Crush and boil 15 min; filter.,Spray directly.,20
+238,Fenugreek Seed Extract,Whiteflies; Borers,Vegetables; pulses,Fenugreek seeds â€“ 100 g; Water â€“ 1 L,Soak seeds overnight; grind; filter.,Spray weekly.,20
+239,Fenugreek Leaf Extract,Aphids; Thrips,Leafy greens; vegetables,Fenugreek leaves â€“ 200 g; Water â€“ 2 L,Grind leaves; boil 15 min; filter.,Spray once in 7 days.,20
+240,Mint Oil Spray,Mosquitoes; Whiteflies; Aphids,Vegetables; gardens,Mint oil â€“ 20 ml; Soap solution â€“ 5 ml; Water â€“ 1 L,Mix oil and soap in water.,Spray directly on foliage.,30
+241,Basil Leaf Extract,Aphids; Whiteflies,Vegetables; herbs,Basil leaves â€“ 200 g; Water â€“ 2 L,Crush and boil 15 min; filter.,Spray once a week.,20
+242,Basil Oil Spray,Mites; Caterpillars,Herbs; vegetables,Basil essential oil â€“ 20 ml; Soap solution â€“ 5 ml; Water â€“ 1 L,Mix oil with soap water.,Spray directly on plants.,35
+243,Tulsi (Holy Basil) Leaf Extract,Thrips; Aphids,Vegetables; medicinal crops,Tulsi leaves â€“ 200 g; Water â€“ 2 L,Crush leaves; soak overnight; filter.,Spray once in 7 days.,20
+244,Lemongrass Leaf Extract,Mosquitoes; Thrips,Vegetables; gardens,Lemongrass leaves â€“ 200 g; Water â€“ 2 L,Crush and boil 20 min; filter.,Spray every 10 days.,25
+245,Lemongrass Oil Spray,Aphids; Whiteflies,Fruits; vegetables,Lemongrass oil â€“ 15 ml; Soap solution â€“ 5 ml; Water â€“ 1 L,Mix oil and soap in water.,Spray directly.,40
+246,Citronella Leaf Extract,Mosquitoes; Caterpillars,Paddy; vegetables; gardens,Citronella leaves â€“ 200 g; Water â€“ 2 L,Boil 15 min; filter.,Spray once in 10 days.,25
+247,Citronella Oil Spray,Mites; Thrips,Vegetables; spices,Citronella oil â€“ 20 ml; Soap solution â€“ 5 ml; Water â€“ 1 L,Mix and dilute in water.,Spray weekly.,40
+248,Eucalyptus Leaf Extract,Whiteflies; Beetles,Eucalyptus; vegetables,Eucalyptus leaves â€“ 300 g; Water â€“ 3 L,Crush and boil 30 min; filter.,Spray on crops.,25
+249,Eucalyptus Oil Spray,Aphids; Mites,Vegetables; orchards,Eucalyptus oil â€“ 15 ml; Soap solution â€“ 5 ml; Water â€“ 1 L,Mix and dilute in water.,Spray every 7 days.,35
+250,Camphor Oil Spray,Mites; Caterpillars,Vegetables; gardens,Camphor oil â€“ 10 ml; Soap solution â€“ 5 ml; Water â€“ 1 L,Mix oil with soap water.,Spray weekly.,40
+251,Camphor Water Solution,Mosquitoes; Whiteflies,Vegetables; fruit crops,Camphor â€“ 10 g; Water â€“ 1 L,Dissolve camphor in water.,Spray once in 7 days.,20
+252,Clove Oil Spray,Aphids; Whiteflies,Vegetables; fruits,Clove oil â€“ 10 ml; Soap solution â€“ 5 ml; Water â€“ 1 L,Mix and shake well.,Spray directly.,50
+253,Clove Seed Extract,Thrips; Caterpillars,Vegetables; spices,Clove buds â€“ 50 g; Water â€“ 1 L,Crush; soak overnight; filter.,Spray weekly.,30
+254,Cinnamon Bark Extract,Whiteflies; Aphids,Vegetables; fruits,Cinnamon bark â€“ 50 g; Water â€“ 1 L,Boil bark 20 min; cool; filter.,Spray directly.,35
+255,Cinnamon Oil Spray,Mites; Thrips,Fruits; vegetables,Cinnamon oil â€“ 10 ml; Soap solution â€“ 5 ml; Water â€“ 1 L,Mix oil with soap in water.,Spray once a week.,45
+256,Bay Leaf Extract,Thrips; Caterpillars,Vegetables; spices,Bay leaves â€“ 200 g; Water â€“ 2 L,Crush and soak overnight; filter.,Spray directly.,25
+257,Bay Oil Spray,Aphids; Whiteflies,Vegetables; orchards,Bay oil â€“ 15 ml; Soap solution â€“ 5 ml; Water â€“ 1 L,Mix with soap water.,Spray once in 10 days.,40
+258,Nutmeg Seed Extract,Caterpillars; Borers,Spices; vegetables,Nutmeg seeds â€“ 50 g; Water â€“ 1 L,Crush; soak overnight; filter.,Spray weekly.,30
+259,Nutmeg Oil Spray,Thrips; Mites,Vegetables; orchards,Nutmeg oil â€“ 10 ml; Soap solution â€“ 5 ml; Water â€“ 1 L,Mix in water with soap.,Spray every 7â€“10 days.,45
+260,Cardamom Seed Extract,Whiteflies; Thrips,Spices; vegetables,Cardamom seeds â€“ 50 g; Water â€“ 1 L,Grind; soak overnight; filter.,Spray directly.,40
+261,Cardamom Oil Spray,Aphids; Borers,Vegetables; fruits,Cardamom oil â€“ 10 ml; Soap solution â€“ 5 ml; Water â€“ 1 L,Mix and dilute in water.,Spray weekly.,50
+262,Black Pepper Seed Extract,Caterpillars; Borers,Vegetables; spices,Black pepper seeds â€“ 50 g; Water â€“ 1 L,Crush and soak overnight; filter.,Spray once in 7 days.,35
+263,Black Pepper Oil Spray,Mites; Thrips,Vegetables; fruits,Black pepper oil â€“ 10 ml; Soap solution â€“ 5 ml; Water â€“ 1 L,Mix with soap water.,Spray weekly.,55
+264,Long Pepper (Pippali) Extract,Borers; Caterpillars,Vegetables; spices,Long pepper â€“ 50 g; Water â€“ 1 L,Crush and soak 12 hrs; filter.,Spray directly.,40
+265,Turmeric Rhizome Extract,Fungal pests; Aphids,Turmeric; vegetables,Turmeric rhizome â€“ 200 g; Water â€“ 2 L,Grind; boil 20 min; filter.,Spray once in 10 days.,30
+266,Turmeric Leaf Extract,Leaf miners; Thrips,Vegetables; turmeric fields,Turmeric leaves â€“ 200 g; Water â€“ 2 L,Crush and soak overnight; filter.,Spray weekly.,20
+267,Ginger Rhizome Extract,Whiteflies; Mites,Ginger; vegetables,Ginger rhizome â€“ 200 g; Water â€“ 2 L,Grind and boil 20 min; filter.,Spray every 10 days.,30
+268,Ginger Leaf Extract,Thrips; Caterpillars,Vegetables; spices,Ginger leaves â€“ 200 g; Water â€“ 2 L,Crush; soak overnight; filter.,Spray weekly.,20
+269,Garlic Oil Spray,Aphids; Thrips; Whiteflies,Vegetables; orchards,Garlic oil â€“ 15 ml; Soap solution â€“ 5 ml; Water â€“ 1 L,Mix and dilute.,Spray weekly.,35
+270,Onion Oil Spray,Whiteflies; Mites,Vegetables; onion fields,Onion oil â€“ 15 ml; Soap solution â€“ 5 ml; Water â€“ 1 L,Mix with soap water.,Spray directly.,35
+271,Onion Peel Extract,Aphids; Thrips,Vegetables; onion fields,Onion peels â€“ 200 g; Water â€“ 2 L,Boil peels for 20 min; cool; filter.,Spray once in 7â€“10 days.,10
+272,Onion-Garlic Mixture,Whiteflies; Borers,Vegetables; pulses,Garlic cloves â€“ 50 g; Onion â€“ 50 g; Water â€“ 1 L,Grind together; soak overnight; filter.,Spray weekly.,20
+273,Garlic-Chilli Extract,Caterpillars; Leaf miners,Vegetables; orchards,Garlic â€“ 50 g; Green chilli â€“ 50 g; Water â€“ 1 L,Crush; soak overnight; filter.,Spray every 7 days.,25
+274,Garlic-Turmeric Mix,Fungal pests; Thrips,Vegetables; turmeric fields,Garlic â€“ 50 g; Turmeric powder â€“ 20 g; Water â€“ 1 L,Grind garlic; mix with turmeric powder in water.,Spray once in 10 days.,20
+275,Onion-Chilli Extract,Aphids; Caterpillars,Vegetables; pulses,Onion â€“ 50 g; Green chilli â€“ 50 g; Water â€“ 1 L,Grind; soak overnight; filter.,Spray weekly.,20
+276,Ginger-Garlic Mix,Whiteflies; Thrips,Vegetables; orchards,Ginger â€“ 50 g; Garlic â€“ 50 g; Water â€“ 1 L,Grind together; soak 12 hrs; filter.,Spray weekly.,25
+277,Neem-Garlic-Chilli Mix,Caterpillars; Whiteflies,Vegetables; pulses,Neem leaves â€“ 200 g; Garlic â€“ 50 g; Chilli â€“ 50 g; Water â€“ 2 L,Grind all; soak overnight; filter.,Spray every 7â€“10 days.,30
+278,Neem-Turmeric Extract,Fungal pests; Aphids,Vegetables; spices,Neem leaves â€“ 200 g; Turmeric â€“ 20 g; Water â€“ 2 L,Crush and boil 15 min; filter.,Spray once in 10 days.,25
+279,Neem-Cow Urine Solution,Thrips; Borers,Vegetables; cotton,Neem leaves â€“ 200 g; Cow urine â€“ 500 ml; Water â€“ 2 L,Ferment 3 days; filter.,Spray weekly.,15
+280,Tulsi-Ginger Mix,Aphids; Mites,Vegetables; medicinal crops,Tulsi leaves â€“ 100 g; Ginger â€“ 50 g; Water â€“ 1 L,Grind and soak overnight; filter.,Spray directly.,20
+281,Lemon-Pepper Extract,Thrips; Caterpillars,Vegetables; gardens,Lemon juice â€“ 20 ml; Black pepper â€“ 20 g; Water â€“ 1 L,Mix lemon juice and pepper powder in water.,Spray every 10 days.,25
+282,Tamarind Leaf Extract,Whiteflies; Beetles,Vegetables; pulses,Tamarind leaves â€“ 200 g; Water â€“ 2 L,Crush and soak overnight; filter.,Spray weekly.,20
+283,Tamarind Seed Extract,Thrips; Caterpillars,Vegetables; orchards,Tamarind seeds â€“ 50 g; Water â€“ 1 L,Grind seeds; boil 20 min; cool; filter.,Spray directly.,25
+284,Bael Leaf Extract,Mites; Whiteflies,Vegetables; fruits,Bael leaves â€“ 200 g; Water â€“ 2 L,Crush and soak overnight; filter.,Spray every 7â€“10 days.,20
+285,Guava Leaf Extract,Aphids; Caterpillars,Guava orchards; vegetables,Guava leaves â€“ 200 g; Water â€“ 2 L,Crush leaves; boil 15 min; filter.,Spray weekly.,20
+286,Mango Leaf Extract,Thrips; Leaf miners,Mango orchards; vegetables,Mango leaves â€“ 200 g; Water â€“ 2 L,Boil 20 min; cool; filter.,Spray directly.,25
+287,Mango Seed Kernel Extract,Weevils; Caterpillars,Mango; vegetables,Mango seed kernels â€“ 200 g; Water â€“ 2 L,Grind; soak overnight; filter.,Spray every 10 days.,25
+288,Papaya Leaf Extract,Whiteflies; Caterpillars,Papaya orchards; vegetables,Papaya leaves â€“ 200 g; Water â€“ 2 L,Crush and boil 15 min; filter.,Spray weekly.,20
+289,Banana Peel Extract,Aphids; Mites,Vegetables; banana fields,Banana peel â€“ 200 g; Water â€“ 2 L,Chop peels; soak overnight; filter.,Spray once in 10 days.,10
+290,Banana Stem Juice,Borers; Whiteflies,Banana fields; vegetables,Banana stem juice â€“ 1 L; Water â€“ 2 L,Extract juice; dilute with water.,Spray every 7â€“10 days.,15
+291,Banana Flower Extract,Thrips; Caterpillars,Banana; vegetables,Banana flowers â€“ 200 g; Water â€“ 2 L,Crush and soak overnight; filter.,Spray directly.,20
+292,Pomegranate Peel Extract,Aphids; Whiteflies,Pomegranate; vegetables,Pomegranate peels â€“ 200 g; Water â€“ 2 L,Boil 15 min; cool; filter.,Spray weekly.,25
+293,Pomegranate Leaf Extract,Caterpillars; Thrips,Fruits; vegetables,Pomegranate leaves â€“ 200 g; Water â€“ 2 L,Crush and soak 12 hrs; filter.,Spray directly.,20
+294,Drumstick (Moringa) Leaf Extract,Aphids; Borers,Drumstick trees; vegetables,Moringa leaves â€“ 200 g; Water â€“ 2 L,Crush and boil 15 min; filter.,Spray every 10 days.,20
+295,Drumstick Pod Extract,Thrips; Caterpillars,Vegetables; gardens,Moringa pods â€“ 200 g; Water â€“ 2 L,Chop pods; soak overnight; filter.,Spray weekly.,25
+296,Drumstick Seed Extract,Mites; Whiteflies,Vegetables; pulses,Moringa seeds â€“ 100 g; Water â€“ 1 L,Grind seeds; soak overnight; filter.,Spray directly.,30
+297,Jackfruit Leaf Extract,Caterpillars; Borers,Jackfruit orchards; vegetables,Jackfruit leaves â€“ 200 g; Water â€“ 2 L,Crush; boil 15 min; filter.,Spray every 7 days.,20
+298,Jackfruit Seed Extract,Thrips; Aphids,Vegetables; orchards,Jackfruit seeds â€“ 100 g; Water â€“ 1 L,Crush; soak overnight; filter.,Spray weekly.,25
+299,Custard Apple Leaf Extract,Whiteflies; Mites,Custard apple orchards; vegetables,Custard apple leaves â€“ 200 g; Water â€“ 2 L,Crush and boil 20 min; filter.,Spray directly.,20
+300,Custard Apple Seed Extract,Caterpillars; Borers,Fruits; vegetables,Custard apple seeds â€“ 100 g; Water â€“ 1 L,Grind seeds; soak overnight; filter.,Spray weekly.,25
+
