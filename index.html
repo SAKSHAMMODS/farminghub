@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en" class="scroll-smooth">
 <head>
@@ -80,8 +81,8 @@
                     <p class="text-slate-600">Find effective, homemade, and organic pesticide solutions for your crops.</p>
                 </a>
                 <a href="#tools" class="nav-link-card bg-white p-6 rounded-xl shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300 border border-slate-200 block">
-                    <h2 class="text-2xl font-bold text-emerald-600 mb-2">Farming Tools</h2>
-                    <p class="text-slate-600">Explore a catalog of essential tools to improve your farm's efficiency and yield.</p>
+                    <h2 class="text-2xl font-bold text-emerald-600 mb-2">Farming Calculators</h2>
+                    <p class="text-slate-600">Calculate pesticide needs for your farm with our easy-to-use tool.</p>
                 </a>
                 <a href="#reviews" class="nav-link-card bg-white p-6 rounded-xl shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300 border border-slate-200 block">
                     <h2 class="text-2xl font-bold text-emerald-600 mb-2">Community Reviews</h2>
@@ -139,10 +140,44 @@
         <!-- Tools Page -->
         <section id="tools" class="page">
              <header class="text-center mb-8">
-                <h1 class="text-4xl md:text-5xl font-bold text-emerald-700 mb-2">🚜 Modern Farming Tools</h1>
-                <p class="text-lg text-slate-600">A curated list of tools to enhance your productivity.</p>
+                <h1 class="text-4xl md:text-5xl font-bold text-emerald-700 mb-2">🌾 Farming Calculators</h1>
+                <p class="text-lg text-slate-600">Plan your spraying with this simple tool.</p>
             </header>
-            <div id="tools-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+
+            <div class="flex justify-center">
+                <!-- Pesticide Calculator -->
+                <div class="bg-white p-6 md:p-8 rounded-xl shadow-md border border-slate-200 w-full max-w-2xl">
+                    <h2 class="text-2xl font-bold text-emerald-600 mb-4">Pesticide Spray Calculator</h2>
+                    <form id="pesticide-calculator-form" class="space-y-4">
+                        <div>
+                            <label for="pesticide-recipe" class="block text-sm font-medium text-slate-700">Select Recipe</label>
+                            <select id="pesticide-recipe" class="mt-1 w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-emerald-500">
+                                <option value="">Loading recipes...</option>
+                            </select>
+                        </div>
+                        <div class="grid grid-cols-2 gap-4">
+                            <div>
+                                <label for="pesticide-area" class="block text-sm font-medium text-slate-700">Area</label>
+                                <input type="number" id="pesticide-area" value="1" min="0" class="mt-1 w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-emerald-500">
+                            </div>
+                            <div>
+                                <label for="pesticide-unit" class="block text-sm font-medium text-slate-700">Unit</label>
+                                <select id="pesticide-unit" class="mt-1 w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-emerald-500">
+                                    <option value="acre">Acre</option>
+                                    <option value="gunta">Gunta</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div>
+                            <button type="submit" class="w-full bg-emerald-600 text-white font-bold py-3 px-4 rounded-lg hover:bg-emerald-700 transition-colors">Calculate Ingredients</button>
+                        </div>
+                    </form>
+                    <div id="pesticide-result" class="mt-6 p-4 bg-emerald-50 rounded-lg hidden">
+                        <p id="pesticide-total-mix" class="text-slate-700 text-center mb-2"></p>
+                        <ul id="pesticide-ingredients" class="list-disc list-inside text-slate-700 space-y-1"></ul>
+                    </div>
+                </div>
+            </div>
         </section>
         
         <!-- Reviews Page -->
@@ -151,8 +186,6 @@
                 <h1 class="text-4xl md:text-5xl font-bold text-emerald-700 mb-2">⭐ Farmer Reviews</h1>
                 <p class="text-lg text-slate-600">Real feedback from the farming community.</p>
             </header>
-
-            <!-- Add Review Form -->
             <div class="bg-white p-6 md:p-8 rounded-xl shadow-md border border-slate-200 mb-10">
                 <h2 class="text-2xl font-bold text-emerald-600 mb-4">Leave a Review</h2>
                 <form id="review-form" class="space-y-4">
@@ -190,10 +223,7 @@
                 </form>
                 <div id="form-message" class="mt-4 text-center"></div>
             </div>
-
-            <div id="reviews-container" class="space-y-6">
-                <!-- Reviews will be loaded here from Firebase -->
-            </div>
+            <div id="reviews-container" class="space-y-6"></div>
         </section>
         
         <!-- About Page -->
@@ -216,14 +246,11 @@
 
     <!-- Firebase SDK -->
     <script type="module">
-        // Import the functions you need from the SDKs you need
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
         import { getFirestore, collection, addDoc, onSnapshot, query, orderBy, serverTimestamp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
-        // Your web app's Firebase configuration
         const firebaseConfig = { 
-            
-    apiKey: "AIzaSyAgDzPWLDtfWGkbSX2RLlkECJPVczYxfqM",
+            apiKey: "AIzaSyAgDzPWLDtfWGkbSX2RLlkECJPVczYxfqM",
     authDomain: "agrireviews-956e4.firebaseapp.com",
     projectId: "agrireviews-956e4",
     storageBucket: "agrireviews-956e4.firebasestorage.app",
@@ -232,81 +259,82 @@
     measurementId: "G-2QFP4T6CHG"
         };
 
-        // Initialize Firebase
-        const app = initializeApp(firebaseConfig);
-        const db = getFirestore(app);
+        try {
+            const app = initializeApp(firebaseConfig);
+            const db = getFirestore(app);
 
-        // --- Reviews Logic (Firebase) ---
-        const reviewsContainer = document.getElementById('reviews-container');
-        const reviewForm = document.getElementById('review-form');
-        const formMessage = document.getElementById('form-message');
+            const reviewsContainer = document.getElementById('reviews-container');
+            const reviewForm = document.getElementById('review-form');
+            const formMessage = document.getElementById('form-message');
 
-        // Function to display reviews
-        function displayReviews(reviews) {
-            if (reviews.length === 0) {
-                reviewsContainer.innerHTML = `<p class="text-center text-slate-500">No reviews yet. Be the first to add one!</p>`;
-                return;
-            }
-            reviewsContainer.innerHTML = reviews.map(review => `
-                <div class="bg-white border border-slate-200 rounded-xl p-6 shadow-sm">
-                    <div class="flex items-start">
-                        <div class="flex-shrink-0"><div class="w-12 h-12 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center text-xl font-bold">${review.author ? review.author.charAt(0) : '?'}</div></div>
-                        <div class="ml-4">
-                            <h3 class="text-lg font-bold text-slate-800">${review.title || 'No Title'}</h3>
-                            <div class="flex items-center mt-1">
-                                <div class="flex text-yellow-400">${'★'.repeat(review.rating || 0)}${'☆'.repeat(5 - (review.rating || 0))}</div>
-                                <p class="ml-3 text-sm text-slate-500">by <strong>${review.author || 'Anonymous'}</strong> from ${review.location || 'Unknown'}</p>
+            function displayReviews(reviews) {
+                if (reviews.length === 0) {
+                    reviewsContainer.innerHTML = `<p class="text-center text-slate-500">No reviews yet. Be the first to add one!</p>`;
+                    return;
+                }
+                reviewsContainer.innerHTML = reviews.map(review => `
+                    <div class="bg-white border border-slate-200 rounded-xl p-6 shadow-sm">
+                        <div class="flex items-start">
+                            <div class="flex-shrink-0"><div class="w-12 h-12 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center text-xl font-bold">${review.author ? review.author.charAt(0) : '?'}</div></div>
+                            <div class="ml-4">
+                                <h3 class="text-lg font-bold text-slate-800">${review.title || 'No Title'}</h3>
+                                <div class="flex items-center mt-1">
+                                    <div class="flex text-yellow-400">${'★'.repeat(review.rating || 0)}${'☆'.repeat(5 - (review.rating || 0))}</div>
+                                    <p class="ml-3 text-sm text-slate-500">by <strong>${review.author || 'Anonymous'}</strong> from ${review.location || 'Unknown'}</p>
+                                </div>
+                                <p class="mt-3 text-slate-600">${review.text || ''}</p>
                             </div>
-                            <p class="mt-3 text-slate-600">${review.text || ''}</p>
                         </div>
                     </div>
-                </div>
-            `).join('');
-        }
-
-        // Listen for real-time updates from Firestore
-        const reviewsQuery = query(collection(db, "reviews"), orderBy("timestamp", "desc"));
-        onSnapshot(reviewsQuery, (querySnapshot) => {
-            const reviews = [];
-            querySnapshot.forEach((doc) => {
-                reviews.push(doc.data());
-            });
-            displayReviews(reviews);
-        });
-
-        // Handle form submission
-        reviewForm.addEventListener('submit', async (e) => {
-            e.preventDefault();
-            
-            const formData = new FormData(reviewForm);
-            const reviewData = {
-                author: formData.get('author'),
-                location: formData.get('location'),
-                title: formData.get('title'),
-                rating: parseInt(formData.get('rating')),
-                text: formData.get('text'),
-                timestamp: serverTimestamp() // Adds a server-side timestamp
-            };
-
-            try {
-                await addDoc(collection(db, "reviews"), reviewData);
-                formMessage.textContent = "Thank you! Your review has been submitted.";
-                formMessage.className = "text-green-600";
-                reviewForm.reset();
-            } catch (error) {
-                console.error("Error adding document: ", error);
-                formMessage.textContent = "Sorry, there was an error submitting your review.";
-                formMessage.className = "text-red-600";
+                `).join('');
             }
-            setTimeout(() => formMessage.textContent = '', 3000);
-        });
 
+            const reviewsQuery = query(collection(db, "reviews"), orderBy("timestamp", "desc"));
+            onSnapshot(reviewsQuery, (querySnapshot) => {
+                const reviews = [];
+                querySnapshot.forEach((doc) => reviews.push(doc.data()));
+                displayReviews(reviews);
+            });
+
+            reviewForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const formData = new FormData(reviewForm);
+                const reviewData = {
+                    author: formData.get('author'),
+                    location: formData.get('location'),
+                    title: formData.get('title'),
+                    rating: parseInt(formData.get('rating')),
+                    text: formData.get('text'),
+                    timestamp: serverTimestamp()
+                };
+                try {
+                    await addDoc(collection(db, "reviews"), reviewData);
+                    formMessage.textContent = "Thank you! Your review has been submitted.";
+                    formMessage.className = "mt-4 text-center text-green-600";
+                    reviewForm.reset();
+                } catch (error) {
+                    console.error("Error adding document: ", error);
+                    formMessage.textContent = "Sorry, there was an error submitting your review.";
+                    formMessage.className = "mt-4 text-center text-red-600";
+                }
+                setTimeout(() => formMessage.textContent = '', 3000);
+            });
+        } catch (e) {
+            console.error("Firebase initialization failed. Have you pasted your config object?", e);
+            const reviewsPage = document.getElementById('reviews');
+            if(reviewsPage.classList.contains('active')) {
+                 document.getElementById('reviews-container').innerHTML = `<p class="text-center text-red-600">Could not connect to the review service. Please check the console for details.</p>`;
+            }
+        }
     </script>
 
 
     <script>
-    // --- WEBSITE NAVIGATION LOGIC ---
+    // --- GLOBAL DATA AND NAVIGATION ---
+    let allRecipes = [];
+
     document.addEventListener('DOMContentLoaded', () => {
+        // --- Navigation Logic ---
         const pages = document.querySelectorAll('.page');
         const navLinks = document.querySelectorAll('.nav-link');
         const mobileNavLinks = document.querySelectorAll('.nav-link-mobile');
@@ -319,11 +347,7 @@
             pages.forEach(page => page.classList.remove('active'));
             const targetPage = document.getElementById(pageId);
             if (targetPage) targetPage.classList.add('active');
-
-            navLinks.forEach(link => {
-                link.classList.toggle('active', link.hash === `#${pageId}`);
-            });
-            
+            navLinks.forEach(link => link.classList.toggle('active', link.hash === `#${pageId}`));
             mobileMenu.classList.add('hidden');
             window.scrollTo(0, 0);
         }
@@ -337,73 +361,66 @@
 
         const allLinks = [...navLinks, ...mobileNavLinks, ...cardLinks, ...headerLinks];
         allLinks.forEach(link => link.addEventListener('click', handleNavClick));
-        
         mobileMenuButton.addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
-
-        window.addEventListener('popstate', () => {
-            const pageId = location.hash.substring(1) || 'home';
-            showPage(pageId);
-        });
-
-        const initialPageId = location.hash.substring(1) || 'home';
-        showPage(initialPageId);
+        window.addEventListener('popstate', () => showPage(location.hash.substring(1) || 'home'));
+        showPage(location.hash.substring(1) || 'home');
+        
+        // --- Data Loading and Initialization ---
+        loadAndInitializeApp();
     });
     
-    // --- RECIPES PAGE LOGIC (from CSV) ---
-    (function() {
-        const recipesContainer = document.getElementById('recipes-container');
-        const noResultsDiv = document.getElementById('no-results');
-        const keywordSearch = document.getElementById('keyword-search');
-        const targetFilter = document.getElementById('target-filter');
-        const useFilter = document.getElementById('use-filter');
-        const sortCost = document.getElementById('sort-cost');
-        const resetBtn = document.getElementById('reset-btn');
-        let allRecipes = [];
-
-        async function loadAndInitializeRecipes() {
-            try {
-                const response = await fetch('recipes.csv');
-                if (!response.ok) throw new Error(`Failed to load recipes.csv. Status: ${response.status}`);
-                const csvText = await response.text();
-                Papa.parse(csvText, {
-                    header: true,
-                    dynamicTyping: true,
-                    skipEmptyLines: true,
-                    complete: function(results) {
-                        allRecipes = results.data.map(recipe => {
-                            recipe.targets = typeof recipe.targets === 'string' ? recipe.targets.split(';').map(s => s.trim()) : [];
-                            recipe.whereToUse = typeof recipe.whereToUse === 'string' ? recipe.whereToUse.split(';').map(s => s.trim()) : [];
-                            recipe.ingredients = typeof recipe.ingredients === 'string' ? recipe.ingredients.split(';').map(s => s.trim()) : [];
-                            return recipe;
-                        });
-                        populateFilters(allRecipes);
-                        setupEventListeners(allRecipes);
-                        filterAndSort(allRecipes);
-                    }
-                });
-            } catch (error) {
-                console.error("Error loading recipes:", error);
-                recipesContainer.innerHTML = `<p class="text-center text-red-600 col-span-full">Could not load recipe data. Please make sure 'recipes.csv' is in the correct folder.</p>`;
-            }
-        }
-
-        function populateFilters(recipes) {
-            const targets = new Set();
-            const uses = new Set();
-            recipes.forEach(recipe => {
-                recipe.targets.forEach(t => targets.add(t));
-                recipe.whereToUse.forEach(u => uses.add(u));
+    // --- Main function to load CSV files and initialize pages that need them ---
+    async function loadAndInitializeApp() {
+        try {
+            const response = await fetch('recipes.csv');
+            if (!response.ok) throw new Error(`Failed to load recipes.csv. Status: ${response.status}`);
+            const csvText = await response.text();
+            Papa.parse(csvText, {
+                header: true, dynamicTyping: true, skipEmptyLines: true,
+                complete: (results) => {
+                    allRecipes = results.data.map(recipe => {
+                        recipe.targets = typeof recipe.targets === 'string' ? recipe.targets.split(';').map(s => s.trim()) : [];
+                        recipe.whereToUse = typeof recipe.whereToUse === 'string' ? recipe.whereToUse.split(';').map(s => s.trim()) : [];
+                        recipe.ingredients = typeof recipe.ingredients === 'string' ? recipe.ingredients.split(';').map(s => s.trim()) : [];
+                        return recipe;
+                    });
+                    // Initialize all pages that depend on this data
+                    initializeRecipesPage(allRecipes);
+                    initializeToolsPage(allRecipes);
+                }
             });
-            targetFilter.innerHTML = '<option value="">All Pests/Diseases</option>';
-            useFilter.innerHTML = '<option value="">All Crops</option>';
-            Array.from(targets).sort().forEach(target => targetFilter.innerHTML += `<option value="${target}">${target}</option>`);
-            Array.from(uses).sort().forEach(use => useFilter.innerHTML += `<option value="${use}">${use}</option>`);
+        } catch (error) {
+            console.error("Error loading CSV data:", error);
+            document.getElementById('recipes-container').innerHTML = `<p class="text-center text-red-600 col-span-full">Could not load recipe data.</p>`;
+            document.getElementById('pesticide-recipe').innerHTML = `<option value="">Could not load recipes</option>`;
         }
+    }
 
-        function displayRecipes(recipes) {
-            recipesContainer.innerHTML = '';
-            noResultsDiv.classList.toggle('hidden', recipes.length > 0);
-            recipes.forEach(recipe => {
+    // --- RECIPES PAGE LOGIC ---
+    function initializeRecipesPage(recipes) {
+        const container = document.getElementById('recipes-container');
+        const noResults = document.getElementById('no-results');
+        const keyword = document.getElementById('keyword-search');
+        const target = document.getElementById('target-filter');
+        const use = document.getElementById('use-filter');
+        const sort = document.getElementById('sort-cost');
+        const reset = document.getElementById('reset-btn');
+
+        const targets = new Set();
+        const uses = new Set();
+        recipes.forEach(recipe => {
+            recipe.targets.forEach(t => targets.add(t));
+            recipe.whereToUse.forEach(u => uses.add(u));
+        });
+        target.innerHTML = '<option value="">All Pests/Diseases</option>';
+        use.innerHTML = '<option value="">All Crops</option>';
+        Array.from(targets).sort().forEach(t => target.innerHTML += `<option value="${t}">${t}</option>`);
+        Array.from(uses).sort().forEach(u => use.innerHTML += `<option value="${u}">${u}</option>`);
+
+        function display(recipesToDisplay) {
+            container.innerHTML = '';
+            noResults.classList.toggle('hidden', recipesToDisplay.length > 0);
+            recipesToDisplay.forEach(recipe => {
                 const card = document.createElement('div');
                 card.className = 'recipe-card bg-white border border-slate-200 rounded-xl p-6 shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300 flex flex-col';
                 card.innerHTML = `
@@ -418,61 +435,88 @@
                         <div><h3 class="font-semibold text-slate-700 mb-2">Procedure</h3><p class="text-slate-600">${recipe.procedure || ''}</p></div>
                         <div><h3 class="font-semibold text-slate-700 mb-2">How to Use</h3><p class="text-slate-600">${recipe.howToUse || ''}</p></div>
                     </div>`;
-                recipesContainer.appendChild(card);
+                container.appendChild(card);
             });
         }
 
-        function filterAndSort(recipes) {
-            let filteredRecipes = [...recipes];
-            const keyword = keywordSearch.value.toLowerCase();
-            const target = targetFilter.value;
-            const use = useFilter.value;
-            const sort = sortCost.value;
-            if (keyword) filteredRecipes = filteredRecipes.filter(r => (r.name && r.name.toLowerCase().includes(keyword)) || r.targets.some(t => t.toLowerCase().includes(keyword)) || r.whereToUse.some(u => u.toLowerCase().includes(keyword)));
-            if (target) filteredRecipes = filteredRecipes.filter(r => r.targets.includes(target));
-            if (use) filteredRecipes = filteredRecipes.filter(r => r.whereToUse.includes(use));
-            if (sort === 'asc') filteredRecipes.sort((a, b) => a.cost - b.cost);
-            else if (sort === 'desc') filteredRecipes.sort((a, b) => b.cost - a.cost);
-            else filteredRecipes.sort((a, b) => a.id - b.id);
-            displayRecipes(filteredRecipes);
+        function filterAndSort() {
+            let filtered = [...recipes];
+            if (keyword.value) filtered = filtered.filter(r => (r.name && r.name.toLowerCase().includes(keyword.value.toLowerCase())) || r.targets.some(t => t.toLowerCase().includes(keyword.value.toLowerCase())) || r.whereToUse.some(u => u.toLowerCase().includes(keyword.value.toLowerCase())));
+            if (target.value) filtered = filtered.filter(r => r.targets.includes(target.value));
+            if (use.value) filtered = filtered.filter(r => r.whereToUse.includes(use.value));
+            if (sort.value === 'asc') filtered.sort((a, b) => a.cost - b.cost);
+            else if (sort.value === 'desc') filtered.sort((a, b) => b.cost - a.cost);
+            else filtered.sort((a, b) => a.id - b.id);
+            display(filtered);
         }
         
-        function setupEventListeners(recipes) {
-            const allInputs = [keywordSearch, targetFilter, useFilter, sortCost];
-            allInputs.forEach(input => {
-                input.addEventListener('input', () => filterAndSort(recipes));
-                input.addEventListener('change', () => filterAndSort(recipes));
-            });
-            resetBtn.addEventListener('click', () => {
-                keywordSearch.value = '';
-                targetFilter.value = '';
-                useFilter.value = '';
-                sortCost.value = 'default';
-                filterAndSort(recipes);
-            });
-        }
-        loadAndInitializeRecipes();
-    })();
+        [keyword, target, use, sort].forEach(el => el.addEventListener('input', filterAndSort));
+        reset.addEventListener('click', () => {
+            keyword.value = ''; target.value = ''; use.value = ''; sort.value = 'default';
+            filterAndSort();
+        });
+        filterAndSort(); // Initial display
+    }
 
-    // --- Tools Page Logic ---
-    (function() {
-        const toolsData = [
-            { name: "Power Tiller", category: "Tillage", description: "Used for cultivating soil in small to medium-sized farms.", image: "https://placehold.co/600x400/34d399/ffffff?text=Power+Tiller" },
-            { name: "Sprayer Pump", category: "Pest Control", description: "Essential for applying liquid pesticides, herbicides, and fertilizers.", image: "https://placehold.co/600x400/34d399/ffffff?text=Sprayer" },
-            { name: "Drip Irrigation Kit", category: "Irrigation", description: "A water-efficient system that delivers water directly to the plant roots.", image: "https://placehold.co/600x400/34d399/ffffff?text=Drip+Kit" },
-        ];
-        const toolsContainer = document.getElementById('tools-container');
-        toolsContainer.innerHTML = toolsData.map(tool => `
-            <div class="bg-white border border-slate-200 rounded-xl shadow-sm overflow-hidden hover:shadow-lg hover:-translate-y-1 transition-all duration-300 flex flex-col">
-                <img src="${tool.image}" alt="${tool.name}" class="w-full h-48 object-cover">
-                <div class="p-6 flex-grow flex flex-col">
-                    <h3 class="text-xl font-bold text-emerald-600">${tool.name}</h3>
-                    <p class="text-sm font-medium text-slate-500 mb-2">${tool.category}</p>
-                    <p class="text-slate-600 flex-grow">${tool.description}</p>
-                </div>
-            </div>
-        `).join('');
-    })();
+    // --- TOOLS PAGE LOGIC ---
+    function initializeToolsPage(recipes) {
+        // Pesticide Calculator
+        const pesticideForm = document.getElementById('pesticide-calculator-form');
+        const recipeSelect = document.getElementById('pesticide-recipe');
+        const pesticideResultDiv = document.getElementById('pesticide-result');
+        const pesticideTotalMixEl = document.getElementById('pesticide-total-mix');
+        const pesticideIngredientsEl = document.getElementById('pesticide-ingredients');
+        
+        recipeSelect.innerHTML = '<option value="">Select a recipe</option>';
+        recipes.forEach(recipe => {
+            recipeSelect.innerHTML += `<option value="${recipe.id}">${recipe.name}</option>`;
+        });
+
+        pesticideForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const recipeId = parseInt(recipeSelect.value);
+            let area = parseFloat(document.getElementById('pesticide-area').value);
+            const unit = document.getElementById('pesticide-unit').value;
+            if (!recipeId || isNaN(area) || area <= 0) return;
+
+            const recipe = recipes.find(r => r.id === recipeId);
+            if (!recipe) return;
+
+            if (unit === 'gunta') area /= 40;
+
+            const mixMatch = recipe.howToUse.match(/(\d+)\s*L/);
+            const baseMixPerAcre = mixMatch ? parseFloat(mixMatch[1]) : 100;
+            const totalMixNeeded = baseMixPerAcre * area;
+
+            const waterMatch = recipe.ingredients.join(';').match(/(\d+)\s*L/i);
+            const baseWaterVolume = waterMatch ? parseFloat(waterMatch[1]) : 10;
+
+            pesticideTotalMixEl.innerHTML = `For <strong>${area.toFixed(2)} acres</strong>, you need a total mix of <strong>${totalMixNeeded.toFixed(2)} L</strong>.`;
+            pesticideIngredientsEl.innerHTML = '';
+
+            recipe.ingredients.forEach(ing => {
+                const parts = ing.match(/([\d.]+)\s*(kg|g|ml|L)/i);
+                if (parts) {
+                    const baseAmount = parseFloat(parts[1]);
+                    const baseUnit = parts[2]; // Corrected index for unit
+                    const ingredientName = ing.replace(parts[0], '').replace(/–|-/g, '').trim();
+                    const requiredAmount = (baseAmount / baseWaterVolume) * totalMixNeeded;
+                    let finalAmount = requiredAmount;
+                    let finalUnit = baseUnit;
+
+                    if (finalUnit.toLowerCase() === 'g' && finalAmount >= 1000) {
+                        finalAmount /= 1000; finalUnit = 'kg';
+                    } else if (finalUnit.toLowerCase() === 'ml' && finalAmount >= 1000) {
+                        finalAmount /= 1000; finalUnit = 'L';
+                    }
+                    pesticideIngredientsEl.innerHTML += `<li><strong>${ingredientName}:</strong> ${finalAmount.toFixed(2)} ${finalUnit}</li>`;
+                } else {
+                    pesticideIngredientsEl.innerHTML += `<li><strong>${ing}</strong> (check recipe for ratio)</li>`;
+                }
+            });
+            pesticideResultDiv.classList.remove('hidden');
+        });
+    }
     </script>
 </body>
 </html>
