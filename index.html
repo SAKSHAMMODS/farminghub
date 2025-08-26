@@ -25,40 +25,33 @@
         ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
         ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
         
-        /* --- New Premium Star Rating Styles --- */
+        /* --- Premium Star Rating Styles --- */
         .star-rating {
             display: inline-flex;
-            flex-direction: row-reverse; /* This is key for the hover effect */
+            flex-direction: row-reverse;
             align-items: center;
             justify-content: center;
         }
-        .star-rating input {
-            display: none; /* Hide the radio buttons */
-        }
+        .star-rating input { display: none; }
         .star-rating label {
-            font-size: 2.5rem; /* Larger stars */
-            color: #e5e7eb; /* A lighter gray for unselected stars */
+            font-size: 2.5rem;
+            color: #e5e7eb;
             cursor: pointer;
-            /* Smooth, bouncy transition for animations */
             transition: transform 0.2s cubic-bezier(0.68, -0.55, 0.27, 1.55), color 0.2s ease;
             text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
         }
-        /* When you hover over a star, it and the ones "before" it (to the right) light up */
         .star-rating label:hover,
         .star-rating label:hover ~ label {
-            color: #fca5a5; /* A light, temporary hover color */
+            color: #fca5a5;
             transform: scale(1.2);
         }
-        /* The star you are directly hovering on gets a special animation */
         .star-rating label:hover {
             transform: scale(1.3) rotate(10deg);
         }
-        /* When a radio button is checked, its star and the ones before it get the final color */
         .star-rating input:checked ~ label {
-            color: #f59e0b; /* Final selected color (amber) */
+            color: #f59e0b;
             transform: scale(1.1);
         }
-        /* The specific star that was clicked gets a final "pop" animation */
         .star-rating input:checked + label {
             transform: scale(1.3) rotate(-5deg);
         }
@@ -66,242 +59,166 @@
 </head>
 <body class="text-slate-800">
 
-    <!-- Header and Navigation -->
-    <header class="bg-white shadow-md sticky top-0 z-50">
-        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between items-center py-4">
-                <div class="text-2xl font-bold text-emerald-700">
-                    <a href="#home" class="nav-link-header">🌿 Agri-Helper</a>
-                </div>
-                <nav class="hidden md:flex space-x-8">
-                    <a href="#home" class="nav-link active text-slate-600 hover:text-emerald-700 transition pb-1">Home</a>
-                    <a href="#recipes" class="nav-link text-slate-600 hover:text-emerald-700 transition pb-1">Recipes</a>
-                    <a href="#tools" class="nav-link text-slate-600 hover:text-emerald-700 transition pb-1">Tools</a>
-                    <a href="#reviews" class="nav-link text-slate-600 hover:text-emerald-700 transition pb-1">Reviews</a>
-                    <a href="#about" class="nav-link text-slate-600 hover:text-emerald-700 transition pb-1">About</a>
-                </nav>
-                <div class="md:hidden">
-                    <button id="mobile-menu-button" class="text-slate-800 focus:outline-none">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
-                    </button>
-                </div>
+    <!-- This section is shown to logged-out users -->
+    <section id="login-page" class="min-h-screen flex items-center justify-center bg-slate-50 p-4">
+        <div class="w-full max-w-md">
+            <div class="text-center mb-8">
+                <h1 class="text-4xl font-bold text-emerald-700">🌿 Welcome to Agri-Helper</h1>
+                <p class="text-slate-600 mt-2">Please sign in or create an account to continue.</p>
             </div>
-        </div>
-        <div id="mobile-menu" class="md:hidden hidden bg-white border-t border-slate-200">
-            <a href="#home" class="nav-link-mobile block py-3 px-4 text-sm text-slate-600 hover:bg-emerald-50">Home</a>
-            <a href="#recipes" class="nav-link-mobile block py-3 px-4 text-sm text-slate-600 hover:bg-emerald-50">Recipes</a>
-            <a href="#tools" class="nav-link-mobile block py-3 px-4 text-sm text-slate-600 hover:bg-emerald-50">Tools</a>
-            <a href="#reviews" class="nav-link-mobile block py-3 px-4 text-sm text-slate-600 hover:bg-emerald-50">Reviews</a>
-            <a href="#about" class="nav-link-mobile block py-3 px-4 text-sm text-slate-600 hover:bg-emerald-50">About</a>
-        </div>
-    </header>
-
-    <!-- Main Content Area -->
-    <main class="container mx-auto p-4 sm:p-6 lg:p-8">
-
-        <!-- Home Page -->
-        <section id="home" class="page active">
-            <div class="text-center bg-white p-8 md:p-16 rounded-xl shadow-sm border border-slate-200">
-                <h1 class="text-4xl md:text-5xl font-bold text-emerald-700 mb-4">Smart & Sustainable Farming</h1>
-                <p class="text-lg text-slate-600 max-w-3xl mx-auto">Your one-stop resource for organic pesticide recipes, modern farming tools, and community-driven reviews.</p>
-            </div>
-            <div class="grid md:grid-cols-3 gap-6 mt-8">
-                <a href="#recipes" class="nav-link-card bg-white p-6 rounded-xl shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300 border border-slate-200 block">
-                    <h2 class="text-2xl font-bold text-emerald-600 mb-2">Pesticide Recipes</h2>
-                    <p class="text-slate-600">Find effective, homemade, and organic pesticide solutions for your crops.</p>
-                </a>
-                <a href="#tools" class="nav-link-card bg-white p-6 rounded-xl shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300 border border-slate-200 block">
-                    <h2 class="text-2xl font-bold text-emerald-600 mb-2">Farming Calculators</h2>
-                    <p class="text-slate-600">Calculate pesticide needs for your farm with our easy-to-use tool.</p>
-                </a>
-                <a href="#reviews" class="nav-link-card bg-white p-6 rounded-xl shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300 border border-slate-200 block">
-                    <h2 class="text-2xl font-bold text-emerald-600 mb-2">Community Reviews</h2>
-                    <p class="text-slate-600">Read and share experiences with recipes and tools from farmers like you.</p>
-                </a>
-            </div>
-        </section>
-
-        <!-- Recipes Page -->
-        <section id="recipes" class="page">
-            <header class="text-center mb-8">
-                <h1 class="text-4xl md:text-5xl font-bold text-emerald-700 mb-2">🌿 Organic Pesticide Recipe Finder</h1>
-                <p class="text-lg text-slate-600">Search and filter through homemade pesticide recipes for your farm or garden.</p>
-            </header>
-            <nav class="search-menu bg-white p-6 rounded-xl shadow-md mb-10 border border-slate-200">
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6">
-                    <div class="filter-group lg:col-span-2">
-                        <label for="keyword-search" class="block text-sm font-medium text-slate-700 mb-1">Search by Keyword</label>
-                        <input type="text" id="keyword-search" placeholder="e.g., 'Caterpillar', 'Tomato', 'Neem'" class="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition">
-                    </div>
-                    <div class="filter-group">
-                        <label for="target-filter" class="block text-sm font-medium text-slate-700 mb-1">Filter by Target Pest</label>
-                        <select id="target-filter" class="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition bg-white">
-                            <option value="">All Pests/Diseases</option>
-                        </select>
-                    </div>
-                    <div class="filter-group">
-                        <label for="use-filter" class="block text-sm font-medium text-slate-700 mb-1">Filter by Crop/Use</label>
-                        <select id="use-filter" class="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition bg-white">
-                            <option value="">All Crops</option>
-                        </select>
-                    </div>
-                    <div class="filter-group flex flex-col justify-end">
-                        <label for="sort-cost" class="block text-sm font-medium text-slate-700 mb-1">Sort & Reset</label>
-                        <div class="flex gap-2">
-                            <select id="sort-cost" class="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition bg-white">
-                                <option value="default">Sort by Cost</option>
-                                <option value="asc">Low to High</option>
-                                <option value="desc">High to Low</option>
-                            </select>
-                            <button id="reset-btn" title="Reset Filters" class="p-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition shadow">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 0 0-9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/><path d="M3 12a9 9 0 0 0 9 9 9.75 9.75 0 0 0 6.74-2.74L21 16"/><path d="M21 21v-5h-5"/></svg>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </nav>
-            <div id="recipes-container" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6"></div>
-            <div id="no-results" class="hidden text-center py-16">
-                <h2 class="text-2xl font-semibold text-slate-700">No Recipes Found</h2>
-                <p class="text-slate-500 mt-2">Try adjusting your search or filter criteria.</p>
-            </div>
-        </section>
-
-        <!-- Tools Page -->
-        <section id="tools" class="page">
-             <header class="text-center mb-8">
-                <h1 class="text-4xl md:text-5xl font-bold text-emerald-700 mb-2">🌾 Farming Calculators</h1>
-                <p class="text-lg text-slate-600">Plan your spraying with this simple tool.</p>
-            </header>
-
-            <div class="flex justify-center">
-                <!-- Pesticide Calculator -->
-                <div class="bg-white p-6 md:p-8 rounded-xl shadow-md border border-slate-200 w-full max-w-2xl">
-                    <h2 class="text-2xl font-bold text-emerald-600 mb-4">Pesticide Spray Calculator</h2>
-                    <form id="pesticide-calculator-form" class="space-y-4">
-                        <div>
-                            <label for="pesticide-recipe" class="block text-sm font-medium text-slate-700">Select Recipe</label>
-                            <select id="pesticide-recipe" class="mt-1 w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-emerald-500">
-                                <option value="">Loading recipes...</option>
-                            </select>
-                        </div>
-                        <div class="grid grid-cols-2 gap-4">
-                            <div>
-                                <label for="pesticide-area" class="block text-sm font-medium text-slate-700">Area</label>
-                                <input type="number" id="pesticide-area" value="1" min="0" class="mt-1 w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-emerald-500">
-                            </div>
-                            <div>
-                                <label for="pesticide-unit" class="block text-sm font-medium text-slate-700">Unit</label>
-                                <select id="pesticide-unit" class="mt-1 w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-emerald-500">
-                                    <option value="acre">Acre</option>
-                                    <option value="gunta">Gunta</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div>
-                            <button type="submit" class="w-full bg-emerald-600 text-white font-bold py-3 px-4 rounded-lg hover:bg-emerald-700 transition-colors">Calculate Ingredients</button>
-                        </div>
-                    </form>
-                    <div id="pesticide-result" class="mt-6 p-4 bg-emerald-50 rounded-lg hidden">
-                        <p id="pesticide-total-mix" class="text-slate-700 text-center mb-2"></p>
-                        <ul id="pesticide-ingredients" class="list-disc list-inside text-slate-700 space-y-1"></ul>
-                    </div>
-                </div>
-            </div>
-        </section>
-        
-        <!-- Reviews Page -->
-        <section id="reviews" class="page">
-             <header class="text-center mb-8">
-                <h1 class="text-4xl md:text-5xl font-bold text-emerald-700 mb-2">⭐ Farmer Reviews</h1>
-                <p class="text-lg text-slate-600">Real feedback from the farming community.</p>
-            </header>
-            <div class="bg-white p-6 md:p-8 rounded-xl shadow-md border border-slate-200 mb-10">
-                <h2 class="text-2xl font-bold text-emerald-600 mb-4">Leave a Review</h2>
-                <form id="review-form" class="space-y-4">
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <div>
-                            <label for="author" class="block text-sm font-medium text-slate-700">Your Name</label>
-                            <input type="text" id="author" name="author" required class="mt-1 w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-emerald-500">
-                        </div>
-                        <div>
-                             <label for="location" class="block text-sm font-medium text-slate-700">Your Location</label>
-                            <div class="flex items-center gap-2 mt-1">
-                                <input type="text" id="location" name="location" readonly required placeholder="Click button to get location" class="w-full px-4 py-2 border border-slate-300 rounded-lg bg-slate-100 focus:outline-none cursor-not-allowed">
-                                <button type="button" id="get-location-btn" class="flex-shrink-0 px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-geo-alt-fill" viewBox="0 0 16 16">
-                                        <path d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10zm0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6z"/>
-                                    </svg>
-                                </button>
-                            </div>
-                            <p id="location-status" class="text-xs text-slate-500 mt-1 h-4"></p>
-                        </div>
+            <div class="bg-white p-8 rounded-xl shadow-md border border-slate-200">
+                <form id="auth-form" class="space-y-6">
+                    <div>
+                        <label for="email" class="block text-sm font-medium text-slate-700">Email Address</label>
+                        <input type="email" id="email" name="email" required class="mt-1 w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-emerald-500">
                     </div>
                     <div>
-                        <label for="title" class="block text-sm font-medium text-slate-700">Review Title</label>
-                        <input type="text" id="title" name="title" required class="mt-1 w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-emerald-500">
+                        <label for="password" class="block text-sm font-medium text-slate-700">Password</label>
+                        <input type="password" id="password" name="password" required class="mt-1 w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-emerald-500">
                     </div>
                     <div>
-                        <label class="block text-sm font-medium text-slate-700">Rating</label>
-                        <div class="star-rating mt-1">
-                            <input type="radio" id="5-stars" name="rating" value="5" required /><label for="5-stars">☆</label>
-                            <input type="radio" id="4-stars" name="rating" value="4" /><label for="4-stars">☆</label>
-                            <input type="radio" id="3-stars" name="rating" value="3" /><label for="3-stars">☆</label>
-                            <input type="radio" id="2-stars" name="rating" value="2" /><label for="2-stars">☆</label>
-                            <input type="radio" id="1-star" name="rating" value="1" /><label for="1-star">☆</label>
-                        </div>
-                    </div>
-                    <div>
-                        <label for="text" class="block text-sm font-medium text-slate-700">Your Review</label>
-                        <textarea id="text" name="text" rows="4" required class="mt-1 w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-emerald-500"></textarea>
-                    </div>
-                    <div>
-                        <button type="submit" class="w-full bg-emerald-600 text-white font-bold py-3 px-4 rounded-lg hover:bg-emerald-700 transition-colors">Submit Review</button>
+                        <button type="submit" id="auth-button" class="w-full bg-emerald-600 text-white font-bold py-3 px-4 rounded-lg hover:bg-emerald-700 transition-colors">Sign In</button>
                     </div>
                 </form>
-                <div id="form-message" class="mt-4 text-center"></div>
-            </div>
-            <div id="reviews-container" class="space-y-6"></div>
-        </section>
-        
-        <!-- About Page -->
-        <section id="about" class="page">
-            <div class="bg-white p-8 md:p-12 rounded-xl shadow-sm border border-slate-250 max-w-4xl mx-auto">
-                <h1 class="text-4xl font-bold text-emerald-700 mb-6 text-center">About Agri-Helper</h1>
-                <div class="prose prose-lg max-w-none text-slate-600">
-                    <p>About Agri‑HelperAgri‑Helper was created with a simple mission: to empower farmers with accessible, reliable, and sustainable farming knowledge. But our mission goes beyond just sharing information—it’s about building a resilient agricultural future for everyone.Our Mission
-We aim to equip farmers with practical tools, up-to-date techniques, and trusted guidance to help them grow better, healthier crops while caring for the environment. From organic and regenerative farming to soil health and pest management, we promote methods that are both sustainable and scalable.
-We believe in the power of community and collaboration. By connecting farmers with experts and each other, we create a space where knowledge flows freely, challenges are solved together, and success is shared..</p>
+                <p id="auth-error" class="text-red-500 text-sm text-center mt-4 h-4"></p>
+                <div class="text-center mt-4">
+                    <button id="toggle-auth-mode" class="text-sm text-emerald-600 hover:underline">Don't have an account? Create one</button>
                 </div>
             </div>
-        </section>
-    </main>
-    
-    <!-- Footer -->
-    <footer class="bg-slate-800 text-slate-300 mt-12">
-        <div class="container mx-auto py-6 px-4 sm:px-6 lg:px-8 text-center">
-            <p>&copy; 2024 Agri-Helper. All Rights Reserved. </p>
         </div>
-    </footer>
+    </section>
+
+    <!-- This section is shown to logged-in users -->
+    <div id="app-content" class="hidden">
+        <!-- Header and Navigation -->
+        <header class="bg-white shadow-md sticky top-0 z-50">
+            <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex justify-between items-center py-4">
+                    <div class="text-2xl font-bold text-emerald-700">
+                        <a href="#home" class="nav-link-header">🌿 Agri-Helper</a>
+                    </div>
+                    <nav class="hidden md:flex items-center space-x-8">
+                        <a href="#home" class="nav-link active text-slate-600 hover:text-emerald-700 transition pb-1">Home</a>
+                        <a href="#recipes" class="nav-link text-slate-600 hover:text-emerald-700 transition pb-1">Recipes</a>
+                        <a href="#tools" class="nav-link text-slate-600 hover:text-emerald-700 transition pb-1">Tools</a>
+                        <a href="#reviews" class="nav-link text-slate-600 hover:text-emerald-700 transition pb-1">Reviews</a>
+                        <a href="#about" class="nav-link text-slate-600 hover:text-emerald-700 transition pb-1">About</a>
+                        <div id="user-info" class="flex items-center gap-4 pl-4">
+                            <span id="user-email" class="text-sm text-slate-500"></span>
+                            <button id="logout-button" class="text-sm bg-red-500 text-white px-3 py-1 rounded-md hover:bg-red-600 transition">Logout</button>
+                        </div>
+                    </nav>
+                    <div class="md:hidden">
+                        <button id="mobile-menu-button" class="text-slate-800 focus:outline-none">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div id="mobile-menu" class="md:hidden hidden bg-white border-t border-slate-200">
+                <a href="#home" class="nav-link-mobile block py-3 px-4 text-sm text-slate-600 hover:bg-emerald-50">Home</a>
+                <a href="#recipes" class="nav-link-mobile block py-3 px-4 text-sm text-slate-600 hover:bg-emerald-50">Recipes</a>
+                <a href="#tools" class="nav-link-mobile block py-3 px-4 text-sm text-slate-600 hover:bg-emerald-50">Tools</a>
+                <a href="#reviews" class="nav-link-mobile block py-3 px-4 text-sm text-slate-600 hover:bg-emerald-50">Reviews</a>
+                <a href="#about" class="nav-link-mobile block py-3 px-4 text-sm text-slate-600 hover:bg-emerald-50">About</a>
+                 <div class="p-4 border-t">
+                    <span id="mobile-user-email" class="block text-sm text-slate-500 mb-2"></span>
+                    <button id="mobile-logout-button" class="w-full text-sm bg-red-500 text-white px-3 py-2 rounded-md hover:bg-red-600 transition">Logout</button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content Area -->
+        <main class="container mx-auto p-4 sm:p-6 lg:p-8">
+            <section id="home" class="page active"></section>
+            <section id="recipes" class="page"></section>
+            <section id="tools" class="page"></section>
+            <section id="reviews" class="page"></section>
+            <section id="about" class="page"></section>
+        </main>
+        
+        <footer class="bg-slate-800 text-slate-300 mt-12">
+            <div class="container mx-auto py-6 px-4 sm:px-6 lg:px-8 text-center">
+                <p>&copy; 2024 Agri-Helper. All Rights Reserved.</p>
+            </div>
+        </footer>
+    </div>
+
 
     <!-- Firebase SDK -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
         import { getFirestore, collection, addDoc, onSnapshot, query, orderBy, serverTimestamp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
-        const firebaseConfig = { 		 apiKey: "AIzaSyAgDzPWLDtfWGkbSX2RLlkECJPVczYxfqM",
-   		 authDomain: "agrireviews-956e4.firebaseapp.com",
-   		 projectId: "agrireviews-956e4",
-   		 storageBucket: "agrireviews-956e4.firebasestorage.app",
-   		 messagingSenderId: "967891428533",
-   		 appId: "1:967891428533:web:4f75d9d1e9320ed6664afc",
-   		 measurementId: "G-2QFP4T6CHG"
+        const firebaseConfig = { apiKey: "AIzaSyAgDzPWLDtfWGkbSX2RLlkECJPVczYxfqM",
+    authDomain: "agrireviews-956e4.firebaseapp.com",
+    projectId: "agrireviews-956e4",
+    storageBucket: "agrireviews-956e4.firebasestorage.app",
+    messagingSenderId: "967891428533",
+    appId: "1:967891428533:web:4f75d9d1e9320ed6664afc",
+    measurementId: "G-2QFP4T6CHG"
         };
 
         try {
             const app = initializeApp(firebaseConfig);
+            const auth = getAuth(app);
             const db = getFirestore(app);
 
+            const loginPage = document.getElementById('login-page');
+            const appContent = document.getElementById('app-content');
+            const authForm = document.getElementById('auth-form');
+            const authButton = document.getElementById('auth-button');
+            const authError = document.getElementById('auth-error');
+            const toggleAuthModeBtn = document.getElementById('toggle-auth-mode');
+            let isLoginMode = true;
+
+            // --- Auth UI Toggle ---
+            toggleAuthModeBtn.addEventListener('click', () => {
+                isLoginMode = !isLoginMode;
+                authButton.textContent = isLoginMode ? 'Sign In' : 'Create Account';
+                toggleAuthModeBtn.textContent = isLoginMode ? "Don't have an account? Create one" : "Already have an account? Sign In";
+                authError.textContent = '';
+            });
+
+            // --- Auth Form Submission ---
+            authForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const email = authForm.email.value;
+                const password = authForm.password.value;
+                authError.textContent = '';
+
+                if (isLoginMode) {
+                    signInWithEmailAndPassword(auth, email, password)
+                        .catch(error => { authError.textContent = error.message; });
+                } else {
+                    createUserWithEmailAndPassword(auth, email, password)
+                        .catch(error => { authError.textContent = error.message; });
+                }
+            });
+
+            // --- Auth State Listener ---
+            onAuthStateChanged(auth, user => {
+                if (user) {
+                    // User is logged in
+                    loginPage.style.display = 'none';
+                    appContent.classList.remove('hidden');
+                    document.getElementById('user-email').textContent = user.email;
+                    document.getElementById('mobile-user-email').textContent = user.email;
+                    initializeLoggedInApp(); // Function to set up the app after login
+                } else {
+                    // User is logged out
+                    loginPage.style.display = 'flex';
+                    appContent.classList.add('hidden');
+                }
+            });
+
+            // --- Logout ---
+            document.getElementById('logout-button').addEventListener('click', () => signOut(auth));
+            document.getElementById('mobile-logout-button').addEventListener('click', () => signOut(auth));
+
+
+            // --- Reviews Logic (Firebase) ---
             const reviewsContainer = document.getElementById('reviews-container');
             const reviewForm = document.getElementById('review-form');
             const formMessage = document.getElementById('form-message');
@@ -309,7 +226,6 @@ We believe in the power of community and collaboration. By connecting farmers wi
             const locationInput = document.getElementById('location');
             const locationStatus = document.getElementById('location-status');
 
-            // --- Geolocation Logic ---
             getLocationBtn.addEventListener('click', () => {
                 if ("geolocation" in navigator) {
                     locationStatus.textContent = "Fetching location...";
@@ -329,20 +245,17 @@ We believe in the power of community and collaboration. By connecting farmers wi
                             locationStatus.textContent = "Location found!";
                         } catch (error) {
                             locationStatus.textContent = "Could not determine address.";
-                            console.error("Reverse geocoding failed:", error);
                         } finally {
                             getLocationBtn.disabled = false;
                         }
                     }, (error) => {
                         locationStatus.textContent = "Could not get location. Check permissions.";
-                        console.error("Geolocation error:", error);
                         getLocationBtn.disabled = false;
                     });
                 } else {
                     locationStatus.textContent = "Geolocation is not supported by your browser.";
                 }
             });
-
 
             function displayReviews(reviews) {
                 if (reviews.length === 0) {
@@ -397,21 +310,49 @@ We believe in the power of community and collaboration. By connecting farmers wi
                 }
                 setTimeout(() => formMessage.textContent = '', 3000);
             });
+
         } catch (e) {
             console.error("Firebase initialization failed. Have you pasted your config object?", e);
-            const reviewsPage = document.getElementById('reviews');
-            if(reviewsPage.classList.contains('active')) {
-                 document.getElementById('reviews-container').innerHTML = `<p class="text-center text-red-600">Could not connect to the review service. Please check the console for details.</p>`;
-            }
+            document.body.innerHTML = `<div class="text-center p-8 text-red-600">Failed to initialize Firebase. Please check your configuration and the console for errors.</div>`;
         }
     </script>
 
 
     <script>
-    // --- GLOBAL DATA AND NAVIGATION ---
-    let allRecipes = [];
+    // --- APP INITIALIZATION (runs after login) ---
+    let appInitialized = false;
+    function initializeLoggedInApp() {
+        if (appInitialized) return; // Prevent re-initializing
+        
+        // --- Inject Page Content ---
+        document.getElementById('home').innerHTML = `
+            <div class="text-center bg-white p-8 md:p-16 rounded-xl shadow-sm border border-slate-200">
+                <h1 class="text-4xl md:text-5xl font-bold text-emerald-700 mb-4">Smart & Sustainable Farming</h1>
+                <p class="text-lg text-slate-600 max-w-3xl mx-auto">Your one-stop resource for organic pesticide recipes, modern farming tools, and community-driven reviews.</p>
+            </div>
+            <div class="grid md:grid-cols-3 gap-6 mt-8">
+                <a href="#recipes" class="nav-link-card bg-white p-6 rounded-xl shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300 border border-slate-200 block"><h2 class="text-2xl font-bold text-emerald-600 mb-2">Pesticide Recipes</h2><p class="text-slate-600">Find effective, homemade, and organic pesticide solutions for your crops.</p></a>
+                <a href="#tools" class="nav-link-card bg-white p-6 rounded-xl shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300 border border-slate-200 block"><h2 class="text-2xl font-bold text-emerald-600 mb-2">Farming Calculators</h2><p class="text-slate-600">Calculate pesticide needs for your farm with our easy-to-use tool.</p></a>
+                <a href="#reviews" class="nav-link-card bg-white p-6 rounded-xl shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300 border border-slate-200 block"><h2 class="text-2xl font-bold text-emerald-600 mb-2">Community Reviews</h2><p class="text-slate-600">Read and share experiences with recipes and tools from farmers like you.</p></a>
+            </div>`;
+        
+        document.getElementById('recipes').innerHTML = `
+            <header class="text-center mb-8"><h1 class="text-4xl md:text-5xl font-bold text-emerald-700 mb-2">🌿 Organic Pesticide Recipe Finder</h1><p class="text-lg text-slate-600">Search and filter through homemade pesticide recipes for your farm or garden.</p></header>
+            <nav class="search-menu bg-white p-6 rounded-xl shadow-md mb-10 border border-slate-200"><div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6"><div class="filter-group lg:col-span-2"><label for="keyword-search" class="block text-sm font-medium text-slate-700 mb-1">Search by Keyword</label><input type="text" id="keyword-search" placeholder="e.g., 'Caterpillar', 'Tomato', 'Neem'" class="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-emerald-500"></div><div class="filter-group"><label for="target-filter" class="block text-sm font-medium text-slate-700 mb-1">Filter by Target Pest</label><select id="target-filter" class="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-emerald-500 bg-white"><option value="">All Pests/Diseases</option></select></div><div class="filter-group"><label for="use-filter" class="block text-sm font-medium text-slate-700 mb-1">Filter by Crop/Use</label><select id="use-filter" class="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-emerald-500 bg-white"><option value="">All Crops</option></select></div><div class="filter-group flex flex-col justify-end"><label for="sort-cost" class="block text-sm font-medium text-slate-700 mb-1">Sort & Reset</label><div class="flex gap-2"><select id="sort-cost" class="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-emerald-500 bg-white"><option value="default">Sort by Cost</option><option value="asc">Low to High</option><option value="desc">High to Low</option></select><button id="reset-btn" title="Reset Filters" class="p-2 bg-red-500 text-white rounded-lg hover:bg-red-600 shadow"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 0 0-9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/><path d="M3 12a9 9 0 0 0 9 9 9.75 9.75 0 0 0 6.74-2.74L21 16"/><path d="M21 21v-5h-5"/></svg></button></div></div></div></nav>
+            <div id="recipes-container" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6"></div><div id="no-results" class="hidden text-center py-16"><h2 class="text-2xl font-semibold text-slate-700">No Recipes Found</h2><p class="text-slate-500 mt-2">Try adjusting your search or filter criteria.</p></div>`;
 
-    document.addEventListener('DOMContentLoaded', () => {
+        document.getElementById('tools').innerHTML = `
+            <header class="text-center mb-8"><h1 class="text-4xl md:text-5xl font-bold text-emerald-700 mb-2">🌾 Farming Calculators</h1><p class="text-lg text-slate-600">Plan your spraying with this simple tool.</p></header>
+            <div class="flex justify-center"><div class="bg-white p-6 md:p-8 rounded-xl shadow-md border border-slate-200 w-full max-w-2xl"><h2 class="text-2xl font-bold text-emerald-600 mb-4">Pesticide Spray Calculator</h2><form id="pesticide-calculator-form" class="space-y-4"><div><label for="pesticide-recipe" class="block text-sm font-medium text-slate-700">Select Recipe</label><select id="pesticide-recipe" class="mt-1 w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-emerald-500"><option value="">Loading recipes...</option></select></div><div class="grid grid-cols-2 gap-4"><div><label for="pesticide-area" class="block text-sm font-medium text-slate-700">Area</label><input type="number" id="pesticide-area" value="1" min="0" class="mt-1 w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-emerald-500"></div><div><label for="pesticide-unit" class="block text-sm font-medium text-slate-700">Unit</label><select id="pesticide-unit" class="mt-1 w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-emerald-500"><option value="acre">Acre</option><option value="gunta">Gunta</option></select></div></div><div><button type="submit" class="w-full bg-emerald-600 text-white font-bold py-3 px-4 rounded-lg hover:bg-emerald-700 transition-colors">Calculate Ingredients</button></div></form><div id="pesticide-result" class="mt-6 p-4 bg-emerald-50 rounded-lg hidden"><p id="pesticide-total-mix" class="text-slate-700 text-center mb-2"></p><ul id="pesticide-ingredients" class="list-disc list-inside text-slate-700 space-y-1"></ul></div></div></div>`;
+
+        document.getElementById('reviews').innerHTML = `
+            <header class="text-center mb-8"><h1 class="text-4xl md:text-5xl font-bold text-emerald-700 mb-2">⭐ Farmer Reviews</h1><p class="text-lg text-slate-600">Real feedback from the farming community.</p></header>
+            <div class="bg-white p-6 md:p-8 rounded-xl shadow-md border border-slate-200 mb-10"><h2 class="text-2xl font-bold text-emerald-600 mb-4">Leave a Review</h2><form id="review-form" class="space-y-4"><div class="grid grid-cols-1 md:grid-cols-2 gap-4"><div><label for="author" class="block text-sm font-medium text-slate-700">Your Name</label><input type="text" id="author" name="author" required class="mt-1 w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-emerald-500"></div><div><label for="location" class="block text-sm font-medium text-slate-700">Your Location</label><div class="flex items-center gap-2 mt-1"><input type="text" id="location" name="location" readonly required placeholder="Click button to get location" class="w-full px-4 py-2 border border-slate-300 rounded-lg bg-slate-100 cursor-not-allowed"><button type="button" id="get-location-btn" class="flex-shrink-0 px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-geo-alt-fill" viewBox="0 0 16 16"><path d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10zm0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6z"/></svg></button></div><p id="location-status" class="text-xs text-slate-500 mt-1 h-4"></p></div></div><div><label for="title" class="block text-sm font-medium text-slate-700">Review Title</label><input type="text" id="title" name="title" required class="mt-1 w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-emerald-500"></div><div><label class="block text-sm font-medium text-slate-700">Rating</label><div class="star-rating mt-1"><input type="radio" id="5-stars" name="rating" value="5" required /><label for="5-stars">☆</label><input type="radio" id="4-stars" name="rating" value="4" /><label for="4-stars">☆</label><input type="radio" id="3-stars" name="rating" value="3" /><label for="3-stars">☆</label><input type="radio" id="2-stars" name="rating" value="2" /><label for="2-stars">☆</label><input type="radio" id="1-star" name="rating" value="1" /><label for="1-star">☆</label></div></div><div><label for="text" class="block text-sm font-medium text-slate-700">Your Review</label><textarea id="text" name="text" rows="4" required class="mt-1 w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-emerald-500"></textarea></div><div><button type="submit" class="w-full bg-emerald-600 text-white font-bold py-3 px-4 rounded-lg hover:bg-emerald-700 transition-colors">Submit Review</button></div></form><div id="form-message" class="mt-4 text-center"></div></div>
+            <div id="reviews-container" class="space-y-6"></div>`;
+
+        document.getElementById('about').innerHTML = `
+            <div class="bg-white p-8 md:p-12 rounded-xl shadow-sm border border-slate-200 max-w-4xl mx-auto"><h1 class="text-4xl font-bold text-emerald-700 mb-6 text-center">About Agri-Helper</h1><div class="prose prose-lg max-w-none text-slate-600"><p>Agri-Helper was created with a simple mission: to empower farmers with accessible, reliable, and sustainable farming knowledge. We believe that by sharing information and experiences, we can help build a stronger, more resilient agricultural community.</p></div></div>`;
+        
         // --- Navigation Logic ---
         const pages = document.querySelectorAll('.page');
         const navLinks = document.querySelectorAll('.nav-link');
@@ -445,9 +386,10 @@ We believe in the power of community and collaboration. By connecting farmers wi
         
         // --- Data Loading and Initialization ---
         loadAndInitializeApp();
-    });
-    
-    // --- Main function to load CSV files and initialize pages that need them ---
+        appInitialized = true;
+    }
+
+    let allRecipes = [];
     async function loadAndInitializeApp() {
         try {
             const response = await fetch('recipes.csv');
@@ -462,7 +404,6 @@ We believe in the power of community and collaboration. By connecting farmers wi
                         recipe.ingredients = typeof recipe.ingredients === 'string' ? recipe.ingredients.split(';').map(s => s.trim()) : [];
                         return recipe;
                     });
-                    // Initialize all pages that depend on this data
                     initializeRecipesPage(allRecipes);
                     initializeToolsPage(allRecipes);
                 }
@@ -474,7 +415,6 @@ We believe in the power of community and collaboration. By connecting farmers wi
         }
     }
 
-    // --- RECIPES PAGE LOGIC ---
     function initializeRecipesPage(recipes) {
         const container = document.getElementById('recipes-container');
         const noResults = document.getElementById('no-results');
@@ -533,12 +473,10 @@ We believe in the power of community and collaboration. By connecting farmers wi
             keyword.value = ''; target.value = ''; use.value = ''; sort.value = 'default';
             filterAndSort();
         });
-        filterAndSort(); // Initial display
+        filterAndSort();
     }
 
-    // --- TOOLS PAGE LOGIC ---
     function initializeToolsPage(recipes) {
-        // Pesticide Calculator
         const pesticideForm = document.getElementById('pesticide-calculator-form');
         const recipeSelect = document.getElementById('pesticide-recipe');
         const pesticideResultDiv = document.getElementById('pesticide-result');
@@ -576,7 +514,7 @@ We believe in the power of community and collaboration. By connecting farmers wi
                 const parts = ing.match(/([\d.]+)\s*(kg|g|ml|L)/i);
                 if (parts) {
                     const baseAmount = parseFloat(parts[1]);
-                    const baseUnit = parts[2]; // Corrected index for unit
+                    const baseUnit = parts[2];
                     const ingredientName = ing.replace(parts[0], '').replace(/–|-/g, '').trim();
                     const requiredAmount = (baseAmount / baseWaterVolume) * totalMixNeeded;
                     let finalAmount = requiredAmount;
