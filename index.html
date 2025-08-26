@@ -151,16 +151,15 @@
         import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
         import { getFirestore, collection, addDoc, onSnapshot, query, orderBy, serverTimestamp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
-         const firebaseConfig = {
-    apiKey: "AIzaSyAgDzPWLDtfWGkbSX2RLlkECJPVczYxfqM",
-    authDomain: "agrireviews-956e4.firebaseapp.com",
-    projectId: "agrireviews-956e4",
-    storageBucket: "agrireviews-956e4.firebasestorage.app",
-    messagingSenderId: "967891428533",
-    appId: "1:967891428533:web:4f75d9d1e9320ed6664afc",
-    measurementId: "G-2QFP4T6CHG"
-  };
-
+        const firebaseConfig = {
+            apiKey: "AIzaSyAgDzPWLDtfWGkbSX2RLlkECJPVczYxfqM",
+            authDomain: "agrireviews-956e4.firebaseapp.com",
+            projectId: "agrireviews-956e4",
+            storageBucket: "agrireviews-956e4.appspot.com",
+            messagingSenderId: "967891428533",
+            appId: "1:967891428533:web:4f75d9d1e9320ed6664afc",
+            measurementId: "G-2QFP4T6CHG"
+        };
 
         try {
             const app = initializeApp(firebaseConfig);
@@ -538,4 +537,3 @@
     </script>
 </body>
 </html>
-
