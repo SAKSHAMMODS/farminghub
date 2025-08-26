@@ -74,6 +74,10 @@
             background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black overlay */
             z-index: -1;
         }
+        /* --- Text Glow Style --- */
+        .text-glow {
+            text-shadow: 0 0 8px rgba(16, 185, 129, 0.8);
+        }
     </style>
 </head>
 <body class="text-slate-800">
@@ -337,7 +341,49 @@
                 <div id="reviews-container" class="space-y-6"></div>`;
 
             document.getElementById('about').innerHTML = `
-                <div class="bg-white p-8 md:p-12 rounded-xl shadow-sm border border-slate-200 max-w-4xl mx-auto"><h1 class="text-4xl font-bold text-emerald-700 mb-6 text-center">About Agri-Helper</h1><div class="prose prose-lg max-w-none text-slate-600"><p>Agri-Helper was created with a simple mission: to empower farmers with accessible, reliable, and sustainable farming knowledge. We believe that by sharing information and experiences, we can help build a stronger, more resilient agricultural community.</p></div><hr class="my-8"><h2 class="text-3xl font-bold text-emerald-700 mb-4 text-center">Credits</h2><div class="text-center text-slate-600"><p>This project was built using resources from the open-source community. Special thanks to Firebase, Tailwind CSS, and Papa Parse.</p></div></div>`;
+                <div class="bg-white p-8 md:p-12 rounded-xl shadow-sm border border-slate-200 max-w-4xl mx-auto">
+                    <h1 class="text-4xl font-bold text-emerald-700 mb-6 text-center">About Agri-Helper</h1>
+                    <div class="prose prose-lg max-w-none text-slate-600">
+                        <p>Agri-Helper was created with a simple mission: to empower farmers with accessible, reliable, and sustainable farming knowledge. We believe that by sharing information and experiences, we can help build a stronger, more resilient agricultural community.</p>
+                    </div>
+                    <hr class="my-8">
+                    <h2 class="text-3xl font-bold text-emerald-700 mb-6 text-center">Meet the Team</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-center">
+                        <div class="bg-slate-50 p-4 rounded-lg">
+                            <h3 class="text-xl font-bold text-emerald-500 text-glow">UMAR SHAIK</h3>
+                            <p class="font-semibold text-slate-600">Backend Developer</p>
+                            <div class="mt-2 space-x-4">
+                                <a href="tel:+919021172961" class="text-blue-500 hover:underline">Contact</a>
+                                <a href="mailto:umarshaikh3307@gmail.com" class="text-blue-500 hover:underline">Email</a>
+                            </div>
+                        </div>
+                        <div class="bg-slate-50 p-4 rounded-lg">
+                            <h3 class="text-xl font-bold text-emerald-500 text-glow">ATHARVA SONNEKAR</h3>
+                            <p class="font-semibold text-slate-600">Data Analysis</p>
+                            <div class="mt-2 space-x-4">
+                                <a href="tel:+918010388206" class="text-blue-500 hover:underline">Contact</a>
+                                <a href="mailto:atharva.sonnekar6316@gmail.com" class="text-blue-500 hover:underline">Email</a>
+                            </div>
+                        </div>
+                        <div class="bg-slate-50 p-4 rounded-lg">
+                            <h3 class="text-xl font-bold text-emerald-500 text-glow">MADHUR CHAVAN</h3>
+                            <p class="font-semibold text-slate-600">Automation Expert</p>
+                            <div class="mt-2 space-x-4">
+                                <a href="tel:+919352822864" class="text-blue-500 hover:underline">Contact</a>
+                                <a href="mailto:madhurchauhan1109@gmail.com" class="text-blue-500 hover:underline">Email</a>
+                            </div>
+                        </div>
+                        <div class="bg-slate-50 p-4 rounded-lg">
+                            <h3 class="text-xl font-bold text-emerald-500 text-glow">SAKSHAM BHOR</h3>
+                            <p class="font-semibold text-slate-600">Frontend Developer</p>
+                        </div>
+                    </div>
+                    <hr class="my-8">
+                    <h2 class="text-3xl font-bold text-emerald-700 mb-4 text-center">Credits</h2>
+                    <div class="text-center text-slate-600">
+                        <p>This project was built using resources from the open-source community. Special thanks to Firebase, Tailwind CSS, and Papa Parse.</p>
+                    </div>
+                </div>`;
             
             document.getElementById('profile').innerHTML = `
                 <header class="text-center mb-8"><h1 class="text-4xl md:text-5xl font-bold text-emerald-700 mb-2">👤 User Profile</h1><p class="text-lg text-slate-600">Your account details.</p></header>
@@ -524,8 +570,6 @@
         }
 
         function initializeReviewsPage(db) {
-            const { collection, onSnapshot, query, orderBy, addDoc, serverTimestamp } = window.firebase.firestore;
-
             const reviewsContainer = document.getElementById('reviews-container');
             const reviewForm = document.getElementById('review-form');
             const formMessage = document.getElementById('form-message');
