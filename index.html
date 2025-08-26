@@ -574,8 +574,6 @@
         }
 
         function initializeReviewsPage(db) {
-            const { collection, onSnapshot, query, orderBy, addDoc, serverTimestamp } = window.firebase.firestore;
-
             const reviewsContainer = document.getElementById('reviews-container');
             const reviewForm = document.getElementById('review-form');
             const formMessage = document.getElementById('form-message');
