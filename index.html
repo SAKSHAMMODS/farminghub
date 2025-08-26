@@ -116,6 +116,7 @@
                         <a href="#tools" class="nav-link text-slate-600 hover:text-emerald-700 transition pb-1">Tools</a>
                         <a href="#reviews" class="nav-link text-slate-600 hover:text-emerald-700 transition pb-1">Reviews</a>
                         <a href="#about" class="nav-link text-slate-600 hover:text-emerald-700 transition pb-1">About</a>
+                        <a href="#profile" class="nav-link text-slate-600 hover:text-emerald-700 transition pb-1">Profile</a>
                         <div id="user-info" class="flex items-center gap-4 pl-4">
                             <span id="user-name" class="text-sm font-semibold text-emerald-600"></span>
                             <button id="logout-button" class="text-sm bg-red-500 text-white px-3 py-1 rounded-md hover:bg-red-600 transition">Logout</button>
@@ -134,6 +135,7 @@
                 <a href="#tools" class="nav-link-mobile block py-3 px-4 text-sm text-slate-600 hover:bg-emerald-50">Tools</a>
                 <a href="#reviews" class="nav-link-mobile block py-3 px-4 text-sm text-slate-600 hover:bg-emerald-50">Reviews</a>
                 <a href="#about" class="nav-link-mobile block py-3 px-4 text-sm text-slate-600 hover:bg-emerald-50">About</a>
+                <a href="#profile" class="nav-link-mobile block py-3 px-4 text-sm text-slate-600 hover:bg-emerald-50">Profile</a>
                  <div class="p-4 border-t">
                     <span id="mobile-user-name" class="block text-sm font-semibold text-emerald-600 mb-2"></span>
                     <button id="mobile-logout-button" class="w-full text-sm bg-red-500 text-white px-3 py-2 rounded-md hover:bg-red-600 transition">Logout</button>
@@ -148,6 +150,7 @@
             <section id="tools" class="page"></section>
             <section id="reviews" class="page"></section>
             <section id="about" class="page"></section>
+            <section id="profile" class="page"></section>
         </main>
         
         <footer class="bg-slate-800 text-slate-300 mt-12">
@@ -234,16 +237,17 @@
                     // User is logged in, fetch their profile
                     const userDocRef = doc(db, "users", user.uid);
                     const userDocSnap = await getDoc(userDocRef);
-                    let userName = user.email; // Fallback to email
+                    let currentUserProfile = { email: user.email };
                     if (userDocSnap.exists()) {
-                        userName = userDocSnap.data().name || user.email;
+                        currentUserProfile = userDocSnap.data();
                     }
+                    const userName = currentUserProfile.name || user.email;
 
                     loginPage.classList.add('hidden');
                     appContent.classList.remove('hidden');
                     document.getElementById('user-name').textContent = userName;
                     document.getElementById('mobile-user-name').textContent = userName;
-                    initializeLoggedInApp();
+                    initializeLoggedInApp(currentUserProfile);
                 } else {
                     // User is logged out
                     loginPage.classList.remove('hidden');
@@ -265,7 +269,7 @@
     <script>
     // --- APP INITIALIZATION (runs after login) ---
     let appInitialized = false;
-    function initializeLoggedInApp() {
+    function initializeLoggedInApp(userProfile) {
         if (appInitialized) return;
         
         // --- Inject Page Content ---
@@ -295,7 +299,16 @@
             <div id="reviews-container" class="space-y-6"></div>`;
 
         document.getElementById('about').innerHTML = `
-            <div class="bg-white p-8 md:p-12 rounded-xl shadow-sm border border-slate-200 max-w-4xl mx-auto"><h1 class="text-4xl font-bold text-emerald-700 mb-6 text-center">About Agri-Helper</h1><div class="prose prose-lg max-w-none text-slate-600"><p>Agri-Helper was created with a simple mission: to empower farmers with accessible, reliable, and sustainable farming knowledge. We believe that by sharing information and experiences, we can help build a stronger, more resilient agricultural community.</p></div></div>`;
+            <div class="bg-white p-8 md:p-12 rounded-xl shadow-sm border border-slate-200 max-w-4xl mx-auto"><h1 class="text-4xl font-bold text-emerald-700 mb-6 text-center">About Agri-Helper</h1><div class="prose prose-lg max-w-none text-slate-600"><p>Agri-Helper was created with a simple mission: to empower farmers with accessible, reliable, and sustainable farming knowledge. We believe that by sharing information and experiences, we can help build a stronger, more resilient agricultural community.</p></div><hr class="my-8"><h2 class="text-3xl font-bold text-emerald-700 mb-4 text-center">Credits</h2><div class="text-center text-slate-600"><p>This project was built using resources from the open-source community. Special thanks to Firebase, Tailwind CSS, and Papa Parse.</p></div></div>`;
+        
+        document.getElementById('profile').innerHTML = `
+            <header class="text-center mb-8"><h1 class="text-4xl md:text-5xl font-bold text-emerald-700 mb-2">👤 User Profile</h1><p class="text-lg text-slate-600">Your account details.</p></header>
+            <div class="bg-white p-8 rounded-xl shadow-md border border-slate-200 max-w-lg mx-auto"><div class="space-y-4"><div class="flex justify-between items-center"><span class="font-semibold text-slate-700">Name:</span><span id="profile-name" class="text-slate-900"></span></div><hr><div class="flex justify-between items-center"><span class="font-semibold text-slate-700">Email:</span><span id="profile-email" class="text-slate-900"></span></div><hr><div class="flex justify-between items-center"><span class="font-semibold text-slate-700">Contact:</span><span id="profile-contact" class="text-slate-900"></span></div></div></div>`;
+
+        // Populate Profile Page
+        document.getElementById('profile-name').textContent = userProfile.name || 'Not provided';
+        document.getElementById('profile-email').textContent = userProfile.email || 'Not provided';
+        document.getElementById('profile-contact').textContent = userProfile.contact || 'Not provided';
         
         // --- Navigation Logic ---
         const pages = document.querySelectorAll('.page');
