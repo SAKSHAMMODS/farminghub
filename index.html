@@ -177,23 +177,29 @@
             measurementId: "G-2QFP4T6CHG"
         };
 
+        // --- GLOBAL APP STATE ---
+        let appInitialized = false;
+        let allRecipes = [];
+
+        // --- DOM ELEMENTS ---
+        const loadingScreen = document.getElementById('loading-screen');
+        const loginPage = document.getElementById('login-page');
+        const appContent = document.getElementById('app-content');
+        const authForm = document.getElementById('auth-form');
+        const authButton = document.getElementById('auth-button');
+        const authError = document.getElementById('auth-error');
+        const toggleAuthModeBtn = document.getElementById('toggle-auth-mode');
+        const nameField = document.getElementById('name-field');
+        const contactField = document.getElementById('contact-field');
+        let isLoginMode = true;
+
+        // --- FIREBASE INITIALIZATION ---
         try {
             const app = initializeApp(firebaseConfig);
             const auth = getAuth(app);
             const db = getFirestore(app);
 
-            const loadingScreen = document.getElementById('loading-screen');
-            const loginPage = document.getElementById('login-page');
-            const appContent = document.getElementById('app-content');
-            const authForm = document.getElementById('auth-form');
-            const authButton = document.getElementById('auth-button');
-            const authError = document.getElementById('auth-error');
-            const toggleAuthModeBtn = document.getElementById('toggle-auth-mode');
-            const nameField = document.getElementById('name-field');
-            const contactField = document.getElementById('contact-field');
-            let isLoginMode = true;
-
-            // --- Auth UI Toggle ---
+            // --- AUTHENTICATION LOGIC ---
             toggleAuthModeBtn.addEventListener('click', () => {
                 isLoginMode = !isLoginMode;
                 authButton.textContent = isLoginMode ? 'Sign In' : 'Create Account';
@@ -203,7 +209,6 @@
                 authError.textContent = '';
             });
 
-            // --- Auth Form Submission ---
             authForm.addEventListener('submit', (e) => {
                 e.preventDefault();
                 const name = authForm.name.value;
@@ -219,7 +224,6 @@
                     createUserWithEmailAndPassword(auth, email, password)
                         .then(async (userCredential) => {
                             const user = userCredential.user;
-                            // Now save the extra user info to Firestore
                             await setDoc(doc(db, "users", user.uid), {
                                 name: name,
                                 contact: contact,
@@ -230,11 +234,9 @@
                 }
             });
 
-            // --- Auth State Listener ---
             onAuthStateChanged(auth, async (user) => {
                 loadingScreen.classList.add('hidden');
                 if (user) {
-                    // User is logged in, fetch their profile
                     const userDocRef = doc(db, "users", user.uid);
                     const userDocSnap = await getDoc(userDocRef);
                     let currentUserProfile = { email: user.email };
@@ -249,13 +251,11 @@
                     document.getElementById('mobile-user-name').textContent = userName;
                     initializeLoggedInApp(currentUserProfile, db);
                 } else {
-                    // User is logged out
                     loginPage.classList.remove('hidden');
                     appContent.classList.add('hidden');
                 }
             });
 
-            // --- Logout ---
             document.getElementById('logout-button').addEventListener('click', () => signOut(auth));
             document.getElementById('mobile-logout-button').addEventListener('click', () => signOut(auth));
 
@@ -263,347 +263,358 @@
             console.error("Firebase initialization failed:", e);
             document.getElementById('loading-screen').innerHTML = `<div class="text-center p-8 text-red-600">Failed to initialize Firebase. Please check your configuration and the console for errors.</div>`;
         }
-    </script>
 
 
-    <script>
-    // --- APP INITIALIZATION (runs after login) ---
-    let appInitialized = false;
-    function initializeLoggedInApp(userProfile, db) {
-        if (appInitialized) return;
-        
-        // --- Inject Page Content ---
-        document.getElementById('home').innerHTML = `
-            <div class="text-center bg-white p-8 md:p-16 rounded-xl shadow-sm border border-slate-200">
-                <h1 class="text-4xl md:text-5xl font-bold text-emerald-700 mb-4">Smart & Sustainable Farming</h1>
-                <p class="text-lg text-slate-600 max-w-3xl mx-auto">Your one-stop resource for organic pesticide recipes, modern farming tools, and community-driven reviews.</p>
-            </div>
-            <div class="grid md:grid-cols-3 gap-6 mt-8">
-                <a href="#recipes" class="nav-link-card bg-white p-6 rounded-xl shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300 border border-slate-200 block"><h2 class="text-2xl font-bold text-emerald-600 mb-2">Pesticide Recipes</h2><p class="text-slate-600">Find effective, homemade, and organic pesticide solutions for your crops.</p></a>
-                <a href="#tools" class="nav-link-card bg-white p-6 rounded-xl shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300 border border-slate-200 block"><h2 class="text-2xl font-bold text-emerald-600 mb-2">Farming Calculators</h2><p class="text-slate-600">Calculate pesticide needs for your farm with our easy-to-use tool.</p></a>
-                <a href="#reviews" class="nav-link-card bg-white p-6 rounded-xl shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300 border border-slate-200 block"><h2 class="text-2xl font-bold text-emerald-600 mb-2">Community Reviews</h2><p class="text-slate-600">Read and share experiences with recipes and tools from farmers like you.</p></a>
-            </div>`;
-        
-        document.getElementById('recipes').innerHTML = `
-            <header class="text-center mb-8"><h1 class="text-4xl md:text-5xl font-bold text-emerald-700 mb-2">🌿 Organic Pesticide Recipe Finder</h1><p class="text-lg text-slate-600">Search and filter through homemade pesticide recipes for your farm or garden.</p></header>
-            <nav class="search-menu bg-white p-6 rounded-xl shadow-md mb-10 border border-slate-200"><div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6"><div class="filter-group lg:col-span-2"><label for="keyword-search" class="block text-sm font-medium text-slate-700 mb-1">Search by Keyword</label><input type="text" id="keyword-search" placeholder="e.g., 'Caterpillar', 'Tomato', 'Neem'" class="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-emerald-500"></div><div class="filter-group"><label for="target-filter" class="block text-sm font-medium text-slate-700 mb-1">Filter by Target Pest</label><select id="target-filter" class="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-emerald-500 bg-white"><option value="">All Pests/Diseases</option></select></div><div class="filter-group"><label for="use-filter" class="block text-sm font-medium text-slate-700 mb-1">Filter by Crop/Use</label><select id="use-filter" class="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-emerald-500 bg-white"><option value="">All Crops</option></select></div><div class="filter-group flex flex-col justify-end"><label for="sort-cost" class="block text-sm font-medium text-slate-700 mb-1">Sort & Reset</label><div class="flex gap-2"><select id="sort-cost" class="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-emerald-500 bg-white"><option value="default">Sort by Cost</option><option value="asc">Low to High</option><option value="desc">High to Low</option></select><button id="reset-btn" title="Reset Filters" class="p-2 bg-red-500 text-white rounded-lg hover:bg-red-600 shadow"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 0 0-9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/><path d="M3 12a9 9 0 0 0 9 9 9.75 9.75 0 0 0 6.74-2.74L21 16"/><path d="M21 21v-5h-5"/></svg></button></div></div></div></nav>
-            <div id="recipes-container" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6"></div><div id="no-results" class="hidden text-center py-16"><h2 class="text-2xl font-semibold text-slate-700">No Recipes Found</h2><p class="text-slate-500 mt-2">Try adjusting your search or filter criteria.</p></div>`;
+        // --- APP INITIALIZATION (runs after login) ---
+        function initializeLoggedInApp(userProfile, db) {
+            if (appInitialized) return;
+            
+            // --- Inject Page Content ---
+            injectPageHTML();
 
-        document.getElementById('tools').innerHTML = `
-            <header class="text-center mb-8"><h1 class="text-4xl md:text-5xl font-bold text-emerald-700 mb-2">🌾 Farming Calculators</h1><p class="text-lg text-slate-600">Plan your spraying with this simple tool.</p></header>
-            <div class="flex justify-center"><div class="bg-white p-6 md:p-8 rounded-xl shadow-md border border-slate-200 w-full max-w-2xl"><h2 class="text-2xl font-bold text-emerald-600 mb-4">Pesticide Spray Calculator</h2><form id="pesticide-calculator-form" class="space-y-4"><div><label for="pesticide-recipe" class="block text-sm font-medium text-slate-700">Select Recipe</label><select id="pesticide-recipe" class="mt-1 w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-emerald-500"><option value="">Loading recipes...</option></select></div><div class="grid grid-cols-2 gap-4"><div><label for="pesticide-area" class="block text-sm font-medium text-slate-700">Area</label><input type="number" id="pesticide-area" value="1" min="0" class="mt-1 w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-emerald-500"></div><div><label for="pesticide-unit" class="block text-sm font-medium text-slate-700">Unit</label><select id="pesticide-unit" class="mt-1 w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-emerald-500"><option value="acre">Acre</option><option value="gunta">Gunta</option></select></div></div><div><button type="submit" class="w-full bg-emerald-600 text-white font-bold py-3 px-4 rounded-lg hover:bg-emerald-700 transition-colors">Calculate Ingredients</button></div></form><div id="pesticide-result" class="mt-6 p-4 bg-emerald-50 rounded-lg hidden"><p id="pesticide-total-mix" class="text-slate-700 text-center mb-2"></p><ul id="pesticide-ingredients" class="list-disc list-inside text-slate-700 space-y-1"></ul></div></div></div>`;
+            // --- Setup Navigation ---
+            setupNavigation();
+            
+            // --- Load Data and Initialize Pages ---
+            loadCsvDataAndInitPages();
 
-        document.getElementById('reviews').innerHTML = `
-            <header class="text-center mb-8"><h1 class="text-4xl md:text-5xl font-bold text-emerald-700 mb-2">⭐ Farmer Reviews</h1><p class="text-lg text-slate-600">Real feedback from the farming community.</p></header>
-            <div class="bg-white p-6 md:p-8 rounded-xl shadow-md border border-slate-200 mb-10"><h2 class="text-2xl font-bold text-emerald-600 mb-4">Leave a Review</h2><form id="review-form" class="space-y-4"><div class="grid grid-cols-1 md:grid-cols-2 gap-4"><div><label for="author" class="block text-sm font-medium text-slate-700">Your Name</label><input type="text" id="author" name="author" required class="mt-1 w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-emerald-500"></div><div><label for="location" class="block text-sm font-medium text-slate-700">Your Location</label><div class="flex items-center gap-2 mt-1"><input type="text" id="location" name="location" readonly required placeholder="Click button to get location" class="w-full px-4 py-2 border border-slate-300 rounded-lg bg-slate-100 cursor-not-allowed"><button type="button" id="get-location-btn" class="flex-shrink-0 px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-geo-alt-fill" viewBox="0 0 16 16"><path d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10zm0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6z"/></svg></button></div><div class="flex items-center mt-2"><input type="checkbox" id="manual-location-toggle" class="h-4 w-4 rounded border-gray-300 text-emerald-600 focus:ring-emerald-500"><label for="manual-location-toggle" class="ml-2 block text-sm text-slate-900">Enter location manually</label></div><p id="location-status" class="text-xs text-slate-500 mt-1 h-4"></p></div></div><div><label for="title" class="block text-sm font-medium text-slate-700">Review Title</label><input type="text" id="title" name="title" required class="mt-1 w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-emerald-500"></div><div><label class="block text-sm font-medium text-slate-700">Rating</label><div class="star-rating mt-1"><input type="radio" id="5-stars" name="rating" value="5" required /><label for="5-stars">☆</label><input type="radio" id="4-stars" name="rating" value="4" /><label for="4-stars">☆</label><input type="radio" id="3-stars" name="rating" value="3" /><label for="3-stars">☆</label><input type="radio" id="2-stars" name="rating" value="2" /><label for="2-stars">☆</label><input type="radio" id="1-star" name="rating" value="1" /><label for="1-star">☆</label></div></div><div><label for="text" class="block text-sm font-medium text-slate-700">Your Review</label><textarea id="text" name="text" rows="4" required class="mt-1 w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-emerald-500"></textarea></div><div><button type="submit" class="w-full bg-emerald-600 text-white font-bold py-3 px-4 rounded-lg hover:bg-emerald-700 transition-colors">Submit Review</button></div></form><div id="form-message" class="mt-4 text-center"></div></div>
-            <div id="reviews-container" class="space-y-6"></div>`;
+            // --- Initialize Firebase-dependent pages ---
+            initializeReviewsPage(db);
+            initializeProfilePage(userProfile);
 
-        document.getElementById('about').innerHTML = `
-            <div class="bg-white p-8 md:p-12 rounded-xl shadow-sm border border-slate-200 max-w-4xl mx-auto"><h1 class="text-4xl font-bold text-emerald-700 mb-6 text-center">About Agri-Helper</h1><div class="prose prose-lg max-w-none text-slate-600"><p>Agri-Helper was created with a simple mission: to empower farmers with accessible, reliable, and sustainable farming knowledge. We believe that by sharing information and experiences, we can help build a stronger, more resilient agricultural community.</p></div><hr class="my-8"><h2 class="text-3xl font-bold text-emerald-700 mb-4 text-center">Credits</h2><div class="text-center text-slate-600"><p>This project was built using resources from the open-source community. Special thanks to Firebase, Tailwind CSS, and Papa Parse.</p></div></div>`;
-        
-        document.getElementById('profile').innerHTML = `
-            <header class="text-center mb-8"><h1 class="text-4xl md:text-5xl font-bold text-emerald-700 mb-2">👤 User Profile</h1><p class="text-lg text-slate-600">Your account details.</p></header>
-            <div class="bg-white p-8 rounded-xl shadow-md border border-slate-200 max-w-lg mx-auto"><div class="space-y-4"><div class="flex justify-between items-center"><span class="font-semibold text-slate-700">Name:</span><span id="profile-name" class="text-slate-900"></span></div><hr><div class="flex justify-between items-center"><span class="font-semibold text-slate-700">Email:</span><span id="profile-email" class="text-slate-900"></span></div><hr><div class="flex justify-between items-center"><span class="font-semibold text-slate-700">Contact:</span><span id="profile-contact" class="text-slate-900"></span></div></div></div>`;
-
-        // Populate Profile Page
-        document.getElementById('profile-name').textContent = userProfile.name || 'Not provided';
-        document.getElementById('profile-email').textContent = userProfile.email || 'Not provided';
-        document.getElementById('profile-contact').textContent = userProfile.contact || 'Not provided';
-        
-        // --- Navigation Logic ---
-        const pages = document.querySelectorAll('.page');
-        const navLinks = document.querySelectorAll('.nav-link');
-        const mobileNavLinks = document.querySelectorAll('.nav-link-mobile');
-        const cardLinks = document.querySelectorAll('.nav-link-card');
-        const headerLinks = document.querySelectorAll('.nav-link-header');
-        const mobileMenuButton = document.getElementById('mobile-menu-button');
-        const mobileMenu = document.getElementById('mobile-menu');
-
-        function showPage(pageId) {
-            pages.forEach(page => page.classList.remove('active'));
-            const targetPage = document.getElementById(pageId);
-            if (targetPage) targetPage.classList.add('active');
-            navLinks.forEach(link => link.classList.toggle('active', link.hash === `#${pageId}`));
-            mobileMenu.classList.add('hidden');
-            window.scrollTo(0, 0);
+            appInitialized = true;
         }
 
-        function handleNavClick(event) {
-            event.preventDefault();
-            const pageId = event.currentTarget.hash.substring(1);
-            showPage(pageId);
-            history.pushState(null, null, `#${pageId}`);
+        // --- PAGE CONTENT INJECTION ---
+        function injectPageHTML() {
+            document.getElementById('home').innerHTML = `
+                <div class="text-center bg-white p-8 md:p-16 rounded-xl shadow-sm border border-slate-200">
+                    <h1 class="text-4xl md:text-5xl font-bold text-emerald-700 mb-4">Smart & Sustainable Farming</h1>
+                    <p class="text-lg text-slate-600 max-w-3xl mx-auto">Your one-stop resource for organic pesticide recipes, modern farming tools, and community-driven reviews.</p>
+                </div>
+                <div class="grid md:grid-cols-3 gap-6 mt-8">
+                    <a href="#recipes" class="nav-link-card bg-white p-6 rounded-xl shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300 border border-slate-200 block"><h2 class="text-2xl font-bold text-emerald-600 mb-2">Pesticide Recipes</h2><p class="text-slate-600">Find effective, homemade, and organic pesticide solutions for your crops.</p></a>
+                    <a href="#tools" class="nav-link-card bg-white p-6 rounded-xl shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300 border border-slate-200 block"><h2 class="text-2xl font-bold text-emerald-600 mb-2">Farming Calculators</h2><p class="text-slate-600">Calculate pesticide needs for your farm with our easy-to-use tool.</p></a>
+                    <a href="#reviews" class="nav-link-card bg-white p-6 rounded-xl shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300 border border-slate-200 block"><h2 class="text-2xl font-bold text-emerald-600 mb-2">Community Reviews</h2><p class="text-slate-600">Read and share experiences with recipes and tools from farmers like you.</p></a>
+                </div>`;
+            
+            document.getElementById('recipes').innerHTML = `
+                <header class="text-center mb-8"><h1 class="text-4xl md:text-5xl font-bold text-emerald-700 mb-2">🌿 Organic Pesticide Recipe Finder</h1><p class="text-lg text-slate-600">Search and filter through homemade pesticide recipes for your farm or garden.</p></header>
+                <nav class="search-menu bg-white p-6 rounded-xl shadow-md mb-10 border border-slate-200"><div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6"><div class="filter-group lg:col-span-2"><label for="keyword-search" class="block text-sm font-medium text-slate-700 mb-1">Search by Keyword</label><input type="text" id="keyword-search" placeholder="e.g., 'Caterpillar', 'Tomato', 'Neem'" class="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-emerald-500"></div><div class="filter-group"><label for="target-filter" class="block text-sm font-medium text-slate-700 mb-1">Filter by Target Pest</label><select id="target-filter" class="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-emerald-500 bg-white"><option value="">All Pests/Diseases</option></select></div><div class="filter-group"><label for="use-filter" class="block text-sm font-medium text-slate-700 mb-1">Filter by Crop/Use</label><select id="use-filter" class="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-emerald-500 bg-white"><option value="">All Crops</option></select></div><div class="filter-group flex flex-col justify-end"><label for="sort-cost" class="block text-sm font-medium text-slate-700 mb-1">Sort & Reset</label><div class="flex gap-2"><select id="sort-cost" class="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-emerald-500 bg-white"><option value="default">Sort by Cost</option><option value="asc">Low to High</option><option value="desc">High to Low</option></select><button id="reset-btn" title="Reset Filters" class="p-2 bg-red-500 text-white rounded-lg hover:bg-red-600 shadow"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 0 0-9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/><path d="M3 12a9 9 0 0 0 9 9 9.75 9.75 0 0 0 6.74-2.74L21 16"/><path d="M21 21v-5h-5"/></svg></button></div></div></div></nav>
+                <div id="recipes-container" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6"></div><div id="no-results" class="hidden text-center py-16"><h2 class="text-2xl font-semibold text-slate-700">No Recipes Found</h2><p class="text-slate-500 mt-2">Try adjusting your search or filter criteria.</p></div>`;
+
+            document.getElementById('tools').innerHTML = `
+                <header class="text-center mb-8"><h1 class="text-4xl md:text-5xl font-bold text-emerald-700 mb-2">🌾 Farming Calculators</h1><p class="text-lg text-slate-600">Plan your spraying with this simple tool.</p></header>
+                <div class="flex justify-center"><div class="bg-white p-6 md:p-8 rounded-xl shadow-md border border-slate-200 w-full max-w-2xl"><h2 class="text-2xl font-bold text-emerald-600 mb-4">Pesticide Spray Calculator</h2><form id="pesticide-calculator-form" class="space-y-4"><div><label for="pesticide-recipe" class="block text-sm font-medium text-slate-700">Select Recipe</label><select id="pesticide-recipe" class="mt-1 w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-emerald-500"><option value="">Loading recipes...</option></select></div><div class="grid grid-cols-2 gap-4"><div><label for="pesticide-area" class="block text-sm font-medium text-slate-700">Area</label><input type="number" id="pesticide-area" value="1" min="0" class="mt-1 w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-emerald-500"></div><div><label for="pesticide-unit" class="block text-sm font-medium text-slate-700">Unit</label><select id="pesticide-unit" class="mt-1 w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-emerald-500"><option value="acre">Acre</option><option value="gunta">Gunta</option></select></div></div><div><button type="submit" class="w-full bg-emerald-600 text-white font-bold py-3 px-4 rounded-lg hover:bg-emerald-700 transition-colors">Calculate Ingredients</button></div></form><div id="pesticide-result" class="mt-6 p-4 bg-emerald-50 rounded-lg hidden"><p id="pesticide-total-mix" class="text-slate-700 text-center mb-2"></p><ul id="pesticide-ingredients" class="list-disc list-inside text-slate-700 space-y-1"></ul></div></div></div>`;
+
+            document.getElementById('reviews').innerHTML = `
+                <header class="text-center mb-8"><h1 class="text-4xl md:text-5xl font-bold text-emerald-700 mb-2">⭐ Farmer Reviews</h1><p class="text-lg text-slate-600">Real feedback from the farming community.</p></header>
+                <div class="bg-white p-6 md:p-8 rounded-xl shadow-md border border-slate-200 mb-10"><h2 class="text-2xl font-bold text-emerald-600 mb-4">Leave a Review</h2><form id="review-form" class="space-y-4"><div class="grid grid-cols-1 md:grid-cols-2 gap-4"><div><label for="author" class="block text-sm font-medium text-slate-700">Your Name</label><input type="text" id="author" name="author" required class="mt-1 w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-emerald-500"></div><div><label for="location" class="block text-sm font-medium text-slate-700">Your Location</label><div class="flex items-center gap-2 mt-1"><input type="text" id="location" name="location" readonly required placeholder="Click button to get location" class="w-full px-4 py-2 border border-slate-300 rounded-lg bg-slate-100 cursor-not-allowed"><button type="button" id="get-location-btn" class="flex-shrink-0 px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-geo-alt-fill" viewBox="0 0 16 16"><path d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10zm0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6z"/></svg></button></div><div class="flex items-center mt-2"><input type="checkbox" id="manual-location-toggle" class="h-4 w-4 rounded border-gray-300 text-emerald-600 focus:ring-emerald-500"><label for="manual-location-toggle" class="ml-2 block text-sm text-slate-900">Enter location manually</label></div><p id="location-status" class="text-xs text-slate-500 mt-1 h-4"></p></div></div><div><label for="title" class="block text-sm font-medium text-slate-700">Review Title</label><input type="text" id="title" name="title" required class="mt-1 w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-emerald-500"></div><div><label class="block text-sm font-medium text-slate-700">Rating</label><div class="star-rating mt-1"><input type="radio" id="5-stars" name="rating" value="5" required /><label for="5-stars">☆</label><input type="radio" id="4-stars" name="rating" value="4" /><label for="4-stars">☆</label><input type="radio" id="3-stars" name="rating" value="3" /><label for="3-stars">☆</label><input type="radio" id="2-stars" name="rating" value="2" /><label for="2-stars">☆</label><input type="radio" id="1-star" name="rating" value="1" /><label for="1-star">☆</label></div></div><div><label for="text" class="block text-sm font-medium text-slate-700">Your Review</label><textarea id="text" name="text" rows="4" required class="mt-1 w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-emerald-500"></textarea></div><div><button type="submit" class="w-full bg-emerald-600 text-white font-bold py-3 px-4 rounded-lg hover:bg-emerald-700 transition-colors">Submit Review</button></div></form><div id="form-message" class="mt-4 text-center"></div></div>
+                <div id="reviews-container" class="space-y-6"></div>`;
+
+            document.getElementById('about').innerHTML = `
+                <div class="bg-white p-8 md:p-12 rounded-xl shadow-sm border border-slate-200 max-w-4xl mx-auto"><h1 class="text-4xl font-bold text-emerald-700 mb-6 text-center">About Agri-Helper</h1><div class="prose prose-lg max-w-none text-slate-600"><p>Agri-Helper was created with a simple mission: to empower farmers with accessible, reliable, and sustainable farming knowledge. We believe that by sharing information and experiences, we can help build a stronger, more resilient agricultural community.</p></div><hr class="my-8"><h2 class="text-3xl font-bold text-emerald-700 mb-4 text-center">Credits</h2><div class="text-center text-slate-600"><p>This project was built using resources from the open-source community. Special thanks to Firebase, Tailwind CSS, and Papa Parse.</p></div></div>`;
+            
+            document.getElementById('profile').innerHTML = `
+                <header class="text-center mb-8"><h1 class="text-4xl md:text-5xl font-bold text-emerald-700 mb-2">👤 User Profile</h1><p class="text-lg text-slate-600">Your account details.</p></header>
+                <div class="bg-white p-8 rounded-xl shadow-md border border-slate-200 max-w-lg mx-auto"><div class="space-y-4"><div class="flex justify-between items-center"><span class="font-semibold text-slate-700">Name:</span><span id="profile-name" class="text-slate-900"></span></div><hr><div class="flex justify-between items-center"><span class="font-semibold text-slate-700">Email:</span><span id="profile-email" class="text-slate-900"></span></div><hr><div class="flex justify-between items-center"><span class="font-semibold text-slate-700">Contact:</span><span id="profile-contact" class="text-slate-900"></span></div></div></div>`;
         }
 
-        const allLinks = [...navLinks, ...mobileNavLinks, ...cardLinks, ...headerLinks];
-        allLinks.forEach(link => link.addEventListener('click', handleNavClick));
-        mobileMenuButton.addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
-        window.addEventListener('popstate', () => showPage(location.hash.substring(1) || 'home'));
-        showPage(location.hash.substring(1) || 'home');
-        
-        // --- Data Loading and Initialization ---
-        loadAndInitializeApp();
-        initializeReviewsPage(db);
-        appInitialized = true;
-    }
+        // --- NAVIGATION SETUP ---
+        function setupNavigation() {
+            const pages = document.querySelectorAll('.page');
+            const navLinks = document.querySelectorAll('.nav-link');
+            const mobileNavLinks = document.querySelectorAll('.nav-link-mobile');
+            const cardLinks = document.querySelectorAll('.nav-link-card');
+            const headerLinks = document.querySelectorAll('.nav-link-header');
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
 
-    let allRecipes = [];
-    async function loadAndInitializeApp() {
-        try {
-            const response = await fetch('recipes.csv');
-            if (!response.ok) throw new Error(`Failed to load recipes.csv. Status: ${response.status}`);
-            const csvText = await response.text();
-            Papa.parse(csvText, {
-                header: true, dynamicTyping: true, skipEmptyLines: true,
-                complete: (results) => {
-                    allRecipes = results.data.map(recipe => {
-                        recipe.targets = typeof recipe.targets === 'string' ? recipe.targets.split(';').map(s => s.trim()) : [];
-                        recipe.whereToUse = typeof recipe.whereToUse === 'string' ? recipe.whereToUse.split(';').map(s => s.trim()) : [];
-                        recipe.ingredients = typeof recipe.ingredients === 'string' ? recipe.ingredients.split(';').map(s => s.trim()) : [];
-                        return recipe;
-                    });
-                    initializeRecipesPage(allRecipes);
-                    initializeToolsPage(allRecipes);
-                }
-            });
-        } catch (error) {
-            console.error("Error loading CSV data:", error);
-            document.getElementById('recipes-container').innerHTML = `<p class="text-center text-red-600 col-span-full">Could not load recipe data.</p>`;
-            document.getElementById('pesticide-recipe').innerHTML = `<option value="">Could not load recipes</option>`;
-        }
-    }
-
-    function initializeRecipesPage(recipes) {
-        const container = document.getElementById('recipes-container');
-        const noResults = document.getElementById('no-results');
-        const keyword = document.getElementById('keyword-search');
-        const target = document.getElementById('target-filter');
-        const use = document.getElementById('use-filter');
-        const sort = document.getElementById('sort-cost');
-        const reset = document.getElementById('reset-btn');
-
-        const targets = new Set();
-        const uses = new Set();
-        recipes.forEach(recipe => {
-            recipe.targets.forEach(t => targets.add(t));
-            recipe.whereToUse.forEach(u => uses.add(u));
-        });
-        target.innerHTML = '<option value="">All Pests/Diseases</option>';
-        use.innerHTML = '<option value="">All Crops</option>';
-        Array.from(targets).sort().forEach(t => target.innerHTML += `<option value="${t}">${t}</option>`);
-        Array.from(uses).sort().forEach(u => use.innerHTML += `<option value="${u}">${u}</option>`);
-
-        function display(recipesToDisplay) {
-            container.innerHTML = '';
-            noResults.classList.toggle('hidden', recipesToDisplay.length > 0);
-            recipesToDisplay.forEach(recipe => {
-                const card = document.createElement('div');
-                card.className = 'recipe-card bg-white border border-slate-200 rounded-xl p-6 shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300 flex flex-col';
-                card.innerHTML = `
-                    <div class="flex justify-between items-start mb-4">
-                        <h2 class="text-xl font-bold text-emerald-600">${recipe.name || 'Unnamed Recipe'}</h2>
-                        <span class="text-xl font-bold text-slate-800 bg-emerald-100 text-emerald-800 px-3 py-1 rounded-full">₹${recipe.cost || 0}</span>
-                    </div>
-                    <div class="space-y-4 flex-grow">
-                        <div><h3 class="font-semibold text-slate-700 mb-2">Targets</h3><div class="flex flex-wrap gap-2">${recipe.targets.map(t => `<span class="tag bg-slate-100 text-slate-700 px-2 py-1 text-xs font-medium rounded-full">${t}</span>`).join('')}</div></div>
-                        <div><h3 class="font-semibold text-slate-700 mb-2">Where to Use</h3><div class="flex flex-wrap gap-2">${recipe.whereToUse.map(u => `<span class="tag bg-slate-100 text-slate-700 px-2 py-1 text-xs font-medium rounded-full">${u}</span>`).join('')}</div></div>
-                        <div><h3 class="font-semibold text-slate-700 mb-2">Ingredients</h3><ul class="list-disc list-inside text-slate-600 space-y-1">${recipe.ingredients.map(i => `<li>${i}</li>`).join('')}</ul></div>
-                        <div><h3 class="font-semibold text-slate-700 mb-2">Procedure</h3><p class="text-slate-600">${recipe.procedure || ''}</p></div>
-                        <div><h3 class="font-semibold text-slate-700 mb-2">How to Use</h3><p class="text-slate-600">${recipe.howToUse || ''}</p></div>
-                    </div>`;
-                container.appendChild(card);
-            });
-        }
-
-        function filterAndSort() {
-            let filtered = [...recipes];
-            if (keyword.value) filtered = filtered.filter(r => (r.name && r.name.toLowerCase().includes(keyword.value.toLowerCase())) || r.targets.some(t => t.toLowerCase().includes(keyword.value.toLowerCase())) || r.whereToUse.some(u => u.toLowerCase().includes(keyword.value.toLowerCase())));
-            if (target.value) filtered = filtered.filter(r => r.targets.includes(target.value));
-            if (use.value) filtered = filtered.filter(r => r.whereToUse.includes(use.value));
-            if (sort.value === 'asc') filtered.sort((a, b) => a.cost - b.cost);
-            else if (sort.value === 'desc') filtered.sort((a, b) => b.cost - a.cost);
-            else filtered.sort((a, b) => a.id - b.id);
-            display(filtered);
-        }
-        
-        [keyword, target, use, sort].forEach(el => el.addEventListener('input', filterAndSort));
-        reset.addEventListener('click', () => {
-            keyword.value = ''; target.value = ''; use.value = ''; sort.value = 'default';
-            filterAndSort();
-        });
-        filterAndSort();
-    }
-
-    function initializeToolsPage(recipes) {
-        const pesticideForm = document.getElementById('pesticide-calculator-form');
-        const recipeSelect = document.getElementById('pesticide-recipe');
-        const pesticideResultDiv = document.getElementById('pesticide-result');
-        const pesticideTotalMixEl = document.getElementById('pesticide-total-mix');
-        const pesticideIngredientsEl = document.getElementById('pesticide-ingredients');
-        
-        recipeSelect.innerHTML = '<option value="">Select a recipe</option>';
-        recipes.forEach(recipe => {
-            recipeSelect.innerHTML += `<option value="${recipe.id}">${recipe.name}</option>`;
-        });
-
-        pesticideForm.addEventListener('submit', (e) => {
-            e.preventDefault();
-            const recipeId = parseInt(recipeSelect.value);
-            let area = parseFloat(document.getElementById('pesticide-area').value);
-            const unit = document.getElementById('pesticide-unit').value;
-            if (!recipeId || isNaN(area) || area <= 0) return;
-
-            const recipe = recipes.find(r => r.id === recipeId);
-            if (!recipe) return;
-
-            if (unit === 'gunta') area /= 40;
-
-            const mixMatch = recipe.howToUse.match(/(\d+)\s*L/);
-            const baseMixPerAcre = mixMatch ? parseFloat(mixMatch[1]) : 100;
-            const totalMixNeeded = baseMixPerAcre * area;
-
-            const waterMatch = recipe.ingredients.join(';').match(/(\d+)\s*L/i);
-            const baseWaterVolume = waterMatch ? parseFloat(waterMatch[1]) : 10;
-
-            pesticideTotalMixEl.innerHTML = `For <strong>${area.toFixed(2)} acres</strong>, you need a total mix of <strong>${totalMixNeeded.toFixed(2)} L</strong>.`;
-            pesticideIngredientsEl.innerHTML = '';
-
-            recipe.ingredients.forEach(ing => {
-                const parts = ing.match(/([\d.]+)\s*(kg|g|ml|L)/i);
-                if (parts) {
-                    const baseAmount = parseFloat(parts[1]);
-                    const baseUnit = parts[2];
-                    const ingredientName = ing.replace(parts[0], '').replace(/–|-/g, '').trim();
-                    const requiredAmount = (baseAmount / baseWaterVolume) * totalMixNeeded;
-                    let finalAmount = requiredAmount;
-                    let finalUnit = baseUnit;
-
-                    if (finalUnit.toLowerCase() === 'g' && finalAmount >= 1000) {
-                        finalAmount /= 1000; finalUnit = 'kg';
-                    } else if (finalUnit.toLowerCase() === 'ml' && finalAmount >= 1000) {
-                        finalAmount /= 1000; finalUnit = 'L';
-                    }
-                    pesticideIngredientsEl.innerHTML += `<li><strong>${ingredientName}:</strong> ${finalAmount.toFixed(2)} ${finalUnit}</li>`;
-                } else {
-                    pesticideIngredientsEl.innerHTML += `<li><strong>${ing}</strong> (check recipe for ratio)</li>`;
-                }
-            });
-            pesticideResultDiv.classList.remove('hidden');
-        });
-    }
-
-    function initializeReviewsPage(db) {
-        const { collection, onSnapshot, query, orderBy, addDoc, serverTimestamp } =
-            (window.firebase && window.firebase.firestore) ? window.firebase.firestore :
-            (window.firebase) ? window.firebase.firestore() : {};
-
-        const reviewsContainer = document.getElementById('reviews-container');
-        const reviewForm = document.getElementById('review-form');
-        const formMessage = document.getElementById('form-message');
-        const getLocationBtn = document.getElementById('get-location-btn');
-        const locationInput = document.getElementById('location');
-        const locationStatus = document.getElementById('location-status');
-        const manualLocationToggle = document.getElementById('manual-location-toggle');
-
-        manualLocationToggle.addEventListener('change', function() {
-            const isManual = this.checked;
-            locationInput.readOnly = !isManual;
-            locationInput.classList.toggle('bg-slate-100', !isManual);
-            locationInput.classList.toggle('cursor-not-allowed', !isManual);
-            getLocationBtn.disabled = isManual;
-            if (isManual) {
-                locationInput.placeholder = 'Enter city, state';
-                locationInput.value = '';
-            } else {
-                locationInput.placeholder = 'Click button to get location';
+            function showPage(pageId) {
+                pages.forEach(page => page.classList.remove('active'));
+                const targetPage = document.getElementById(pageId);
+                if (targetPage) targetPage.classList.add('active');
+                navLinks.forEach(link => link.classList.toggle('active', link.hash === `#${pageId}`));
+                mobileMenu.classList.add('hidden');
+                window.scrollTo(0, 0);
             }
-        });
 
-        getLocationBtn.addEventListener('click', () => {
-            if ("geolocation" in navigator) {
-                locationStatus.textContent = "Fetching location...";
-                getLocationBtn.disabled = true;
-                navigator.geolocation.getCurrentPosition(async (position) => {
-                    const { latitude, longitude } = position.coords;
-                    const url = `https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}`;
-                    try {
-                        const response = await fetch(url);
-                        const data = await response.json();
-                        const address = data.address;
-                        const village = address.village || address.suburb || '';
-                        const city = address.city || address.town || address.county || '';
-                        const state = address.state || '';
-                        const formattedAddress = [village, city, state].filter(Boolean).join(', ');
-                        locationInput.value = formattedAddress;
-                        locationStatus.textContent = "Location found!";
-                    } catch (error) {
-                        locationStatus.textContent = "Could not determine address.";
-                    } finally {
-                        getLocationBtn.disabled = false;
+            function handleNavClick(event) {
+                event.preventDefault();
+                const pageId = event.currentTarget.hash.substring(1);
+                showPage(pageId);
+                history.pushState(null, null, `#${pageId}`);
+            }
+
+            const allLinks = [...navLinks, ...mobileNavLinks, ...cardLinks, ...headerLinks];
+            allLinks.forEach(link => link.addEventListener('click', handleNavClick));
+            mobileMenuButton.addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
+            window.addEventListener('popstate', () => showPage(location.hash.substring(1) || 'home'));
+            showPage(location.hash.substring(1) || 'home');
+        }
+
+        // --- DATA LOADING & PAGE INITIALIZATION ---
+        async function loadCsvDataAndInitPages() {
+            try {
+                const response = await fetch('recipes.csv');
+                if (!response.ok) throw new Error(`Failed to load recipes.csv. Status: ${response.status}`);
+                const csvText = await response.text();
+                Papa.parse(csvText, {
+                    header: true, dynamicTyping: true, skipEmptyLines: true,
+                    complete: (results) => {
+                        allRecipes = results.data.map(recipe => {
+                            recipe.targets = typeof recipe.targets === 'string' ? recipe.targets.split(';').map(s => s.trim()) : [];
+                            recipe.whereToUse = typeof recipe.whereToUse === 'string' ? recipe.whereToUse.split(';').map(s => s.trim()) : [];
+                            recipe.ingredients = typeof recipe.ingredients === 'string' ? recipe.ingredients.split(';').map(s => s.trim()) : [];
+                            return recipe;
+                        });
+                        initializeRecipesPage(allRecipes);
+                        initializeToolsPage(allRecipes);
                     }
-                }, (error) => {
-                    locationStatus.textContent = "Could not get location. Check permissions.";
-                    getLocationBtn.disabled = false;
                 });
-            } else {
-                locationStatus.textContent = "Geolocation is not supported by your browser.";
+            } catch (error) {
+                console.error("Error loading CSV data:", error);
+                document.getElementById('recipes-container').innerHTML = `<p class="text-center text-red-600 col-span-full">Could not load recipe data.</p>`;
+                document.getElementById('pesticide-recipe').innerHTML = `<option value="">Could not load recipes</option>`;
             }
-        });
+        }
 
-        function displayReviews(reviews) {
-            if (reviews.length === 0) {
-                reviewsContainer.innerHTML = `<p class="text-center text-slate-500">No reviews yet. Be the first to add one!</p>`;
-                return;
+        // --- PAGE-SPECIFIC INITIALIZERS ---
+        function initializeRecipesPage(recipes) {
+            const container = document.getElementById('recipes-container');
+            const noResults = document.getElementById('no-results');
+            const keyword = document.getElementById('keyword-search');
+            const target = document.getElementById('target-filter');
+            const use = document.getElementById('use-filter');
+            const sort = document.getElementById('sort-cost');
+            const reset = document.getElementById('reset-btn');
+
+            const targets = new Set();
+            const uses = new Set();
+            recipes.forEach(recipe => {
+                recipe.targets.forEach(t => targets.add(t));
+                recipe.whereToUse.forEach(u => uses.add(u));
+            });
+            target.innerHTML = '<option value="">All Pests/Diseases</option>';
+            use.innerHTML = '<option value="">All Crops</option>';
+            Array.from(targets).sort().forEach(t => target.innerHTML += `<option value="${t}">${t}</option>`);
+            Array.from(uses).sort().forEach(u => use.innerHTML += `<option value="${u}">${u}</option>`);
+
+            function display(recipesToDisplay) {
+                container.innerHTML = '';
+                noResults.classList.toggle('hidden', recipesToDisplay.length > 0);
+                recipesToDisplay.forEach(recipe => {
+                    const card = document.createElement('div');
+                    card.className = 'recipe-card bg-white border border-slate-200 rounded-xl p-6 shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300 flex flex-col';
+                    card.innerHTML = `
+                        <div class="flex justify-between items-start mb-4">
+                            <h2 class="text-xl font-bold text-emerald-600">${recipe.name || 'Unnamed Recipe'}</h2>
+                            <span class="text-xl font-bold text-slate-800 bg-emerald-100 text-emerald-800 px-3 py-1 rounded-full">₹${recipe.cost || 0}</span>
+                        </div>
+                        <div class="space-y-4 flex-grow">
+                            <div><h3 class="font-semibold text-slate-700 mb-2">Targets</h3><div class="flex flex-wrap gap-2">${recipe.targets.map(t => `<span class="tag bg-slate-100 text-slate-700 px-2 py-1 text-xs font-medium rounded-full">${t}</span>`).join('')}</div></div>
+                            <div><h3 class="font-semibold text-slate-700 mb-2">Where to Use</h3><div class="flex flex-wrap gap-2">${recipe.whereToUse.map(u => `<span class="tag bg-slate-100 text-slate-700 px-2 py-1 text-xs font-medium rounded-full">${u}</span>`).join('')}</div></div>
+                            <div><h3 class="font-semibold text-slate-700 mb-2">Ingredients</h3><ul class="list-disc list-inside text-slate-600 space-y-1">${recipe.ingredients.map(i => `<li>${i}</li>`).join('')}</ul></div>
+                            <div><h3 class="font-semibold text-slate-700 mb-2">Procedure</h3><p class="text-slate-600">${recipe.procedure || ''}</p></div>
+                            <div><h3 class="font-semibold text-slate-700 mb-2">How to Use</h3><p class="text-slate-600">${recipe.howToUse || ''}</p></div>
+                        </div>`;
+                    container.appendChild(card);
+                });
             }
-            reviewsContainer.innerHTML = reviews.map(review => `
-                <div class="bg-white border border-slate-200 rounded-xl p-6 shadow-sm">
-                    <div class="flex items-start">
-                        <div class="flex-shrink-0"><div class="w-12 h-12 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center text-xl font-bold">${review.author ? review.author.charAt(0) : '?'}</div></div>
-                        <div class="ml-4">
-                            <h3 class="text-lg font-bold text-slate-800">${review.title || 'No Title'}</h3>
-                            <div class="flex items-center mt-1">
-                                <div class="flex text-yellow-400">${'★'.repeat(review.rating || 0)}${'☆'.repeat(5 - (review.rating || 0))}</div>
-                                <p class="ml-3 text-sm text-slate-500">by <strong>${review.author || 'Anonymous'}</strong> from ${review.location || 'Unknown'}</p>
+
+            function filterAndSort() {
+                let filtered = [...recipes];
+                if (keyword.value) filtered = filtered.filter(r => (r.name && r.name.toLowerCase().includes(keyword.value.toLowerCase())) || r.targets.some(t => t.toLowerCase().includes(keyword.value.toLowerCase())) || r.whereToUse.some(u => u.toLowerCase().includes(keyword.value.toLowerCase())));
+                if (target.value) filtered = filtered.filter(r => r.targets.includes(target.value));
+                if (use.value) filtered = filtered.filter(r => r.whereToUse.includes(use.value));
+                if (sort.value === 'asc') filtered.sort((a, b) => a.cost - b.cost);
+                else if (sort.value === 'desc') filtered.sort((a, b) => b.cost - a.cost);
+                else filtered.sort((a, b) => a.id - b.id);
+                display(filtered);
+            }
+            
+            [keyword, target, use, sort].forEach(el => el.addEventListener('input', filterAndSort));
+            reset.addEventListener('click', () => {
+                keyword.value = ''; target.value = ''; use.value = ''; sort.value = 'default';
+                filterAndSort();
+            });
+            filterAndSort();
+        }
+
+        function initializeToolsPage(recipes) {
+            const pesticideForm = document.getElementById('pesticide-calculator-form');
+            const recipeSelect = document.getElementById('pesticide-recipe');
+            const pesticideResultDiv = document.getElementById('pesticide-result');
+            const pesticideTotalMixEl = document.getElementById('pesticide-total-mix');
+            const pesticideIngredientsEl = document.getElementById('pesticide-ingredients');
+            
+            recipeSelect.innerHTML = '<option value="">Select a recipe</option>';
+            recipes.forEach(recipe => {
+                recipeSelect.innerHTML += `<option value="${recipe.id}">${recipe.name}</option>`;
+            });
+
+            pesticideForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const recipeId = parseInt(recipeSelect.value);
+                let area = parseFloat(document.getElementById('pesticide-area').value);
+                const unit = document.getElementById('pesticide-unit').value;
+                if (!recipeId || isNaN(area) || area <= 0) return;
+
+                const recipe = recipes.find(r => r.id === recipeId);
+                if (!recipe) return;
+
+                if (unit === 'gunta') area /= 40;
+
+                const mixMatch = recipe.howToUse.match(/(\d+)\s*L/);
+                const baseMixPerAcre = mixMatch ? parseFloat(mixMatch[1]) : 100;
+                const totalMixNeeded = baseMixPerAcre * area;
+
+                const waterMatch = recipe.ingredients.join(';').match(/(\d+)\s*L/i);
+                const baseWaterVolume = waterMatch ? parseFloat(waterMatch[1]) : 10;
+
+                pesticideTotalMixEl.innerHTML = `For <strong>${area.toFixed(2)} acres</strong>, you need a total mix of <strong>${totalMixNeeded.toFixed(2)} L</strong>.`;
+                pesticideIngredientsEl.innerHTML = '';
+
+                recipe.ingredients.forEach(ing => {
+                    const parts = ing.match(/([\d.]+)\s*(kg|g|ml|L)/i);
+                    if (parts) {
+                        const baseAmount = parseFloat(parts[1]);
+                        const baseUnit = parts[2];
+                        const ingredientName = ing.replace(parts[0], '').replace(/–|-/g, '').trim();
+                        const requiredAmount = (baseAmount / baseWaterVolume) * totalMixNeeded;
+                        let finalAmount = requiredAmount;
+                        let finalUnit = baseUnit;
+
+                        if (finalUnit.toLowerCase() === 'g' && finalAmount >= 1000) {
+                            finalAmount /= 1000; finalUnit = 'kg';
+                        } else if (finalUnit.toLowerCase() === 'ml' && finalAmount >= 1000) {
+                            finalAmount /= 1000; finalUnit = 'L';
+                        }
+                        pesticideIngredientsEl.innerHTML += `<li><strong>${ingredientName}:</strong> ${finalAmount.toFixed(2)} ${finalUnit}</li>`;
+                    } else {
+                        pesticideIngredientsEl.innerHTML += `<li><strong>${ing}</strong> (check recipe for ratio)</li>`;
+                    }
+                });
+                pesticideResultDiv.classList.remove('hidden');
+            });
+        }
+
+        function initializeReviewsPage(db) {
+            const { collection, onSnapshot, query, orderBy, addDoc, serverTimestamp } = window.firebase.firestore;
+
+            const reviewsContainer = document.getElementById('reviews-container');
+            const reviewForm = document.getElementById('review-form');
+            const formMessage = document.getElementById('form-message');
+            const getLocationBtn = document.getElementById('get-location-btn');
+            const locationInput = document.getElementById('location');
+            const locationStatus = document.getElementById('location-status');
+            const manualLocationToggle = document.getElementById('manual-location-toggle');
+
+            manualLocationToggle.addEventListener('change', function() {
+                const isManual = this.checked;
+                locationInput.readOnly = !isManual;
+                locationInput.classList.toggle('bg-slate-100', !isManual);
+                locationInput.classList.toggle('cursor-not-allowed', !isManual);
+                getLocationBtn.disabled = isManual;
+                if (isManual) {
+                    locationInput.placeholder = 'Enter city, state';
+                    locationInput.value = '';
+                } else {
+                    locationInput.placeholder = 'Click button to get location';
+                }
+            });
+
+            getLocationBtn.addEventListener('click', () => {
+                if ("geolocation" in navigator) {
+                    locationStatus.textContent = "Fetching location...";
+                    getLocationBtn.disabled = true;
+                    navigator.geolocation.getCurrentPosition(async (position) => {
+                        const { latitude, longitude } = position.coords;
+                        const url = `https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}`;
+                        try {
+                            const response = await fetch(url);
+                            const data = await response.json();
+                            const address = data.address;
+                            const village = address.village || address.suburb || '';
+                            const city = address.city || address.town || address.county || '';
+                            const state = address.state || '';
+                            const formattedAddress = [village, city, state].filter(Boolean).join(', ');
+                            locationInput.value = formattedAddress;
+                            locationStatus.textContent = "Location found!";
+                        } catch (error) {
+                            locationStatus.textContent = "Could not determine address.";
+                        } finally {
+                            getLocationBtn.disabled = false;
+                        }
+                    }, (error) => {
+                        locationStatus.textContent = "Could not get location. Check permissions.";
+                        getLocationBtn.disabled = false;
+                    });
+                } else {
+                    locationStatus.textContent = "Geolocation is not supported by your browser.";
+                }
+            });
+
+            function displayReviews(reviews) {
+                if (reviews.length === 0) {
+                    reviewsContainer.innerHTML = `<p class="text-center text-slate-500">No reviews yet. Be the first to add one!</p>`;
+                    return;
+                }
+                reviewsContainer.innerHTML = reviews.map(review => `
+                    <div class="bg-white border border-slate-200 rounded-xl p-6 shadow-sm">
+                        <div class="flex items-start">
+                            <div class="flex-shrink-0"><div class="w-12 h-12 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center text-xl font-bold">${review.author ? review.author.charAt(0) : '?'}</div></div>
+                            <div class="ml-4">
+                                <h3 class="text-lg font-bold text-slate-800">${review.title || 'No Title'}</h3>
+                                <div class="flex items-center mt-1">
+                                    <div class="flex text-yellow-400">${'★'.repeat(review.rating || 0)}${'☆'.repeat(5 - (review.rating || 0))}</div>
+                                    <p class="ml-3 text-sm text-slate-500">by <strong>${review.author || 'Anonymous'}</strong> from ${review.location || 'Unknown'}</p>
+                                </div>
+                                <p class="mt-3 text-slate-600">${review.text || ''}</p>
                             </div>
-                            <p class="mt-3 text-slate-600">${review.text || ''}</p>
                         </div>
                     </div>
-                </div>
-            `).join('');
+                `).join('');
+            }
+
+            const reviewsQuery = query(collection(db, "reviews"), orderBy("timestamp", "desc"));
+            onSnapshot(reviewsQuery, (querySnapshot) => {
+                const reviews = [];
+                querySnapshot.forEach((doc) => reviews.push(doc.data()));
+                displayReviews(reviews);
+            });
+
+            reviewForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const formData = new FormData(reviewForm);
+                const reviewData = {
+                    author: formData.get('author'),
+                    location: formData.get('location'),
+                    title: formData.get('title'),
+                    rating: parseInt(formData.get('rating')),
+                    text: formData.get('text'),
+                    timestamp: serverTimestamp()
+                };
+                try {
+                    await addDoc(collection(db, "reviews"), reviewData);
+                    formMessage.textContent = "Thank you! Your review has been submitted.";
+                    formMessage.className = "mt-4 text-center text-green-600";
+                    reviewForm.reset();
+                    locationStatus.textContent = "";
+                } catch (error) {
+                    console.error("Error adding document: ", error);
+                    formMessage.textContent = "Sorry, there was an error submitting your review.";
+                    formMessage.className = "mt-4 text-center text-red-600";
+                }
+                setTimeout(() => formMessage.textContent = '', 3000);
+            });
         }
 
-        const reviewsQuery = query(collection(db, "reviews"), orderBy("timestamp", "desc"));
-        onSnapshot(reviewsQuery, (querySnapshot) => {
-            const reviews = [];
-            querySnapshot.forEach((doc) => reviews.push(doc.data()));
-            displayReviews(reviews);
-        });
-
-        reviewForm.addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const formData = new FormData(reviewForm);
-            const reviewData = {
-                author: formData.get('author'),
-                location: formData.get('location'),
-                title: formData.get('title'),
-                rating: parseInt(formData.get('rating')),
-                text: formData.get('text'),
-                timestamp: serverTimestamp()
-            };
-            try {
-                await addDoc(collection(db, "reviews"), reviewData);
-                formMessage.textContent = "Thank you! Your review has been submitted.";
-                formMessage.className = "mt-4 text-center text-green-600";
-                reviewForm.reset();
-                locationStatus.textContent = "";
-            } catch (error) {
-                console.error("Error adding document: ", error);
-                formMessage.textContent = "Sorry, there was an error submitting your review.";
-                formMessage.className = "mt-4 text-center text-red-600";
-            }
-            setTimeout(() => formMessage.textContent = '', 3000);
-        });
-    }
+        function initializeProfilePage(userProfile) {
+            document.getElementById('profile-name').textContent = userProfile.name || 'Not provided';
+            document.getElementById('profile-email').textContent = userProfile.email || 'Not provided';
+            document.getElementById('profile-contact').textContent = userProfile.contact || 'Not provided';
+        }
     </script>
 </body>
 </html>
