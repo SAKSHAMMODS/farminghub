@@ -59,8 +59,13 @@
 </head>
 <body class="text-slate-800">
 
+    <!-- Loading Screen -->
+    <div id="loading-screen" class="min-h-screen flex items-center justify-center">
+        <p class="text-xl text-slate-600">Loading Agri-Helper...</p>
+    </div>
+
     <!-- This section is shown to logged-out users -->
-    <section id="login-page" class="min-h-screen flex items-center justify-center bg-slate-50 p-4">
+    <section id="login-page" class="min-h-screen flex items-center justify-center bg-slate-50 p-4 hidden">
         <div class="w-full max-w-md">
             <div class="text-center mb-8">
                 <h1 class="text-4xl font-bold text-emerald-700">🌿 Welcome to Agri-Helper</h1>
@@ -166,6 +171,7 @@
             const auth = getAuth(app);
             const db = getFirestore(app);
 
+            const loadingScreen = document.getElementById('loading-screen');
             const loginPage = document.getElementById('login-page');
             const appContent = document.getElementById('app-content');
             const authForm = document.getElementById('auth-form');
@@ -200,16 +206,17 @@
 
             // --- Auth State Listener ---
             onAuthStateChanged(auth, user => {
+                loadingScreen.classList.add('hidden'); // Hide loading screen once auth state is known
                 if (user) {
                     // User is logged in
-                    loginPage.style.display = 'none';
+                    loginPage.classList.add('hidden');
                     appContent.classList.remove('hidden');
                     document.getElementById('user-email').textContent = user.email;
                     document.getElementById('mobile-user-email').textContent = user.email;
                     initializeLoggedInApp(); // Function to set up the app after login
                 } else {
                     // User is logged out
-                    loginPage.style.display = 'flex';
+                    loginPage.classList.remove('hidden');
                     appContent.classList.add('hidden');
                 }
             });
@@ -314,7 +321,7 @@
 
         } catch (e) {
             console.error("Firebase initialization failed. Have you pasted your config object?", e);
-            document.body.innerHTML = `<div class="text-center p-8 text-red-600">Failed to initialize Firebase. Please check your configuration and the console for errors.</div>`;
+            document.getElementById('loading-screen').innerHTML = `<div class="text-center p-8 text-red-600">Failed to initialize Firebase. Please check your configuration and the console for errors.</div>`;
         }
     </script>
 
