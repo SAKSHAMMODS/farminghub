@@ -634,6 +634,7 @@
                         });
                         initializeRecipesPage(allRecipes);
                         initializeToolsPage(allRecipes);
+                        initializeHomePage(allRecipes);
                     }
                 });
             } catch (error) {
@@ -644,6 +645,54 @@
         }
 
         // --- PAGE-SPECIFIC INITIALIZERS ---
+        function initializeHomePage(recipes) {
+            const featuredRecipeContainer = document.getElementById('featured-recipe');
+            const farmingTipContainer = document.getElementById('farming-tip');
+            
+            // --- Farming Tip of the Day ---
+            const farmingTips = [
+                "Test your soil's pH level before planting to ensure optimal nutrient absorption.",
+                "Use companion planting to naturally deter pests and attract beneficial insects.",
+                "Implement crop rotation to prevent soil depletion and reduce disease buildup.",
+                "Conserve water by using drip irrigation or soaker hoses.",
+                "Mulch your garden beds to retain moisture, suppress weeds, and regulate soil temperature.",
+                "Compost kitchen scraps and yard waste to create nutrient-rich soil for your plants.",
+                "Attract pollinators like bees and butterflies by planting native flowers.",
+                "Harvest rainwater in barrels to use for watering your crops during dry spells.",
+                "Use cover crops during the off-season to improve soil health and prevent erosion.",
+                "Check your plants regularly for early signs of pests or diseases.",
+                "Encourage natural predators like ladybugs and lacewings to control aphid populations.",
+                "Avoid over-fertilizing, which can harm plants and pollute waterways.",
+                "Build healthy soil with organic matter for stronger, more resilient plants.",
+                "Water your plants deeply but infrequently to encourage deep root growth.",
+                "Choose plant varieties that are well-suited to your local climate and soil type.",
+                "Use natural barriers like row covers to protect young plants from pests.",
+                "Keep your gardening tools clean to prevent the spread of diseases.",
+                "Provide good air circulation around your plants to reduce the risk of fungal diseases.",
+                "Learn to identify beneficial insects so you don't accidentally harm them.",
+                "Intercrop with nitrogen-fixing plants like legumes to enrich your soil naturally."
+            ];
+            const dayOfYear = Math.floor((new Date() - new Date(new Date().getFullYear(), 0, 0)) / (1000 * 60 * 60 * 24));
+            const tipIndex = dayOfYear % farmingTips.length;
+            farmingTipContainer.innerHTML = `
+                <h2 class="text-2xl font-bold text-emerald-600 mb-2">💡 Farming Tip of the Day</h2>
+                <p class="text-slate-600">${farmingTips[tipIndex]}</p>
+            `;
+
+            // --- Featured Recipe of the Day ---
+            const recipeIndex = dayOfYear % recipes.length;
+            const featuredRecipe = recipes[recipeIndex];
+            if (featuredRecipe) {
+                featuredRecipeContainer.innerHTML = `
+                    <h2 class="text-2xl font-bold text-emerald-600 mb-2">🌿 Recipe of the Day</h2>
+                    <h3 class="text-xl font-semibold text-slate-800">${featuredRecipe.name}</h3>
+                    <p class="text-slate-600 mt-2"><strong>Targets:</strong> ${featuredRecipe.targets.join(', ')}</p>
+                    <a href="#recipes" class="nav-link-card text-emerald-600 hover:underline mt-4 inline-block">Find out how to make it &rarr;</a>
+                `;
+            }
+        }
+
+
         function initializeRecipesPage(recipes) {
             const container = document.getElementById('recipes-container');
             const noResults = document.getElementById('no-results');
@@ -669,7 +718,7 @@
                 noResults.classList.toggle('hidden', recipesToDisplay.length > 0);
                 recipesToDisplay.forEach(recipe => {
                     const card = document.createElement('div');
-                    card.className = 'recipe-card bg-white border border-slate-200 rounded-xl p-6 shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300 flex flex-col';
+                    card.className = 'recipe-card bg-white border border-slate-200 rounded-xl p-6 shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300 flex flex-col reveal';
                     card.innerHTML = `
                         <div class="flex justify-between items-start mb-4">
                             <h2 class="text-xl font-bold text-emerald-600">${recipe.name || 'Unnamed Recipe'}</h2>
@@ -903,6 +952,24 @@
             });
             scrollToTopBtn.addEventListener('click', () => {
                 window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+        }
+        
+        function setup3dCardEffects() {
+             const cards = document.querySelectorAll('.card-3d');
+            cards.forEach(card => {
+                card.addEventListener('mousemove', (e) => {
+                    const rect = card.getBoundingClientRect();
+                    const x = e.clientX - rect.left;
+                    const y = e.clientY - rect.top;
+                    const { width, height } = rect;
+                    const rotateX = (y / height - 0.5) * -15; // Max 15 degree rotation
+                    const rotateY = (x / width - 0.5) * 15;
+                    card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.05, 1.05, 1.05)`;
+                });
+                card.addEventListener('mouseleave', () => {
+                    card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) scale3d(1, 1, 1)';
+                });
             });
         }
     </script>
