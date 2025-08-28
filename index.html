@@ -335,6 +335,16 @@
                     email: user.email
                 });
                 detailsModal.classList.add('hidden');
+                // Manually trigger the UI update after details are submitted
+                const userDocSnap = await getDoc(doc(db, "users", user.uid));
+                const currentUserProfile = userDocSnap.data();
+                const userName = currentUserProfile.name || user.email;
+
+                loginPage.classList.add('hidden');
+                appContent.classList.remove('hidden');
+                document.getElementById('user-name').textContent = userName;
+                document.getElementById('mobile-user-name').textContent = userName;
+                initializeLoggedInApp(currentUserProfile, db);
             });
 
             // Handle redirect result from Google Sign-In
@@ -353,20 +363,17 @@
                     if (!userDocSnap.exists()) {
                         document.getElementById('modal-name').value = user.displayName || '';
                         detailsModal.classList.remove('hidden');
-                        return; 
-                    }
+                        // Don't initialize the app yet, wait for the modal submission
+                    } else {
+                        let currentUserProfile = userDocSnap.data();
+                        const userName = currentUserProfile.name || user.email;
 
-                    let currentUserProfile = { email: user.email };
-                    if (userDocSnap.exists()) {
-                        currentUserProfile = userDocSnap.data();
+                        loginPage.classList.add('hidden');
+                        appContent.classList.remove('hidden');
+                        document.getElementById('user-name').textContent = userName;
+                        document.getElementById('mobile-user-name').textContent = userName;
+                        initializeLoggedInApp(currentUserProfile, db);
                     }
-                    const userName = currentUserProfile.name || user.email;
-
-                    loginPage.classList.add('hidden');
-                    appContent.classList.remove('hidden');
-                    document.getElementById('user-name').textContent = userName;
-                    document.getElementById('mobile-user-name').textContent = userName;
-                    initializeLoggedInApp(currentUserProfile, db);
                 } else {
                     loginPage.classList.remove('hidden');
                     appContent.classList.add('hidden');
