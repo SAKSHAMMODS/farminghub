@@ -14,13 +14,35 @@
             font-family: 'Inter', sans-serif;
             background-color: #f8fafc;
         }
-        .page { display: none; }
-        .page.active { display: block; }
+        .page { 
+            display: none;
+            animation: fadeInSlideUp 0.5s ease-out forwards;
+        }
+        .page.active { 
+            display: block; 
+        }
         .nav-link.active {
             color: #047857;
             font-weight: 600;
-            border-bottom: 2px solid #047857;
         }
+        .nav-link {
+            position: relative;
+        }
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -2px;
+            left: 50%;
+            background-color: #047857;
+            transition: all 0.3s ease-in-out;
+        }
+        .nav-link:hover::after, .nav-link.active::after {
+            width: 100%;
+            left: 0;
+        }
+
         ::-webkit-scrollbar { width: 8px; }
         ::-webkit-scrollbar-track { background: #f1f5f9; }
         ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
@@ -99,12 +121,39 @@
         .login-container form > div:nth-child(4) { animation-delay: 0.5s; }
         .login-container form > div:nth-child(5) { animation-delay: 0.6s; }
 
+        /* --- Scroll Animation --- */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* --- Loading Spinner --- */
+        @keyframes pulse {
+            0%, 100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+            50% {
+                opacity: 0.7;
+                transform: scale(0.95);
+            }
+        }
+        .loader-logo {
+            animation: pulse 2s infinite ease-in-out;
+        }
+
     </style>
 </head>
 <body class="text-slate-800">
 
     <!-- Loading Screen -->
-    <div id="loading-screen" class="min-h-screen flex items-center justify-center">
+    <div id="loading-screen" class="min-h-screen flex flex-col items-center justify-center">
+        <img src="https://i.postimg.cc/Gm9RL4dM/Gemini-Generated-Image-ogg36pogg36pogg3.png" alt="Loading Logo" class="w-24 h-24 loader-logo mb-4">
         <p class="text-xl text-slate-600">Loading Agri-Helper...</p>
     </div>
 
@@ -671,6 +720,8 @@
         }
 
         function initializeReviewsPage(db) {
+            const { collection, onSnapshot, query, orderBy, addDoc, serverTimestamp } = window.firebase.firestore;
+
             const reviewsContainer = document.getElementById('reviews-container');
             const reviewForm = document.getElementById('review-form');
             const formMessage = document.getElementById('form-message');
