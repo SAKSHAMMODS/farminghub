@@ -243,7 +243,7 @@
     <!-- Firebase SDK and App Logic -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-        import { getAuth, GoogleAuthProvider, signInWithPopup, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getAuth, GoogleAuthProvider, signInWithRedirect, getRedirectResult, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
         import { getFirestore, collection, addDoc, onSnapshot, query, orderBy, serverTimestamp, doc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
         const firebaseConfig = {
@@ -316,14 +316,9 @@
                 }
             });
 
-            googleSignInBtn.addEventListener('click', async () => {
+            googleSignInBtn.addEventListener('click', () => {
                 const provider = new GoogleAuthProvider();
-                try {
-                    await signInWithPopup(auth, provider);
-                    // onAuthStateChanged will handle the rest
-                } catch (error) {
-                    authError.textContent = error.message;
-                }
+                signInWithRedirect(auth, provider);
             });
             
             detailsForm.addEventListener('submit', async (e) => {
@@ -342,6 +337,12 @@
                 detailsModal.classList.add('hidden');
             });
 
+            // Handle redirect result from Google Sign-In
+            getRedirectResult(auth)
+                .catch((error) => {
+                    console.error("Google sign-in redirect error:", error);
+                    authError.textContent = error.message;
+                });
 
             onAuthStateChanged(auth, async (user) => {
                 loadingScreen.classList.add('hidden');
@@ -350,10 +351,9 @@
                     const userDocSnap = await getDoc(userDocRef);
                     
                     if (!userDocSnap.exists()) {
-                        // First time Google sign-in user, need more details
                         document.getElementById('modal-name').value = user.displayName || '';
                         detailsModal.classList.remove('hidden');
-                        return; // Wait for user to submit details
+                        return; 
                     }
 
                     let currentUserProfile = { email: user.email };
