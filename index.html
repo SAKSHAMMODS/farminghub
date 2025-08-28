@@ -170,6 +170,11 @@
             background-color: #047857;
             transform: scale(1.1);
         }
+        /* --- 3D Card Effect --- */
+        .card-3d {
+            transform-style: preserve-3d;
+            transition: transform 0.5s;
+        }
     </style>
 </head>
 <body class="text-slate-800">
@@ -870,6 +875,34 @@
             document.getElementById('profile-name').textContent = userProfile.name || 'Not provided';
             document.getElementById('profile-email').textContent = userProfile.email || 'Not provided';
             document.getElementById('profile-contact').textContent = userProfile.contact || 'Not provided';
+        }
+
+        function setupScrollAnimations() {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            document.querySelectorAll('.reveal').forEach(el => {
+                observer.observe(el);
+            });
+        }
+
+        function setupScrollToTopButton() {
+            const scrollToTopBtn = document.getElementById('scroll-to-top');
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 300) {
+                    scrollToTopBtn.style.display = 'flex';
+                } else {
+                    scrollToTopBtn.style.display = 'none';
+                }
+            });
+            scrollToTopBtn.addEventListener('click', () => {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
         }
     </script>
 </body>
