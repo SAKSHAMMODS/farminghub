@@ -493,6 +493,7 @@
             // --- Initialize Animations ---
             setupScrollAnimations();
             setupScrollToTopButton();
+            setup3dCardEffects();
 
             appInitialized = true;
         }
@@ -505,9 +506,9 @@
                     <p class="text-lg text-slate-600 max-w-3xl mx-auto">Your one-stop resource for organic pesticide recipes, modern farming tools, and community-driven reviews.</p>
                 </div>
                 <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mt-8">
-                    <a href="#recipes" class="nav-link-card bg-white p-6 rounded-xl shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300 border border-slate-200 block reveal"><h2 class="text-2xl font-bold text-emerald-600 mb-2">Pesticide Recipes</h2><p class="text-slate-600">Find effective, homemade, and organic pesticide solutions for your crops.</p></a>
-                    <a href="#tools" class="nav-link-card bg-white p-6 rounded-xl shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300 border border-slate-200 block reveal"><h2 class="text-2xl font-bold text-emerald-600 mb-2">Farming Calculators</h2><p class="text-slate-600">Calculate pesticide needs for your farm with our easy-to-use tool.</p></a>
-                    <a href="#reviews" class="nav-link-card bg-white p-6 rounded-xl shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300 border border-slate-200 block reveal"><h2 class="text-2xl font-bold text-emerald-600 mb-2">Community Reviews</h2><p class="text-slate-600">Read and share experiences with recipes and tools from farmers like you.</p></a>
+                    <a href="#recipes" class="nav-link-card bg-white p-6 rounded-xl shadow-sm hover:shadow-lg border border-slate-200 block reveal card-3d"><h2 class="text-2xl font-bold text-emerald-600 mb-2">Pesticide Recipes</h2><p class="text-slate-600">Find effective, homemade, and organic pesticide solutions for your crops.</p></a>
+                    <a href="#tools" class="nav-link-card bg-white p-6 rounded-xl shadow-sm hover:shadow-lg border border-slate-200 block reveal card-3d"><h2 class="text-2xl font-bold text-emerald-600 mb-2">Farming Calculators</h2><p class="text-slate-600">Calculate pesticide needs for your farm with our easy-to-use tool.</p></a>
+                    <a href="#reviews" class="nav-link-card bg-white p-6 rounded-xl shadow-sm hover:shadow-lg border border-slate-200 block reveal card-3d"><h2 class="text-2xl font-bold text-emerald-600 mb-2">Community Reviews</h2><p class="text-slate-600">Read and share experiences with recipes and tools from farmers like you.</p></a>
                 </div>
                  <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mt-8">
                     <div id="featured-recipe" class="bg-white p-6 rounded-xl shadow-sm border border-slate-200 reveal"></div>
