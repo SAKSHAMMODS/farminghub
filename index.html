@@ -147,6 +147,29 @@
             animation: pulse 2s infinite ease-in-out;
         }
 
+        /* --- Scroll to Top Button --- */
+        #scroll-to-top {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #059669;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            transition: opacity 0.3s, transform 0.3s;
+            z-index: 1000;
+        }
+        #scroll-to-top:hover {
+            background-color: #047857;
+            transform: scale(1.1);
+        }
     </style>
 </head>
 <body class="text-slate-800">
@@ -288,6 +311,12 @@
             </div>
         </footer>
     </div>
+    
+    <button id="scroll-to-top">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-arrow-up" viewBox="0 0 16 16">
+            <path fill-rule="evenodd" d="M8 15a.5.5 0 0 0 .5-.5V2.707l3.146 3.147a.5.5 0 0 0 .708-.708l-4-4a.5.5 0 0 0-.708 0l-4 4a.5.5 0 1 0 .708.708L7.5 2.707V14.5a.5.5 0 0 0 .5.5z"/>
+        </svg>
+    </button>
 
 
     <!-- Firebase SDK and App Logic -->
@@ -456,6 +485,10 @@
             initializeReviewsPage(db);
             initializeProfilePage(userProfile);
 
+            // --- Initialize Animations ---
+            setupScrollAnimations();
+            setupScrollToTopButton();
+
             appInitialized = true;
         }
 
@@ -466,11 +499,16 @@
                     <h1 class="text-4xl md:text-5xl font-bold text-emerald-700 mb-4">Smart & Sustainable Farming</h1>
                     <p class="text-lg text-slate-600 max-w-3xl mx-auto">Your one-stop resource for organic pesticide recipes, modern farming tools, and community-driven reviews.</p>
                 </div>
-                <div class="grid md:grid-cols-3 gap-6 mt-8">
-                    <a href="#recipes" class="nav-link-card bg-white p-6 rounded-xl shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300 border border-slate-200 block"><h2 class="text-2xl font-bold text-emerald-600 mb-2">Pesticide Recipes</h2><p class="text-slate-600">Find effective, homemade, and organic pesticide solutions for your crops.</p></a>
-                    <a href="#tools" class="nav-link-card bg-white p-6 rounded-xl shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300 border border-slate-200 block"><h2 class="text-2xl font-bold text-emerald-600 mb-2">Farming Calculators</h2><p class="text-slate-600">Calculate pesticide needs for your farm with our easy-to-use tool.</p></a>
-                    <a href="#reviews" class="nav-link-card bg-white p-6 rounded-xl shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300 border border-slate-200 block"><h2 class="text-2xl font-bold text-emerald-600 mb-2">Community Reviews</h2><p class="text-slate-600">Read and share experiences with recipes and tools from farmers like you.</p></a>
-                </div>`;
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mt-8">
+                    <a href="#recipes" class="nav-link-card bg-white p-6 rounded-xl shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300 border border-slate-200 block reveal"><h2 class="text-2xl font-bold text-emerald-600 mb-2">Pesticide Recipes</h2><p class="text-slate-600">Find effective, homemade, and organic pesticide solutions for your crops.</p></a>
+                    <a href="#tools" class="nav-link-card bg-white p-6 rounded-xl shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300 border border-slate-200 block reveal"><h2 class="text-2xl font-bold text-emerald-600 mb-2">Farming Calculators</h2><p class="text-slate-600">Calculate pesticide needs for your farm with our easy-to-use tool.</p></a>
+                    <a href="#reviews" class="nav-link-card bg-white p-6 rounded-xl shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300 border border-slate-200 block reveal"><h2 class="text-2xl font-bold text-emerald-600 mb-2">Community Reviews</h2><p class="text-slate-600">Read and share experiences with recipes and tools from farmers like you.</p></a>
+                </div>
+                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mt-8">
+                    <div id="featured-recipe" class="bg-white p-6 rounded-xl shadow-sm border border-slate-200 reveal"></div>
+                    <div id="farming-tip" class="bg-white p-6 rounded-xl shadow-sm border border-slate-200 reveal"></div>
+                </div>
+                `;
             
             document.getElementById('recipes').innerHTML = `
                 <header class="text-center mb-8"><h1 class="text-4xl md:text-5xl font-bold text-emerald-700 mb-2">🌿 Organic Pesticide Recipe Finder</h1><p class="text-lg text-slate-600">Search and filter through homemade pesticide recipes for your farm or garden.</p></header>
@@ -720,8 +758,6 @@
         }
 
         function initializeReviewsPage(db) {
-            const { collection, onSnapshot, query, orderBy, addDoc, serverTimestamp } = window.firebase.firestore;
-
             const reviewsContainer = document.getElementById('reviews-container');
             const reviewForm = document.getElementById('review-form');
             const formMessage = document.getElementById('form-message');
