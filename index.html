@@ -501,10 +501,6 @@
                     <a href="#tools" class="nav-link-card bg-white p-6 rounded-xl shadow-sm hover:shadow-lg border border-slate-200 block reveal card-3d"><h2 class="text-2xl font-bold text-emerald-600 mb-2">Farming Calculators</h2><p class="text-slate-600">Calculate pesticide needs for your farm with our easy-to-use tool.</p></a>
                     <a href="#reviews" class="nav-link-card bg-white p-6 rounded-xl shadow-sm hover:shadow-lg border border-slate-200 block reveal card-3d"><h2 class="text-2xl font-bold text-emerald-600 mb-2">Community Reviews</h2><p class="text-slate-600">Read and share experiences with recipes and tools from farmers like you.</p></a>
                 </div>
-                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mt-8">
-                    <div id="featured-recipe" class="bg-white p-6 rounded-xl shadow-sm border border-slate-200 reveal"></div>
-                    <div id="farming-tip" class="bg-white p-6 rounded-xl shadow-sm border border-slate-200 reveal"></div>
-                </div>
                 `;
             
             document.getElementById('recipes').innerHTML = `
@@ -588,7 +584,17 @@
             function showPage(pageId) {
                 pages.forEach(page => page.classList.remove('active'));
                 const targetPage = document.getElementById(pageId);
-                if (targetPage) targetPage.classList.add('active');
+                if (targetPage) {
+                    targetPage.classList.add('active');
+                    // Re-trigger scroll animations when a page is shown
+                    const elements = targetPage.querySelectorAll('.reveal');
+                    elements.forEach(el => {
+                        const rect = el.getBoundingClientRect();
+                        if (rect.top < window.innerHeight && rect.bottom >= 0) {
+                            el.classList.add('visible');
+                        }
+                    });
+                }
                 navLinks.forEach(link => link.classList.toggle('active', link.hash === `#${pageId}`));
                 mobileMenu.classList.add('hidden');
                 window.scrollTo(0, 0);
@@ -609,7 +615,7 @@
         }
 
         // --- DATA LOADING & PAGE INITIALIZATION ---
-        async function loadCsvDataAndInitPages() {
+        async function loadCsvDataAndInitPages(db, userProfile) {
             try {
                 const response = await fetch('recipes.csv');
                 if (!response.ok) throw new Error(`Failed to load recipes.csv. Status: ${response.status}`);
@@ -623,66 +629,40 @@
                             recipe.ingredients = typeof recipe.ingredients === 'string' ? recipe.ingredients.split(';').map(s => s.trim()) : [];
                             return recipe;
                         });
-                        initializeRecipesPage(allRecipes);
-                        initializeToolsPage(allRecipes);
-                        initializeHomePage(allRecipes);
+                        initializePageContent(allRecipes, db, userProfile);
                     }
                 });
             } catch (error) {
                 console.error("Error loading CSV data:", error);
                 document.getElementById('recipes-container').innerHTML = `<p class="text-center text-red-600 col-span-full">Could not load recipe data.</p>`;
-                document.getElementById('pesticide-recipe').innerHTML = `<option value="">Could not load recipes</option>`;
             }
         }
 
         // --- PAGE-SPECIFIC INITIALIZERS ---
+        function initializePageContent(recipes, db, userProfile) {
+             initializeRecipesPage(recipes);
+             initializeToolsPage(recipes);
+             initializeHomePage(recipes);
+             initializeReviewsPage(db);
+             initializeProfilePage(userProfile);
+             setupScrollAnimations();
+             setupScrollToTopButton();
+             setup3dCardEffects();
+        }
+
         function initializeHomePage(recipes) {
             const featuredRecipeContainer = document.getElementById('featured-recipe');
             const farmingTipContainer = document.getElementById('farming-tip');
-            
-            // --- Farming Tip of the Day ---
-            const farmingTips = [
-                "Test your soil's pH level before planting to ensure optimal nutrient absorption.",
-                "Use companion planting to naturally deter pests and attract beneficial insects.",
-                "Implement crop rotation to prevent soil depletion and reduce disease buildup.",
-                "Conserve water by using drip irrigation or soaker hoses.",
-                "Mulch your garden beds to retain moisture, suppress weeds, and regulate soil temperature.",
-                "Compost kitchen scraps and yard waste to create nutrient-rich soil for your plants.",
-                "Attract pollinators like bees and butterflies by planting native flowers.",
-                "Harvest rainwater in barrels to use for watering your crops during dry spells.",
-                "Use cover crops during the off-season to improve soil health and prevent erosion.",
-                "Check your plants regularly for early signs of pests or diseases.",
-                "Encourage natural predators like ladybugs and lacewings to control aphid populations.",
-                "Avoid over-fertilizing, which can harm plants and pollute waterways.",
-                "Build healthy soil with organic matter for stronger, more resilient plants.",
-                "Water your plants deeply but infrequently to encourage deep root growth.",
-                "Choose plant varieties that are well-suited to your local climate and soil type.",
-                "Use natural barriers like row covers to protect young plants from pests.",
-                "Keep your gardening tools clean to prevent the spread of diseases.",
-                "Provide good air circulation around your plants to reduce the risk of fungal diseases.",
-                "Learn to identify beneficial insects so you don't accidentally harm them.",
-                "Intercrop with nitrogen-fixing plants like legumes to enrich your soil naturally."
-            ];
             const dayOfYear = Math.floor((new Date() - new Date(new Date().getFullYear(), 0, 0)) / (1000 * 60 * 60 * 24));
+            const farmingTips = [ "Test your soil's pH level before planting to ensure optimal nutrient absorption.", "Use companion planting to naturally deter pests and attract beneficial insects.", "Implement crop rotation to prevent soil depletion and reduce disease buildup.", "Conserve water by using drip irrigation or soaker hoses.", "Mulch your garden beds to retain moisture, suppress weeds, and regulate soil temperature.", "Compost kitchen scraps and yard waste to create nutrient-rich soil for your plants.", "Attract pollinators like bees and butterflies by planting native flowers.", "Harvest rainwater in barrels to use for watering your crops during dry spells.", "Use cover crops during the off-season to improve soil health and prevent erosion.", "Check your plants regularly for early signs of pests or diseases.", "Encourage natural predators like ladybugs and lacewings to control aphid populations.", "Avoid over-fertilizing, which can harm plants and pollute waterways.", "Build healthy soil with organic matter for stronger, more resilient plants.", "Water your plants deeply but infrequently to encourage deep root growth.", "Choose plant varieties that are well-suited to your local climate and soil type.", "Use natural barriers like row covers to protect young plants from pests.", "Keep your gardening tools clean to prevent the spread of diseases.", "Provide good air circulation around your plants to reduce the risk of fungal diseases.", "Learn to identify beneficial insects so you don't accidentally harm them.", "Intercrop with nitrogen-fixing plants like legumes to enrich your soil naturally." ];
             const tipIndex = dayOfYear % farmingTips.length;
-            farmingTipContainer.innerHTML = `
-                <h2 class="text-2xl font-bold text-emerald-600 mb-2">💡 Farming Tip of the Day</h2>
-                <p class="text-slate-600">${farmingTips[tipIndex]}</p>
-            `;
-
-            // --- Featured Recipe of the Day ---
+            farmingTipContainer.innerHTML = `<h2 class="text-2xl font-bold text-emerald-600 mb-2">💡 Farming Tip of the Day</h2><p class="text-slate-600">${farmingTips[tipIndex]}</p>`;
             const recipeIndex = dayOfYear % recipes.length;
             const featuredRecipe = recipes[recipeIndex];
             if (featuredRecipe) {
-                featuredRecipeContainer.innerHTML = `
-                    <h2 class="text-2xl font-bold text-emerald-600 mb-2">🌿 Recipe of the Day</h2>
-                    <h3 class="text-xl font-semibold text-slate-800">${featuredRecipe.name}</h3>
-                    <p class="text-slate-600 mt-2"><strong>Targets:</strong> ${featuredRecipe.targets.join(', ')}</p>
-                    <a href="#recipes" class="nav-link-card text-emerald-600 hover:underline mt-4 inline-block">Find out how to make it &rarr;</a>
-                `;
+                featuredRecipeContainer.innerHTML = `<h2 class="text-2xl font-bold text-emerald-600 mb-2">🌿 Recipe of the Day</h2><h3 class="text-xl font-semibold text-slate-800">${featuredRecipe.name}</h3><p class="text-slate-600 mt-2"><strong>Targets:</strong> ${featuredRecipe.targets.join(', ')}</p><a href="#recipes" class="nav-link-card text-emerald-600 hover:underline mt-4 inline-block">Find out how to make it &rarr;</a>`;
             }
         }
-
 
         function initializeRecipesPage(recipes) {
             const container = document.getElementById('recipes-container');
@@ -966,3 +946,4 @@
     </script>
 </body>
 </html>
+
