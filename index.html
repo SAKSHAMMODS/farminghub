@@ -642,7 +642,6 @@
         function initializePageContent(recipes, db, userProfile) {
              initializeRecipesPage(recipes);
              initializeToolsPage(recipes);
-             initializeHomePage(recipes);
              initializeReviewsPage(db);
              initializeProfilePage(userProfile);
              setupScrollAnimations();
@@ -650,22 +649,11 @@
              setup3dCardEffects();
         }
 
-        function initializeHomePage(recipes) {
-            const featuredRecipeContainer = document.getElementById('featured-recipe');
-            const farmingTipContainer = document.getElementById('farming-tip');
-            const dayOfYear = Math.floor((new Date() - new Date(new Date().getFullYear(), 0, 0)) / (1000 * 60 * 60 * 24));
-            const farmingTips = [ "Test your soil's pH level before planting to ensure optimal nutrient absorption.", "Use companion planting to naturally deter pests and attract beneficial insects.", "Implement crop rotation to prevent soil depletion and reduce disease buildup.", "Conserve water by using drip irrigation or soaker hoses.", "Mulch your garden beds to retain moisture, suppress weeds, and regulate soil temperature.", "Compost kitchen scraps and yard waste to create nutrient-rich soil for your plants.", "Attract pollinators like bees and butterflies by planting native flowers.", "Harvest rainwater in barrels to use for watering your crops during dry spells.", "Use cover crops during the off-season to improve soil health and prevent erosion.", "Check your plants regularly for early signs of pests or diseases.", "Encourage natural predators like ladybugs and lacewings to control aphid populations.", "Avoid over-fertilizing, which can harm plants and pollute waterways.", "Build healthy soil with organic matter for stronger, more resilient plants.", "Water your plants deeply but infrequently to encourage deep root growth.", "Choose plant varieties that are well-suited to your local climate and soil type.", "Use natural barriers like row covers to protect young plants from pests.", "Keep your gardening tools clean to prevent the spread of diseases.", "Provide good air circulation around your plants to reduce the risk of fungal diseases.", "Learn to identify beneficial insects so you don't accidentally harm them.", "Intercrop with nitrogen-fixing plants like legumes to enrich your soil naturally." ];
-            const tipIndex = dayOfYear % farmingTips.length;
-            farmingTipContainer.innerHTML = `<h2 class="text-2xl font-bold text-emerald-600 mb-2">💡 Farming Tip of the Day</h2><p class="text-slate-600">${farmingTips[tipIndex]}</p>`;
-            const recipeIndex = dayOfYear % recipes.length;
-            const featuredRecipe = recipes[recipeIndex];
-            if (featuredRecipe) {
-                featuredRecipeContainer.innerHTML = `<h2 class="text-2xl font-bold text-emerald-600 mb-2">🌿 Recipe of the Day</h2><h3 class="text-xl font-semibold text-slate-800">${featuredRecipe.name}</h3><p class="text-slate-600 mt-2"><strong>Targets:</strong> ${featuredRecipe.targets.join(', ')}</p><a href="#recipes" class="nav-link-card text-emerald-600 hover:underline mt-4 inline-block">Find out how to make it &rarr;</a>`;
-            }
-        }
 
         function initializeRecipesPage(recipes) {
             const container = document.getElementById('recipes-container');
+            if (!container) return; // Guard clause
+            
             const noResults = document.getElementById('no-results');
             const keyword = document.getElementById('keyword-search');
             const target = document.getElementById('target-filter');
@@ -676,8 +664,8 @@
             const targets = new Set();
             const uses = new Set();
             recipes.forEach(recipe => {
-                recipe.targets.forEach(t => targets.add(t));
-                recipe.whereToUse.forEach(u => uses.add(u));
+                if(recipe.targets) recipe.targets.forEach(t => targets.add(t));
+                if(recipe.whereToUse) recipe.whereToUse.forEach(u => uses.add(u));
             });
             target.innerHTML = '<option value="">All Pests/Diseases</option>';
             use.innerHTML = '<option value="">All Crops</option>';
@@ -696,9 +684,9 @@
                             <span class="text-xl font-bold text-slate-800 bg-emerald-100 text-emerald-800 px-3 py-1 rounded-full">₹${recipe.cost || 0}</span>
                         </div>
                         <div class="space-y-4 flex-grow">
-                            <div><h3 class="font-semibold text-slate-700 mb-2">Targets</h3><div class="flex flex-wrap gap-2">${recipe.targets.map(t => `<span class="tag bg-slate-100 text-slate-700 px-2 py-1 text-xs font-medium rounded-full">${t}</span>`).join('')}</div></div>
-                            <div><h3 class="font-semibold text-slate-700 mb-2">Where to Use</h3><div class="flex flex-wrap gap-2">${recipe.whereToUse.map(u => `<span class="tag bg-slate-100 text-slate-700 px-2 py-1 text-xs font-medium rounded-full">${u}</span>`).join('')}</div></div>
-                            <div><h3 class="font-semibold text-slate-700 mb-2">Ingredients</h3><ul class="list-disc list-inside text-slate-600 space-y-1">${recipe.ingredients.map(i => `<li>${i}</li>`).join('')}</ul></div>
+                            <div><h3 class="font-semibold text-slate-700 mb-2">Targets</h3><div class="flex flex-wrap gap-2">${(recipe.targets || []).map(t => `<span class="tag bg-slate-100 text-slate-700 px-2 py-1 text-xs font-medium rounded-full">${t}</span>`).join('')}</div></div>
+                            <div><h3 class="font-semibold text-slate-700 mb-2">Where to Use</h3><div class="flex flex-wrap gap-2">${(recipe.whereToUse || []).map(u => `<span class="tag bg-slate-100 text-slate-700 px-2 py-1 text-xs font-medium rounded-full">${u}</span>`).join('')}</div></div>
+                            <div><h3 class="font-semibold text-slate-700 mb-2">Ingredients</h3><ul class="list-disc list-inside text-slate-600 space-y-1">${(recipe.ingredients || []).map(i => `<li>${i}</li>`).join('')}</ul></div>
                             <div><h3 class="font-semibold text-slate-700 mb-2">Procedure</h3><p class="text-slate-600">${recipe.procedure || ''}</p></div>
                             <div><h3 class="font-semibold text-slate-700 mb-2">How to Use</h3><p class="text-slate-600">${recipe.howToUse || ''}</p></div>
                         </div>`;
@@ -708,9 +696,9 @@
 
             function filterAndSort() {
                 let filtered = [...recipes];
-                if (keyword.value) filtered = filtered.filter(r => (r.name && r.name.toLowerCase().includes(keyword.value.toLowerCase())) || r.targets.some(t => t.toLowerCase().includes(keyword.value.toLowerCase())) || r.whereToUse.some(u => u.toLowerCase().includes(keyword.value.toLowerCase())));
-                if (target.value) filtered = filtered.filter(r => r.targets.includes(target.value));
-                if (use.value) filtered = filtered.filter(r => r.whereToUse.includes(use.value));
+                if (keyword.value) filtered = filtered.filter(r => (r.name && r.name.toLowerCase().includes(keyword.value.toLowerCase())) || (r.targets || []).some(t => t.toLowerCase().includes(keyword.value.toLowerCase())) || (r.whereToUse || []).some(u => u.toLowerCase().includes(keyword.value.toLowerCase())));
+                if (target.value) filtered = filtered.filter(r => (r.targets || []).includes(target.value));
+                if (use.value) filtered = filtered.filter(r => (r.whereToUse || []).includes(use.value));
                 if (sort.value === 'asc') filtered.sort((a, b) => a.cost - b.cost);
                 else if (sort.value === 'desc') filtered.sort((a, b) => b.cost - a.cost);
                 else filtered.sort((a, b) => a.id - b.id);
@@ -727,6 +715,8 @@
 
         function initializeToolsPage(recipes) {
             const pesticideForm = document.getElementById('pesticide-calculator-form');
+            if(!pesticideForm) return;
+
             const recipeSelect = document.getElementById('pesticide-recipe');
             const pesticideResultDiv = document.getElementById('pesticide-result');
             const pesticideTotalMixEl = document.getElementById('pesticide-total-mix');
@@ -753,13 +743,13 @@
                 const baseMixPerAcre = mixMatch ? parseFloat(mixMatch[1]) : 100;
                 const totalMixNeeded = baseMixPerAcre * area;
 
-                const waterMatch = recipe.ingredients.join(';').match(/(\d+)\s*L/i);
+                const waterMatch = (recipe.ingredients || []).join(';').match(/(\d+)\s*L/i);
                 const baseWaterVolume = waterMatch ? parseFloat(waterMatch[1]) : 10;
 
                 pesticideTotalMixEl.innerHTML = `For <strong>${area.toFixed(2)} acres</strong>, you need a total mix of <strong>${totalMixNeeded.toFixed(2)} L</strong>.`;
                 pesticideIngredientsEl.innerHTML = '';
 
-                recipe.ingredients.forEach(ing => {
+                (recipe.ingredients || []).forEach(ing => {
                     const parts = ing.match(/([\d.]+)\s*(kg|g|ml|L)/i);
                     if (parts) {
                         const baseAmount = parseFloat(parts[1]);
@@ -784,7 +774,9 @@
         }
 
         function initializeReviewsPage(db) {
-            const reviewsContainer = document.getElementById('reviews-container');
+             const reviewsContainer = document.getElementById('reviews-container');
+            if(!reviewsContainer) return;
+
             const reviewForm = document.getElementById('review-form');
             const formMessage = document.getElementById('form-message');
             const getLocationBtn = document.getElementById('get-location-btn');
