@@ -176,50 +176,37 @@
             transition: transform 0.5s;
         }
         /* --- Footer Animation --- */
-        .flower-svg {
-            width: 80px;
-            height: 80px;
-            margin: 0 auto;
+        .footer-grass {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 70px; /* Height of the SVG */
+            overflow: hidden;
+            z-index: 1;
         }
-        .stem {
-            stroke: #34A853;
-            stroke-width: 3;
-            stroke-dasharray: 100;
-            stroke-dashoffset: 100;
-            animation: grow-stem 2s ease-out infinite;
+        .footer-grass svg {
+            width: 100%;
+            height: 100%;
         }
-        .leaf {
-            fill: #4CAF50;
-            opacity: 0;
-            transform-origin: bottom left;
-            animation: grow-leaf 1.5s ease-out 1s infinite;
+        @keyframes sway {
+            0%, 100% { transform: rotateZ(-2deg); }
+            50% { transform: rotateZ(2deg); }
         }
-        .petal {
-            fill: #FFEB3B;
-            opacity: 0;
+        .grass-blade {
+            fill: #34A853;
             transform-origin: bottom center;
-            animation: grow-petal 1s ease-out 2s infinite;
+            animation: sway 3s ease-in-out infinite;
         }
-        .petal.center {
-            fill: #E65100;
-             animation-delay: 2.5s;
+        .grass-blade:nth-child(2n) {
+            animation-duration: 4s;
+            animation-delay: 0.5s;
+            fill: #4CAF50;
         }
-        @keyframes grow-stem {
-            0% { stroke-dashoffset: 100; }
-            40% { stroke-dashoffset: 0; }
-            100% { stroke-dashoffset: 0; }
-        }
-        @keyframes grow-leaf {
-            0% { opacity: 0; transform: scale(0.2); }
-            20% { opacity: 0; transform: scale(0.2); }
-            60% { opacity: 1; transform: scale(1); }
-            100% { opacity: 1; transform: scale(1); }
-        }
-        @keyframes grow-petal {
-            0% { opacity: 0; transform: scale(0.5); }
-            40% { opacity: 0; transform: scale(0.5); }
-            80% { opacity: 1; transform: scale(1); }
-            100% { opacity: 1; transform: scale(1); }
+        .grass-blade:nth-child(3n) {
+            animation-duration: 2.5s;
+            animation-delay: 1s;
+            fill: #059669;
         }
     </style>
 </head>
@@ -356,20 +343,15 @@
             <section id="profile" class="page"></section>
         </main>
         
-        <footer class="bg-slate-800 text-slate-300 mt-12">
-            <div class="container mx-auto py-6 px-4 sm:px-6 lg:px-8 text-center">
-                <!-- Flower Animation -->
-                <svg class="flower-svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet">
-                  <path class="stem" d="M 50 100 V 30" stroke-linecap="round"/>
-                  <path class="leaf" d="M 50 70 Q 35 65 30 50" fill="none" stroke="#4CAF50" stroke-width="3"/>
-                  <path class="leaf" d="M 50 70 Q 65 65 70 50" fill="none" stroke="#4CAF50" stroke-width="3"/>
-                  <circle class="petal" cx="50" cy="20" r="10" />
-                  <circle class="petal" cx="35" cy="25" r="10" />
-                  <circle class="petal" cx="65" cy="25" r="10" />
-                  <circle class="petal" cx="40" cy="40" r="10" />
-                  <circle class="petal" cx="60" cy="40" r="10" />
-                  <circle class="petal center" cx="50" cy="30" r="8" />
+        <footer class="bg-slate-800 text-slate-300 mt-12 relative overflow-hidden pt-10">
+            <div class="footer-grass" aria-hidden="true">
+                <svg preserveAspectRatio="none" viewBox="0 0 1440 70">
+                    <path class="grass-blade" d="M0,70 Q100,20 200,70 T400,70 T600,70 T800,70 T1000,70 T1200,70 T1440,70 V70 H0 Z" />
+                    <path class="grass-blade" d="M0,70 Q150,30 300,70 T600,70 T900,70 T1200,70 T1440,70 V70 H0 Z" />
+                    <path class="grass-blade" d="M0,70 Q200,40 400,70 T800,70 T1200,70 T1440,70 V70 H0 Z" />
                 </svg>
+            </div>
+            <div class="container mx-auto py-6 px-4 sm:px-6 lg:px-8 text-center relative z-10">
                 <p>&copy; 2024 Agri-Helper. All Rights Reserved.</p>
             </div>
         </footer>
@@ -384,10 +366,32 @@
 
     <!-- Firebase SDK and App Logic -->
     <script type="module">
+        // --- Firebase Imports ---
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-        import { getAuth, GoogleAuthProvider, signInWithRedirect, getRedirectResult, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-        import { getFirestore, collection, addDoc, onSnapshot, query, orderBy, serverTimestamp, doc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+        import { 
+            getAuth, 
+            GoogleAuthProvider, 
+            signInWithRedirect, 
+            getRedirectResult, 
+            createUserWithEmailAndPassword, 
+            signInWithEmailAndPassword, 
+            onAuthStateChanged, 
+            signOut 
+        } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { 
+            getFirestore, 
+            collection, 
+            addDoc, 
+            onSnapshot, 
+            query, 
+            orderBy, 
+            serverTimestamp, 
+            doc, 
+            setDoc, 
+            getDoc 
+        } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
+        // --- Firebase Config ---
         const firebaseConfig = {
             apiKey: "AIzaSyAgDzPWLDtfWGkbSX2RLlkECJPVczYxfqM",
             authDomain: "agrireviews-956e4.firebaseapp.com",
@@ -398,13 +402,15 @@
             measurementId: "G-2QFP4T6CHG"
         };
 
-        // --- GLOBAL APP STATE ---
+        // --- Global App State ---
         let appInitialized = false;
         let allRecipes = [];
         let globalDb;
         let globalUserProfile;
+        let globalAuth;
+        let scrollObserver;
 
-        // --- DOM ELEMENTS ---
+        // --- DOM Elements ---
         const loadingScreen = document.getElementById('loading-screen');
         const loginPage = document.getElementById('login-page');
         const appContent = document.getElementById('app-content');
@@ -422,9 +428,8 @@
         // --- FIREBASE INITIALIZATION ---
         try {
             const app = initializeApp(firebaseConfig);
-            const auth = getAuth(app);
-            const db = getFirestore(app);
-            globalDb = db; // Store db globally for other functions
+            globalAuth = getAuth(app);
+            globalDb = getFirestore(app);
 
             // --- AUTHENTICATION LOGIC ---
             toggleAuthModeBtn.addEventListener('click', () => {
@@ -445,13 +450,13 @@
                 authError.textContent = '';
 
                 if (isLoginMode) {
-                    signInWithEmailAndPassword(auth, email, password)
+                    signInWithEmailAndPassword(globalAuth, email, password)
                         .catch(error => { authError.textContent = error.message; });
                 } else {
-                    createUserWithEmailAndPassword(auth, email, password)
+                    createUserWithEmailAndPassword(globalAuth, email, password)
                         .then(async (userCredential) => {
                             const user = userCredential.user;
-                            await setDoc(doc(db, "users", user.uid), {
+                            await setDoc(doc(globalDb, "users", user.uid), {
                                 name: name,
                                 contact: contact,
                                 email: email
@@ -463,25 +468,25 @@
 
             googleSignInBtn.addEventListener('click', () => {
                 const provider = new GoogleAuthProvider();
-                signInWithRedirect(auth, provider);
+                signInWithRedirect(globalAuth, provider);
             });
             
             detailsForm.addEventListener('submit', async (e) => {
                 e.preventDefault();
-                const user = auth.currentUser;
+                const user = globalAuth.currentUser;
                 if (!user) return;
 
                 const name = detailsForm.name.value;
                 const contact = detailsForm.contact.value;
 
-                await setDoc(doc(db, "users", user.uid), {
+                await setDoc(doc(globalDb, "users", user.uid), {
                     name: name,
                     contact: contact,
                     email: user.email
                 });
                 detailsModal.classList.add('hidden');
                 
-                const userDocSnap = await getDoc(doc(db, "users", user.uid));
+                const userDocSnap = await getDoc(doc(globalDb, "users", user.uid));
                 globalUserProfile = userDocSnap.data();
                 const userName = globalUserProfile.name || user.email;
 
@@ -489,20 +494,20 @@
                 appContent.classList.remove('hidden');
                 document.getElementById('user-name').textContent = userName;
                 document.getElementById('mobile-user-name').textContent = userName;
-                initializeLoggedInApp(globalUserProfile, db);
+                initializeLoggedInApp(globalUserProfile, globalDb);
             });
 
             // Handle redirect result from Google Sign-In
-            getRedirectResult(auth)
+            getRedirectResult(globalAuth)
                 .catch((error) => {
                     console.error("Google sign-in redirect error:", error);
                     authError.textContent = error.message;
                 });
 
-            onAuthStateChanged(auth, async (user) => {
+            onAuthStateChanged(globalAuth, async (user) => {
                 loadingScreen.classList.add('hidden');
                 if (user) {
-                    const userDocRef = doc(db, "users", user.uid);
+                    const userDocRef = doc(globalDb, "users", user.uid);
                     const userDocSnap = await getDoc(userDocRef);
                     
                     if (!userDocSnap.exists()) {
@@ -516,7 +521,7 @@
                         appContent.classList.remove('hidden');
                         document.getElementById('user-name').textContent = userName;
                         document.getElementById('mobile-user-name').textContent = userName;
-                        initializeLoggedInApp(globalUserProfile, db);
+                        initializeLoggedInApp(globalUserProfile, globalDb);
                     }
                 } else {
                     loginPage.classList.remove('hidden');
@@ -524,8 +529,8 @@
                 }
             });
 
-            document.getElementById('logout-button').addEventListener('click', () => signOut(auth));
-            document.getElementById('mobile-logout-button').addEventListener('click', () => signOut(auth));
+            document.getElementById('logout-button').addEventListener('click', () => signOut(globalAuth));
+            document.getElementById('mobile-logout-button').addEventListener('click', () => signOut(globalAuth));
 
         } catch (e) {
             console.error("Firebase initialization failed:", e);
@@ -540,6 +545,8 @@
             injectPageHTML();
             setupNavigation();
             loadCsvDataAndInitPages(db, userProfile);
+            setupScrollToTopButton();
+            setup3dCardEffects();
 
             appInitialized = true;
         }
@@ -618,9 +625,20 @@
                         </div>
                     </div>
                     <hr class="my-8">
+                    <h2 class="text-3xl font-bold text-emerald-700 mb-6 text-center">Project Guides</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-center">
+                        <div class="bg-slate-50 p-4 rounded-lg">
+                            <h3 class="text-xl font-bold text-emerald-500 text-glow">PALLAVI THAKARE</h3>
+                            <p class="font-semibold text-slate-600">Project Guide</p>
+                        </div>
+                        <div class="bg-slate-50 p-4 rounded-lg">
+                            <h3 class="text-xl font-bold text-emerald-500 text-glow">SARIKA PABALKAR</h3>
+                            <p class="font-semibold text-slate-600">CEP Coordinator</p>
+                        </div>
+                    </div>
+                    <hr class="my-8">
                     <h2 class="text-3xl font-bold text-emerald-700 mb-4 text-center">Credits</h2>
                     <div class="text-center text-slate-600">
-                        <p>This project was built using resources from the open-source community. Special thanks to Firebase, Tailwind CSS, and Papa Parse.</p>
                     </div>
                 </div>`;
             
@@ -638,7 +656,9 @@
             const headerLinks = document.querySelectorAll('.nav-link-header');
             const mobileMenuButton = document.getElementById('mobile-menu-button');
             const mobileMenu = document.getElementById('mobile-menu');
-            const observer = new IntersectionObserver((entries) => {
+            
+            // Setup scroll observer
+            scrollObserver = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
                         entry.target.classList.add('visible');
@@ -646,14 +666,17 @@
                 });
             }, { threshold: 0.1 });
 
+            // Initial observation
+            document.querySelectorAll('.reveal').forEach(el => scrollObserver.observe(el));
+
+
             function showPage(pageId) {
                 pages.forEach(page => page.classList.remove('active'));
                 const targetPage = document.getElementById(pageId);
                 if (targetPage) {
                     targetPage.classList.add('active');
                     // Re-observe elements on the newly active page
-                    const elements = targetPage.querySelectorAll('.reveal');
-                    elements.forEach(el => observer.observe(el));
+                    targetPage.querySelectorAll('.reveal').forEach(el => scrollObserver.observe(el));
                 }
                 navLinks.forEach(link => link.classList.toggle('active', link.hash === `#${pageId}`));
                 mobileMenu.classList.add('hidden');
@@ -708,14 +731,16 @@
              initializeReviewsPage(db);
              initializeProfilePage(userProfile);
              initializeHomePage();
-             setupScrollAnimations();
+             setupScrollAnimations(); // Re-run scroll setup after content is ready
              setupScrollToTopButton();
              setup3dCardEffects();
         }
 
         function initializeHomePage() {
             const farmingTipContainer = document.getElementById('farming-tip');
-            if(!farmingTipContainer) return;
+            const recipeContainer = document.getElementById('recipe-of-the-day');
+            if(!farmingTipContainer || !recipeContainer) return;
+
             const dayOfYear = Math.floor((new Date() - new Date(new Date().getFullYear(), 0, 0)) / (1000 * 60 * 60 * 24));
             
             const farmingTips = [
@@ -728,21 +753,22 @@
             const tipIndex = dayOfYear % farmingTips.length;
             farmingTipContainer.innerHTML = `<h2 class="text-2xl font-bold text-emerald-600 mb-2">💡 Farming Tip of the Day</h2><p class="text-slate-600">${farmingTips[tipIndex]}</p>`;
         
-            const recipeContainer = document.getElementById('recipe-of-the-day');
-            if (recipeContainer && allRecipes.length > 0) {
+            if (allRecipes.length > 0) {
                  const recipeIndex = dayOfYear % allRecipes.length;
                  const recipe = allRecipes[recipeIndex];
                  recipeContainer.innerHTML = `
                     <h2 class="text-2xl font-bold text-emerald-600 mb-2">🌿 Recipe of the Day</h2>
                     <h3 class="text-lg font-semibold text-slate-800">${recipe.name}</h3>
-                    <p class="text-slate-600 mt-1"><strong>Targets:</strong> ${recipe.targets.join(', ')}</p>
+                    <p class="text-slate-600 mt-1"><strong>Targets:</strong> ${(recipe.targets || []).join(', ')}</p>
                     <a href="#recipes" class="nav-link-card text-emerald-600 hover:underline mt-2 inline-block">Go to Recipes &raquo;</a>
                  `;
                  // Re-attach event listener for the new nav link
                  recipeContainer.querySelector('.nav-link-card').addEventListener('click', (e) => {
                      e.preventDefault();
                      const pageId = e.currentTarget.hash.substring(1);
-                     showPage(pageId);
+                     document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+                     document.getElementById(pageId).classList.add('active');
+                     document.querySelectorAll('.nav-link').forEach(link => link.classList.toggle('active', link.hash === `#${pageId}`));
                      history.pushState(null, null, `#${pageId}`);
                  });
             }
@@ -792,16 +818,7 @@
                     container.appendChild(card);
                 });
                 // After displaying, re-observe all new reveal elements
-                document.querySelectorAll('.reveal').forEach(el => {
-                    const observer = new IntersectionObserver((entries) => {
-                        entries.forEach(entry => {
-                            if (entry.isIntersecting) {
-                                entry.target.classList.add('visible');
-                            }
-                        });
-                    }, { threshold: 0.1 });
-                    observer.observe(el);
-                });
+                document.querySelectorAll('#recipes-container .reveal').forEach(el => scrollObserver.observe(el));
             }
 
             function filterAndSort() {
@@ -1001,7 +1018,7 @@
         }
 
         function setupScrollAnimations() {
-            const observer = new IntersectionObserver((entries) => {
+            scrollObserver = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
                         entry.target.classList.add('visible');
@@ -1009,9 +1026,7 @@
                 });
             }, { threshold: 0.1 });
 
-            document.querySelectorAll('.reveal').forEach(el => {
-                observer.observe(el);
-            });
+            document.querySelectorAll('.reveal').forEach(el => scrollObserver.observe(el));
         }
 
         function setupScrollToTopButton() {
