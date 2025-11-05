@@ -175,6 +175,52 @@
             transform-style: preserve-3d;
             transition: transform 0.5s;
         }
+        /* --- Footer Animation --- */
+        .flower-svg {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto;
+        }
+        .stem {
+            stroke: #34A853;
+            stroke-width: 3;
+            stroke-dasharray: 100;
+            stroke-dashoffset: 100;
+            animation: grow-stem 2s ease-out infinite;
+        }
+        .leaf {
+            fill: #4CAF50;
+            opacity: 0;
+            transform-origin: bottom left;
+            animation: grow-leaf 1.5s ease-out 1s infinite;
+        }
+        .petal {
+            fill: #FFEB3B;
+            opacity: 0;
+            transform-origin: bottom center;
+            animation: grow-petal 1s ease-out 2s infinite;
+        }
+        .petal.center {
+            fill: #E65100;
+             animation-delay: 2.5s;
+        }
+        @keyframes grow-stem {
+            0% { stroke-dashoffset: 100; }
+            40% { stroke-dashoffset: 0; }
+            100% { stroke-dashoffset: 0; }
+        }
+        @keyframes grow-leaf {
+            0% { opacity: 0; transform: scale(0.2); }
+            20% { opacity: 0; transform: scale(0.2); }
+            60% { opacity: 1; transform: scale(1); }
+            100% { opacity: 1; transform: scale(1); }
+        }
+        @keyframes grow-petal {
+            0% { opacity: 0; transform: scale(0.5); }
+            40% { opacity: 0; transform: scale(0.5); }
+            80% { opacity: 1; transform: scale(1); }
+            100% { opacity: 1; transform: scale(1); }
+        }
     </style>
 </head>
 <body class="text-slate-800">
@@ -312,6 +358,18 @@
         
         <footer class="bg-slate-800 text-slate-300 mt-12">
             <div class="container mx-auto py-6 px-4 sm:px-6 lg:px-8 text-center">
+                <!-- Flower Animation -->
+                <svg class="flower-svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet">
+                  <path class="stem" d="M 50 100 V 30" stroke-linecap="round"/>
+                  <path class="leaf" d="M 50 70 Q 35 65 30 50" fill="none" stroke="#4CAF50" stroke-width="3"/>
+                  <path class="leaf" d="M 50 70 Q 65 65 70 50" fill="none" stroke="#4CAF50" stroke-width="3"/>
+                  <circle class="petal" cx="50" cy="20" r="10" />
+                  <circle class="petal" cx="35" cy="25" r="10" />
+                  <circle class="petal" cx="65" cy="25" r="10" />
+                  <circle class="petal" cx="40" cy="40" r="10" />
+                  <circle class="petal" cx="60" cy="40" r="10" />
+                  <circle class="petal center" cx="50" cy="30" r="8" />
+                </svg>
                 <p>&copy; 2024 Agri-Helper. All Rights Reserved.</p>
             </div>
         </footer>
@@ -343,6 +401,8 @@
         // --- GLOBAL APP STATE ---
         let appInitialized = false;
         let allRecipes = [];
+        let globalDb;
+        let globalUserProfile;
 
         // --- DOM ELEMENTS ---
         const loadingScreen = document.getElementById('loading-screen');
@@ -364,6 +424,7 @@
             const app = initializeApp(firebaseConfig);
             const auth = getAuth(app);
             const db = getFirestore(app);
+            globalDb = db; // Store db globally for other functions
 
             // --- AUTHENTICATION LOGIC ---
             toggleAuthModeBtn.addEventListener('click', () => {
@@ -419,16 +480,16 @@
                     email: user.email
                 });
                 detailsModal.classList.add('hidden');
-                // Manually trigger the UI update after details are submitted
+                
                 const userDocSnap = await getDoc(doc(db, "users", user.uid));
-                const currentUserProfile = userDocSnap.data();
-                const userName = currentUserProfile.name || user.email;
+                globalUserProfile = userDocSnap.data();
+                const userName = globalUserProfile.name || user.email;
 
                 loginPage.classList.add('hidden');
                 appContent.classList.remove('hidden');
                 document.getElementById('user-name').textContent = userName;
                 document.getElementById('mobile-user-name').textContent = userName;
-                initializeLoggedInApp(currentUserProfile, db);
+                initializeLoggedInApp(globalUserProfile, db);
             });
 
             // Handle redirect result from Google Sign-In
@@ -447,16 +508,15 @@
                     if (!userDocSnap.exists()) {
                         document.getElementById('modal-name').value = user.displayName || '';
                         detailsModal.classList.remove('hidden');
-                        // Don't initialize the app yet, wait for the modal submission
                     } else {
-                        let currentUserProfile = userDocSnap.data();
-                        const userName = currentUserProfile.name || user.email;
+                        globalUserProfile = userDocSnap.data();
+                        const userName = globalUserProfile.name || user.email;
 
                         loginPage.classList.add('hidden');
                         appContent.classList.remove('hidden');
                         document.getElementById('user-name').textContent = userName;
                         document.getElementById('mobile-user-name').textContent = userName;
-                        initializeLoggedInApp(currentUserProfile, db);
+                        initializeLoggedInApp(globalUserProfile, db);
                     }
                 } else {
                     loginPage.classList.remove('hidden');
@@ -477,13 +537,8 @@
         function initializeLoggedInApp(userProfile, db) {
             if (appInitialized) return;
             
-            // --- Inject Page Content ---
             injectPageHTML();
-
-            // --- Setup Navigation ---
             setupNavigation();
-            
-            // --- Load Data and Initialize Pages ---
             loadCsvDataAndInitPages(db, userProfile);
 
             appInitialized = true;
@@ -496,13 +551,15 @@
                     <h1 class="text-4xl md:text-5xl font-bold text-emerald-700 mb-4">Smart & Sustainable Farming</h1>
                     <p class="text-lg text-slate-600 max-w-3xl mx-auto">Your one-stop resource for organic pesticide recipes, modern farming tools, and community-driven reviews.</p>
                 </div>
-                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mt-8">
+                <div id="daily-features" class="grid md:grid-cols-2 gap-6 mt-8">
+                     <div id="recipe-of-the-day" class="bg-white p-6 rounded-xl shadow-sm border border-slate-200 reveal"></div>
+                     <div id="farming-tip" class="bg-white p-6 rounded-xl shadow-sm border border-slate-200 reveal"></div>
+                </div>
+                <div class="grid md:grid-cols-3 gap-6 mt-8">
                     <a href="#recipes" class="nav-link-card bg-white p-6 rounded-xl shadow-sm hover:shadow-lg border border-slate-200 block reveal card-3d"><h2 class="text-2xl font-bold text-emerald-600 mb-2">Pesticide Recipes</h2><p class="text-slate-600">Find effective, homemade, and organic pesticide solutions for your crops.</p></a>
                     <a href="#tools" class="nav-link-card bg-white p-6 rounded-xl shadow-sm hover:shadow-lg border border-slate-200 block reveal card-3d"><h2 class="text-2xl font-bold text-emerald-600 mb-2">Farming Calculators</h2><p class="text-slate-600">Calculate pesticide needs for your farm with our easy-to-use tool.</p></a>
                     <a href="#reviews" class="nav-link-card bg-white p-6 rounded-xl shadow-sm hover:shadow-lg border border-slate-200 block reveal card-3d"><h2 class="text-2xl font-bold text-emerald-600 mb-2">Community Reviews</h2><p class="text-slate-600">Read and share experiences with recipes and tools from farmers like you.</p></a>
-                </div>
-                <div id="farming-tip" class="bg-white p-6 rounded-xl shadow-sm border border-slate-200 mt-8 reveal"></div>
-                `;
+                </div>`;
             
             document.getElementById('recipes').innerHTML = `
                 <header class="text-center mb-8"><h1 class="text-4xl md:text-5xl font-bold text-emerald-700 mb-2">🌿 Organic Pesticide Recipe Finder</h1><p class="text-lg text-slate-600">Search and filter through homemade pesticide recipes for your farm or garden.</p></header>
@@ -581,20 +638,22 @@
             const headerLinks = document.querySelectorAll('.nav-link-header');
             const mobileMenuButton = document.getElementById('mobile-menu-button');
             const mobileMenu = document.getElementById('mobile-menu');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, { threshold: 0.1 });
 
             function showPage(pageId) {
                 pages.forEach(page => page.classList.remove('active'));
                 const targetPage = document.getElementById(pageId);
                 if (targetPage) {
                     targetPage.classList.add('active');
-                    // Re-trigger scroll animations when a page is shown
+                    // Re-observe elements on the newly active page
                     const elements = targetPage.querySelectorAll('.reveal');
-                    elements.forEach(el => {
-                        const rect = el.getBoundingClientRect();
-                        if (rect.top < window.innerHeight && rect.bottom >= 0) {
-                            el.classList.add('visible');
-                        }
-                    });
+                    elements.forEach(el => observer.observe(el));
                 }
                 navLinks.forEach(link => link.classList.toggle('active', link.hash === `#${pageId}`));
                 mobileMenu.classList.add('hidden');
@@ -635,7 +694,10 @@
                 });
             } catch (error) {
                 console.error("Error loading CSV data:", error);
-                document.getElementById('recipes-container').innerHTML = `<p class="text-center text-red-600 col-span-full">Could not load recipe data.</p>`;
+                const recipesContainer = document.getElementById('recipes-container');
+                if (recipesContainer) {
+                    recipesContainer.innerHTML = `<p class="text-center text-red-600 col-span-full">Could not load recipe data. Make sure recipes.csv is in the same folder as index.html.</p>`;
+                }
             }
         }
 
@@ -655,6 +717,7 @@
             const farmingTipContainer = document.getElementById('farming-tip');
             if(!farmingTipContainer) return;
             const dayOfYear = Math.floor((new Date() - new Date(new Date().getFullYear(), 0, 0)) / (1000 * 60 * 60 * 24));
+            
             const farmingTips = [
                 "Test your soil's pH level before planting to ensure optimal nutrient absorption.", "Use companion planting to naturally deter pests and attract beneficial insects.", "Implement crop rotation to prevent soil depletion and reduce disease buildup.", "Conserve water by using drip irrigation or soaker hoses.", "Mulch your garden beds to retain moisture, suppress weeds, and regulate soil temperature.", "Compost kitchen scraps and yard waste to create nutrient-rich soil for your plants.", "Attract pollinators like bees and butterflies by planting native flowers.", "Harvest rainwater in barrels to use for watering your crops during dry spells.", "Use cover crops during the off-season to improve soil health and prevent erosion.", "Check your plants regularly for early signs of pests or diseases.", "Encourage natural predators like ladybugs and lacewings to control aphid populations.", "Avoid over-fertilizing, which can harm plants and pollute waterways.", "Build healthy soil with organic matter for stronger, more resilient plants.", "Water your plants deeply but infrequently to encourage deep root growth.", "Choose plant varieties that are well-suited to your local climate and soil type.", "Use natural barriers like row covers to protect young plants from pests.", "Keep your gardening tools clean to prevent the spread of diseases.", "Provide good air circulation around your plants to reduce the risk of fungal diseases.", "Learn to identify beneficial insects so you don't accidentally harm them.", "Intercrop with nitrogen-fixing plants like legumes to enrich your soil naturally.",
                 "Use integrated pest management (IPM) for a balanced approach to pest control.", "Aerate your lawn and soil to improve water and nutrient penetration.", "Understand the frost dates for your region to time your planting and harvesting.", "Practice succession planting to ensure a continuous harvest throughout the season.", "Use vertical gardening techniques to maximize space in small areas.", "Thin your seedlings to give the remaining plants enough space to grow strong.", "Deadhead flowering plants to encourage more blooms.", "Learn to identify common weeds in your area for effective removal.", "Use a soil thermometer to check soil temperature before planting seeds.", "Harden off seedlings before transplanting them outdoors.", "Prune fruit trees and shrubs in the dormant season to promote healthy growth.", "Apply organic fertilizers according to the needs of your specific crops.", "Use a rain gauge to monitor rainfall and adjust your watering schedule.", "Create habitats for beneficial wildlife, such as birdhouses and bat boxes.", "Use trap crops to lure pests away from your main crops.", "Test your irrigation water for salinity and pH levels.", "Practice conservation tillage to reduce soil erosion and improve soil structure.", "Use green manures to add organic matter and nutrients to your soil.", "Monitor your crops for nutrient deficiencies and address them promptly.", "Keep detailed records of your planting, harvesting, and pest control activities.",
@@ -664,12 +727,31 @@
             ];
             const tipIndex = dayOfYear % farmingTips.length;
             farmingTipContainer.innerHTML = `<h2 class="text-2xl font-bold text-emerald-600 mb-2">💡 Farming Tip of the Day</h2><p class="text-slate-600">${farmingTips[tipIndex]}</p>`;
+        
+            const recipeContainer = document.getElementById('recipe-of-the-day');
+            if (recipeContainer && allRecipes.length > 0) {
+                 const recipeIndex = dayOfYear % allRecipes.length;
+                 const recipe = allRecipes[recipeIndex];
+                 recipeContainer.innerHTML = `
+                    <h2 class="text-2xl font-bold text-emerald-600 mb-2">🌿 Recipe of the Day</h2>
+                    <h3 class="text-lg font-semibold text-slate-800">${recipe.name}</h3>
+                    <p class="text-slate-600 mt-1"><strong>Targets:</strong> ${recipe.targets.join(', ')}</p>
+                    <a href="#recipes" class="nav-link-card text-emerald-600 hover:underline mt-2 inline-block">Go to Recipes &raquo;</a>
+                 `;
+                 // Re-attach event listener for the new nav link
+                 recipeContainer.querySelector('.nav-link-card').addEventListener('click', (e) => {
+                     e.preventDefault();
+                     const pageId = e.currentTarget.hash.substring(1);
+                     showPage(pageId);
+                     history.pushState(null, null, `#${pageId}`);
+                 });
+            }
         }
 
 
         function initializeRecipesPage(recipes) {
             const container = document.getElementById('recipes-container');
-            if (!container) return; // Guard clause
+            if (!container) return; 
             
             const noResults = document.getElementById('no-results');
             const keyword = document.getElementById('keyword-search');
@@ -709,6 +791,17 @@
                         </div>`;
                     container.appendChild(card);
                 });
+                // After displaying, re-observe all new reveal elements
+                document.querySelectorAll('.reveal').forEach(el => {
+                    const observer = new IntersectionObserver((entries) => {
+                        entries.forEach(entry => {
+                            if (entry.isIntersecting) {
+                                entry.target.classList.add('visible');
+                            }
+                        });
+                    }, { threshold: 0.1 });
+                    observer.observe(el);
+                });
             }
 
             function filterAndSort() {
@@ -727,7 +820,7 @@
                 keyword.value = ''; target.value = ''; use.value = ''; sort.value = 'default';
                 filterAndSort();
             });
-            filterAndSort();
+            filterAndSort(); // Initial display
         }
 
         function initializeToolsPage(recipes) {
@@ -955,4 +1048,3 @@
     </script>
 </body>
 </html>
-
